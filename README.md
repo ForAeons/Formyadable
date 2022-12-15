@@ -18,13 +18,13 @@ Database: Sqlite3
 
 ## Additional Features (Try my best to do)
 
+- [x] Use TypeScript
+
 - [ ] Implement sorting system for comments
 
 - [ ] Implement likes/dislikes
 
 - [ ] Implement Account-Based Authentication
-
-- [x] Use TypeScript
 
 ---
 
