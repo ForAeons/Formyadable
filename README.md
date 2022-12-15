@@ -6,7 +6,7 @@ Frontend: Vite, React.js
 Backend: Ruby on Rails
 Database: Sqlite3
 
-    ---
+---
 
 ## Basic Features (Requirements)
 
@@ -26,12 +26,12 @@ Database: Sqlite3
 
 - [x] Use TypeScript
 
-  ***
+---
 
 ### Web Application Structure
 
-    ---
+---
 
 ### Data Structure
 
-    ---
+---
