@@ -1,9 +1,12 @@
 # [Formydable](https://formydable.netlify.app)
 
-CVWO Web Application Assignment
+CVWO Web Application Assignment: a simple forum website
 
 Frontend: Vite, React.js
 Backend: Ruby on Rails
+Database: Sqlite3
+
+    ---
 
 ## Basic Features (Requirements)
 
@@ -23,6 +26,12 @@ Backend: Ruby on Rails
 
 - [x] Use TypeScript
 
+  ***
+
 ### Web Application Structure
 
+    ---
+
 ### Data Structure
+
+    ---
