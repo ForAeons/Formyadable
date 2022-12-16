@@ -3,7 +3,6 @@ import "./App.css";
 import { Grid, CssBaseline } from "@mui/material";
 import { Navbar, LoginModalWindow, Thread, Comment } from "./components";
 import { Head, Forum, Sidebar } from "./containers";
-import { useStyles } from "./style";
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);

@@ -9,7 +9,6 @@ import {
   Typography,
 } from "@mui/material";
 import { Topic } from "../../script/helper";
-import { useStyles } from "../../../src/style";
 
 import data from "./fakedata";
 
@@ -26,7 +25,7 @@ export default function Sidebar() {
               <Card>
                 <CardMedia />
                 <CardContent>
-                  <Typography variant="h5">{topic.title}</Typography>
+                  <Typography variant="h6">{topic.title}</Typography>
                   <Typography>{topic.description}</Typography>
                 </CardContent>
               </Card>
