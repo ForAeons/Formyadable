@@ -1,7 +1,12 @@
 import { useState } from "react";
 
-function App() {
-  return <></>;
-}
+export default function App() {
+  const [loggedIn, setLoggedIn] = useState(false);
 
-export default App;
+  return (
+    <div>
+      <h1>Formydable</h1>
+      <p>test</p>
+    </div>
+  );
+}
