@@ -16,6 +16,8 @@ Database: Sqlite3
 
 - [ ] Implement a category/tagging system to categorise threads so that they are easier to search for.
 
+- [ ] Set up a backend
+
 ## Additional Features (Try my best to do)
 
 - [x] Use TypeScript
