@@ -1,47 +1,47 @@
 const data = [
   {
     id: 1,
-    title: "What is Lorem Ipsum?",
+    title: "Gaming",
     description: "What is Lorem Ipsum?",
   },
   {
     id: 2,
-    title: "Pellentesque consectetur metus neque, eleifend.",
+    title: "Sports",
     description: "Letter Pellentesque consectetur metus neque, eleifend.",
   },
   {
     id: 3,
-    title: "Cras pellentesque pellentesque varius. Pellentesque.",
+    title: "Business",
     description: "Letter Cras pellentesque pellentesque varius. Pellentesque.",
   },
   {
     id: 4,
-    title: "Nunc aliquet urna nec est.",
+    title: "Anime",
     description: "Letter Nunc aliquet urna nec est.",
   },
   {
     id: 5,
-    title: "Fusce varius nulla a feugiat.",
+    title: "Art",
     description: "Letter Fusce varius nulla a feugiat.",
   },
   {
     id: 6,
-    title: "Integer eu vulputate turpis. Fusce.",
+    title: "Fashion",
     description: "Letter Integer eu vulputate turpis. Fusce.",
   },
   {
     id: 7,
-    title: "Vestibulum fringilla ut erat nec.",
+    title: "Music",
     description: "Letter Vestibulum fringilla ut erat nec.",
   },
   {
     id: 8,
-    title: "Quisque ut augue enim. Donec.",
+    title: "Programming",
     description: "Letter Quisque ut augue enim. Donec.",
   },
   {
     id: 9,
-    title: "Sed tellus odio, dictum vel.",
+    title: "Science",
     description: "Letter Sed tellus odio, dictum vel.",
   },
 ];

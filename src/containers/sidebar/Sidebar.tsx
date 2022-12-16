@@ -7,8 +7,11 @@ import {
   CardContent,
   CardActions,
   Typography,
+  Stack,
+  Box,
 } from "@mui/material";
 import { Topic } from "../../script/helper";
+import "./Sidebar.css";
 
 import data from "./fakedata";
 
@@ -17,22 +20,26 @@ export default function Sidebar() {
 
   return (
     <div>
-      <h2>Topics</h2>
-      <Grid container>
-        {data.map((topic: Topic) => {
-          return (
-            <Grid item key={topic.id} alignItems="flex-start">
-              <Card>
-                <CardMedia />
-                <CardContent>
+      <Card>
+        <h2 className="topicHeader">Topics</h2>
+        <Box className="box">
+          <Stack
+            direction="column"
+            justifyContent="flex-start"
+            alignItems="flex-start"
+            spacing={1}
+          >
+            {data.map((topic: Topic) => {
+              return (
+                <div key={topic.id} className="card">
                   <Typography variant="h6">{topic.title}</Typography>
                   <Typography>{topic.description}</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          );
-        })}
-      </Grid>
+                </div>
+              );
+            })}
+          </Stack>
+        </Box>
+      </Card>
     </div>
   );
 }
