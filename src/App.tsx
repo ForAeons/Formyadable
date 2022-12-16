@@ -7,6 +7,8 @@ export default function App() {
     <div>
       <h1>Formydable</h1>
       <p>test</p>
+      <p>Test again</p>
+      <p>bruh where is my text</p>
     </div>
   );
 }
