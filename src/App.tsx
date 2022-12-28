@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { Navbar, Sidebar, MainBody } from "./components";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import "./App.css";
 
-function App() {
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#4dccbd",
+    },
+    secondary: {
+      main: "#d6fff6",
+    },
+  },
+});
+
+const App: React.FC = () => {
+  const [login, setLogin] = useState(false);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className="flexbox-container">
+        <nav className="flexbox-item navbar">
+          <Navbar login={login} setLogin={setLogin} />
+        </nav>
+        <aside className="flexbox-item sidebar">
+          <Sidebar />
+        </aside>
+        <main className="flexbox-item main-body">
+          <MainBody />
+        </main>
+      </div>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;
