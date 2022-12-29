@@ -32,8 +32,33 @@ Database: PostgreSQL
 
 ### Web Application Structure
 
----
-
-### Data Structure
-
----
+```
+root
+└──>Navbar component
+│   └>  Logo
+│   └>  App name
+│   └>  Login button
+│
+└──>Sidebar component
+│   └>  User status (login status)
+│   └>  Displays categories of posts
+│
+└──>Main body component
+    │
+    └──>Login component
+    │   └>  Forum for logging in, mutually exclusive with content component
+    │
+    └──>Content component
+        └>  This component will be initialised with post components
+        └──>Post component
+        │   └>  Displays title
+        │   └>  Displays body
+        │   └>  Displays edited status (if creation time != updated time)
+        │   └>  Displays date of posting
+        │   └>  Displays comments (initially set display to none, until user clicks on a post to view more. Async func to fetch data of comments)
+        │
+        └──>Comment component
+           └>  Displays body
+           └>  Displays edited status (if creation time != updated time)
+           └>  Displays date of posting
+```
