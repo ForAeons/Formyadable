@@ -42,3 +42,7 @@ ul {
   flex-grow: 1;
   background-color: var(--div-mainbody-color);
 }
+
+.hidden {
+  display: none;
+}

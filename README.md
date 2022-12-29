@@ -1,4 +1,4 @@
-# Formydable
+# Just A Forum
 
 CVWO Web Application Assignment: a simple forum website
 
@@ -18,15 +18,17 @@ Database: PostgreSQL
 
 - [x] Set up a backend
 
+---
+
 ## Additional Features (Try my best to do)
 
 - [x] Use TypeScript
 
+- [x] Implement Account-Based Authentication
+
 - [ ] Implement sorting system for comments
 
 - [ ] Implement likes/dislikes
-
-- [x] Implement Account-Based Authentication
 
 ---
 

@@ -9,10 +9,19 @@ export const catergories: catergory[] = [
   "Issues",
 ];
 
+export type RouteError = {
+  statusText?: string;
+  message?: string;
+};
+
+// export type OutletContext = {
+//   jwtToken: string;
+//   setJwtToken: (token: string) => void;
+// };
+
 export type Post = {
   userId: number;
   postId: number;
-  commentId: number;
   title: string;
   body: string;
   catergory: catergory;
