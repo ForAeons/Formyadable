@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Navbar, Sidebar, Login, Alert } from "./components";
-import { Outlet, Link, useNavigate } from "react-router-dom";
+import { Navbar, Sidebar, Alert } from "./components";
+import { Outlet } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "./App.css";
 
@@ -20,13 +20,6 @@ const App: React.FC = () => {
   const [alertMessage, setAlertMessage] = useState("");
   const [display, setDisplay] = useState(false);
 
-  const navigator = useNavigate();
-
-  const logOut = (): void => {
-    setJwtToken("");
-    navigator("/login");
-  };
-
   return (
     <ThemeProvider theme={theme}>
       <div className="flexbox-container">
@@ -34,7 +27,7 @@ const App: React.FC = () => {
           <Navbar jwtToken={jwtToken} />
         </nav>
         <aside className="flexbox-item sidebar">
-          <Sidebar />
+          <Sidebar jwtToken={jwtToken} setJwtToken={setJwtToken} />
         </aside>
         <Alert message={alertMessage} display={display} />
         <Outlet
