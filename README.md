@@ -47,6 +47,9 @@ root
 │
 └──>Main body component
     │
+    └──>ALert component
+    │   └>  displays errors, stays hidden until an error occurs
+    │
     └──>Login component
     │   └>  Forum for logging in, mutually exclusive with content component
     │
@@ -69,9 +72,11 @@ root
 
 ## Credits
 
-- [Reacts Docs](https://beta.reactjs.org/learn)
-
 - Jonas Schmedtmann's [complete javascript course](https://www.udemy.com/course/the-complete-javascript-course/)
+
+- Dave Gray's [CSS course](https://www.youtube.com/watch?v=n4R2E7O-Ngo)
+
+- [Reacts Docs](https://beta.reactjs.org/learn)
 
 - [Web Dev Simplified](https://www.youtube.com/@WebDevSimplified) lectures on React Routers, Flexbox and many more
 
