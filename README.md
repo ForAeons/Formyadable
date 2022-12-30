@@ -64,3 +64,17 @@ root
            └>  Displays edited status (if creation time != updated time)
            └>  Displays date of posting
 ```
+
+---
+
+## Credits
+
+- [Reacts Docs](https://beta.reactjs.org/learn)
+
+- Jonas Schmedtmann's [complete javascript course](https://www.udemy.com/course/the-complete-javascript-course/)
+
+- [Web Dev Simplified](https://www.youtube.com/@WebDevSimplified) lectures on React Routers, Flexbox and many more
+
+- [freeCodeCamp.com](https://www.youtube.com/@freecodecamp)'s TypeScript courses
+
+- [Codemy.com](https://www.youtube.com/@Codemycom)
