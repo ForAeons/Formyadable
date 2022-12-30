@@ -18,7 +18,7 @@ export type Post = {
   id: number;
   title: string;
   body: string;
-  catergory: catergory;
+  category: catergory;
   created_at: Date;
   updated_at: Date;
 };

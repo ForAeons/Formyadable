@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { catergories, catergory } from "../../types/type";
+import { categoryConvertor } from "../../utility/helper";
 
 interface Props {
   jwtToken: string;
@@ -31,8 +32,19 @@ const Sidebar: React.FC<Props> = ({ jwtToken, setJwtToken }) => {
       )}
 
       <hr />
+      <li>
+        <h3>Categories</h3>
+      </li>
+      <hr />
+      <li>
+        <Link to="posts/latest">Latest Posts</Link>
+      </li>
       {catergories.map((cat: catergory, i) => (
-        <li key={i}>{cat}</li>
+        <li key={i}>
+          <Link to={`posts?cat=${categoryConvertor(cat)}`} key={i}>
+            {cat}
+          </Link>
+        </li>
       ))}
     </ul>
   );
