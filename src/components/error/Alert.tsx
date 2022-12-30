@@ -7,11 +7,7 @@ interface Props {
 }
 
 const Alert: React.FC<Props> = ({ display, message }) => {
-  return (
-    <div className={`flexbox-item main-body ${display ? "" : "hidden"}`}>
-      {message}
-    </div>
-  );
+  return <div className={`${display ? "" : "hidden"}`}>{message}</div>;
 };
 
 export default Alert;

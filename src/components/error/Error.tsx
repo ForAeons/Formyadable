@@ -6,7 +6,7 @@ const Error: React.FC = () => {
   const error = useRouteError() as RouteError;
   return (
     <div>
-      <h1 className="mt-3">Oops!</h1>
+      <h1>Oops!</h1>
       <p>Sorry, an unexpected error has occured</p>
       <p>
         <em>{error.statusText || error.message}</em>

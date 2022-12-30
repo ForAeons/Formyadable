@@ -1,12 +1,11 @@
 // import React from "react";
 
-export type catergory = "Discussion" | "Question" | "Idea" | "Issues";
+export type catergory = "Discussion" | "Theorycrafting" | "Fan Art";
 
 export const catergories: catergory[] = [
   "Discussion",
-  "Question",
-  "Idea",
-  "Issues",
+  "Theorycrafting",
+  "Fan Art",
 ];
 
 export type RouteError = {
@@ -14,31 +13,26 @@ export type RouteError = {
   message?: string;
 };
 
-// export type OutletContext = {
-//   jwtToken: string;
-//   setJwtToken: (token: string) => void;
-// };
-
 export type Post = {
-  userId: number;
-  postId: number;
+  user_id: number;
+  id: number;
   title: string;
   body: string;
   catergory: catergory;
-  createDate: Date;
-  updateDate: Date;
+  created_at: Date;
+  updated_at: Date;
 };
 
 export type Comment = {
-  userId: number;
-  postId: number;
-  commentId: number;
+  user_id: number;
+  post_id: number;
+  id: number;
   body: string;
-  createDate: Date;
-  updateDate: Date;
+  created_at: Date;
+  update_at: Date;
 };
 
 export type User = {
-  userId: number;
+  id: number;
   userName: string;
 };

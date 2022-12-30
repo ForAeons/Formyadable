@@ -2,7 +2,7 @@
 
 CVWO Web Application Assignment: a simple forum website
 
-Frontend: React.js
+Frontend: React.js, MUI
 Backend: Ruby on Rails
 Database: PostgreSQL
 
@@ -12,9 +12,9 @@ Database: PostgreSQL
 
 - [x] Implement a simple authentication system where users are authenticated solely by their user name (a system that is similar to when2meet.com).
 
-- [x] Implement the ability to perform basic CRUD operations for forum threads and comments.
+- [x] Implement the ability to perform basic CRUD operations for forum threads and comments. (Backend only so far)
 
-- [x] Implement a category/tagging system to categorise threads so that they are easier to search for.
+- [x] Implement a category/tagging system to categorise threads so that they are easier to search for. (Backend only so far)
 
 - [x] Set up a backend
 

@@ -23,6 +23,7 @@ ul {
 .flexbox-item {
   padding: 10px;
   margin: 10px;
+  flex-wrap: wrap;
 }
 
 .navbar {

@@ -29,15 +29,17 @@ const App: React.FC = () => {
         <aside className="flexbox-item sidebar">
           <Sidebar jwtToken={jwtToken} setJwtToken={setJwtToken} />
         </aside>
-        <Alert message={alertMessage} display={display} />
-        <Outlet
-          context={{
-            jwtToken,
-            setJwtToken,
-            setAlertMessage,
-            setDisplay,
-          }}
-        />
+        <div className="flexbox-item main-body">
+          <Alert message={alertMessage} display={display} />
+          <Outlet
+            context={{
+              jwtToken,
+              setJwtToken,
+              setAlertMessage,
+              setDisplay,
+            }}
+          />
+        </div>
       </div>
     </ThemeProvider>
   );
