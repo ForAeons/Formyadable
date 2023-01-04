@@ -18,13 +18,13 @@ const NavMenu: React.FC<Props> = ({ isMobile }) => {
       <div className="flex flex-col items-start w-full px-3 gap-1">
         <Link
           to="/signup"
-          className="font-sans text-lg text-slate-700 hover:text-slate-500 "
+          className="font-Raleway font-bold tracking-wide text-lg text-slate-700 hover:text-slate-500 "
         >
           Sign Up
         </Link>
         <Link
           to="/login"
-          className="font-sans text-lg text-slate-700 hover:text-slate-500 "
+          className="font-Raleway font-bold tracking-wide text-lg text-slate-700 hover:text-slate-500 "
         >
           Login
         </Link>
@@ -36,7 +36,7 @@ const NavMenu: React.FC<Props> = ({ isMobile }) => {
             <Link
               key={i}
               to={`posts?cat=${categoryConvertor(cat)}`}
-              className="font-sans text-lg text-slate-700 hover:text-slate-500 "
+              className="font-Raleway font-bold tracking-wide text-lg text-slate-700 hover:text-slate-500 "
             >
               {cat}
             </Link>

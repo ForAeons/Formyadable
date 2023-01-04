@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { ChatBubbleOvalLeftEllipsisIcon } from "@heroicons/react/24/solid";
-
-import { categories } from "../types/type";
-import categoryConvertor from "../utility/categoryConvertor";
 import MobileMenu from "./MobileMenu";
 import NavMenu from "./NavMenu";
 
@@ -11,14 +7,14 @@ const Navbar: React.FC = () => {
   const [openMenu, setOpenMenu] = useState(false);
 
   return (
-    <div className="flex flex-col gap-6">
-      <nav className="sm:h-screen flex sm:flex-col flex-row-reverse sm:justify-start justify-between items-center sm:p-4 p-2 bg-slate-200 shadow-md sm:shadow-xl sm:hover:shadow-2xl gap-4 sm:sticky sm:top-0 2xl:m-6 2xl:rounded-lg 2xl:h-[calc(100vh-3rem)] 2xl:top-6 relative">
+    <div className="flex flex-col gap-6 sm:sticky sm:top-0">
+      <nav className="sm:h-screen flex sm:flex-col flex-row-reverse sm:justify-start justify-between items-center sm:p-4 py-2 px-4 bg-slate-200 shadow-md sm:shadow-xl sm:hover:shadow-2xl gap-4  2xl:m-6 2xl:rounded-lg 2xl:h-[calc(100vh-3rem)] 2xl:top-6">
         {/* Logo */}
         <ChatBubbleOvalLeftEllipsisIcon className="h-8 w-8 sm:h-[3px]2 sm:w-12 text-slate-700 " />
 
         {/* App Name */}
-        <h1 className="text-2xl font-bold text-slate-700 whitespace-nowrap">
-          Just Forum
+        <h1 className="font-Raleway text-2xl tracking-widest font-extrabold text-slate-700 whitespace-nowrap">
+          JUST FORUM
         </h1>
 
         <hr className="rounded-full border-t-2 w-[100%] border-slate-300 hidden sm:block" />

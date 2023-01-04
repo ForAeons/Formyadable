@@ -5,8 +5,10 @@ const Post: React.FC = () => {
     <div className="flex flex-col mx-3">
       {/* <!-- title section --> */}
       <div className="justify-left flex flex-row items-center gap-4 px-6 py-3">
-        <div className="rounded-full bg-slate-600 p-4"></div>
-        <h3 className="text-2xl font-bold text-slate-700">Interesting Title</h3>
+        <div className="rounded-full bg-slate-300 shadow-md p-4"></div>
+        <h3 className="text-2xl font-bold text-slate-700 font-Raleway tracking-wide">
+          Interesting Title
+        </h3>
       </div>
       <div className="flex min-h-[20%] min-w-[40%] flex-col justify-start gap-3 rounded-2xl bg-slate-200 p-6 shadow-xl hover:shadow-2xl">
         {/* <!-- Body --> */}

@@ -1,4 +1,9 @@
 export { default as Post } from "./Post";
+export { default as PostLoading } from "./PostLoading";
+export { default as PostForm } from "./PostForm";
+export { default as Comment } from "./Comment";
+export { default as CommentLoading } from "./CommentLoading";
+export { default as CommentForm } from "./CommentForm";
 export { default as Navbar } from "./Navbar";
 export { default as SearchBar } from "./SearchBar";
 export { default as MobileMenu } from "./MobileMenu";

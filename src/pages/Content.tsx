@@ -1,5 +1,12 @@
 import React from "react";
-import { Post, Navbar, SearchBar } from "../components";
+import {
+  Post,
+  PostLoading,
+  Comment,
+  CommentLoading,
+  Navbar,
+  SearchBar,
+} from "../components";
 
 const Content: React.FC = () => {
   return (
@@ -7,7 +14,10 @@ const Content: React.FC = () => {
       <Navbar />
       <div className="flex h-screen w-screen flex-row flex-wrap content-start items-center justify-center gap-4 py-3 mr-6 ">
         <SearchBar />
+        <PostLoading />
         <Post />
+        <Comment />
+        <CommentLoading />
         <Post />
         <Post />
         <Post />

@@ -10,7 +10,7 @@ const SearchBar: React.FC = () => {
       <input
         type="text"
         placeholder="What's on your mind?"
-        className="rounded-md font-semibold flex-grow px-3 text-slate-600 bg-transparent"
+        className="rounded-md font-semibold flex-grow px-3 text-slate-600 bg-transparent font-Raleway tracking-wide"
       />
       <button>
         <MagnifyingGlassIcon className="h-6 w-6 text-slate-700" />
