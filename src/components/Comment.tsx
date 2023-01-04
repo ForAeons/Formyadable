@@ -32,7 +32,7 @@ const Comment: React.FC = () => {
       </div>
 
       {/* <!-- Post status --> */}
-      <div className="w-f flex flex-row flex-nowrap items-center justify-between px-6 py-3">
+      <div className="w-f flex flex-row flex-nowrap items-center justify-between mx-6 my-3">
         <h4 className="font-sans text-xs text-slate-500">
           Commented 1 day ago
         </h4>

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { UserCircleIcon } from "@heroicons/react/24/solid";
 
 import { categories } from "../types/type";
 import categoryConvertor from "../utility/categoryConvertor";
@@ -16,6 +17,7 @@ const NavMenu: React.FC<Props> = ({ isMobile }) => {
       } h-[100%] flex-col items-center justify-start gap-4`}
     >
       <div className="flex flex-col items-start w-full px-3 gap-1">
+        <UserCircleIcon className="h-12 w-12 sm:h-[3px]2 sm:w-12 text-slate-700" />
         <Link
           to="/signup"
           className="font-Raleway font-bold tracking-wide text-lg text-slate-700 hover:text-slate-500 "

@@ -2,22 +2,26 @@ import React from "react";
 import {
   Post,
   PostLoading,
+  PostForm,
   Comment,
   CommentLoading,
+  CommentForm,
   Navbar,
   SearchBar,
 } from "../components";
 
 const Content: React.FC = () => {
   return (
-    <div className="min-h-screen scroll-smooth overflow-y-scroll overflow-x-hidden flex flex-col sm:flex-row flex:start sm:justify-between gap-6 relative 2xl:w-[1535px] 2xl:mx-auto 2xl:px-3 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-neutral-200 hover:scrollbar-thumb-slate-300">
+    <div className="scroll-smooth flex flex-col sm:flex-row  sm:justify-between gap-6 2xl:w-[1535px] 2xl:mx-auto 2xl:px-3">
       <Navbar />
-      <div className="flex h-screen w-screen flex-row flex-wrap content-start items-center justify-center gap-4 py-3 mr-6 ">
+      <div className="flex flex-row flex-wrap content-start items-center justify-center gap-4 py-3 ">
         <SearchBar />
-        <PostLoading />
         <Post />
+        <PostLoading />
+        <PostForm />
         <Comment />
         <CommentLoading />
+        <CommentForm />
         <Post />
         <Post />
         <Post />

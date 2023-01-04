@@ -10,7 +10,7 @@ const Post: React.FC = () => {
           Interesting Title
         </h3>
       </div>
-      <div className="flex min-h-[20%] min-w-[40%] flex-col justify-start gap-3 rounded-2xl bg-slate-200 p-6 shadow-xl hover:shadow-2xl">
+      <div className="flex min-h-[20%] min-w-[40%] flex-col justify-start gap-3 rounded-2xl bg-slate-200 p-6 shadow-lg hover:shadow-xl">
         {/* <!-- Body --> */}
         <div className="w-f font-sans text-lg text-slate-600">
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Velit modi
@@ -38,7 +38,7 @@ const Post: React.FC = () => {
       </div>
 
       {/* <!-- Post status --> */}
-      <div className="w-f flex flex-row flex-nowrap items-center justify-between px-6 py-3">
+      <div className="w-f flex flex-row flex-nowrap items-center justify-between mx-6 my-3">
         <h4 className="font-sans text-xs text-slate-500">Posted 1 day ago</h4>
         <h4 className="font-sans text-xs text-slate-500">Edited 2 hours ago</h4>
       </div>

@@ -6,5 +6,5 @@ module.exports = {
       Raleway: ["Raleway", "sans-serif"],
     },
   },
-  plugins: [require("tailwind-scrollbar")],
+  plugins: [],
 };

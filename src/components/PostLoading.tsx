@@ -6,14 +6,14 @@ const PostLoading: React.FC = () => {
       {/* Fake title section */}
       <div className="justify-left opacity-75 w-[100%] flex flex-row items-center gap-4 px-6 py-3 ">
         <div className="rounded-full bg-slate-300 shadow-md p-4"></div>
-        <div className=" bg-slate-400 py-3 px-[150] rounded-md w-[50%]"></div>
+        <div className=" bg-slate-300 py-3 px-[150] rounded-md w-[50%]"></div>
       </div>
-      <div className="flex min-h-[20%] w-[100%] flex-col justify-start gap-3 rounded-2xl bg-slate-200 p-6 shadow-xl hover:shadow-2xl ">
+      <div className="flex min-h-[20%] w-[100%] flex-col justify-start gap-3 rounded-2xl bg-slate-100 p-6 shadow-lg hover:shadow-xl ">
         {/* Fake body */}
-        <div className="bg-slate-400 opacity-75 py-3 ml-12 rounded-md"></div>
-        <div className="bg-slate-400 opacity-75 py-3 rounded-md"></div>
-        <div className="bg-slate-400 opacity-75 py-3 rounded-md"></div>
-        <div className="bg-slate-400 opacity-75 py-3 max-w-[30%] rounded-md"></div>
+        <div className="bg-slate-300 py-3 ml-12 rounded-md"></div>
+        <div className="bg-slate-300 py-3 rounded-md"></div>
+        <div className="bg-slate-300 py-3 rounded-md"></div>
+        <div className="bg-slate-300 py-3 max-w-[30%] rounded-md"></div>
         {/* Hr */}
         <hr className="rounded-full border-t-2 border-slate-300" />
         {/* Fake utilities */}
