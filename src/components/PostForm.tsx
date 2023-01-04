@@ -2,7 +2,7 @@ import React from "react";
 
 const PostForm: React.FC = () => {
   return (
-    <form className="flex flex-col w-full mx-3 bg-slate-300 rounded-3xl p-6 shadow-lg  hover:shadow-xl gap-3">
+    <form className="flex flex-col w-full mx-3 bg-slate-200 rounded-3xl p-6 shadow-lg  hover:shadow-xl gap-3">
       {/* <!-- title section --> */}
       <label
         htmlFor="newPost"
@@ -49,7 +49,7 @@ const PostForm: React.FC = () => {
           Post
         </button>
         {/* <!-- Post status --> */}
-        <h4 className="font-sans font-bold text-xs text-slate-500">31/300</h4>
+        <h4 className="font-sans font-bold text-xs text-slate-500">31/5000</h4>
       </div>
     </form>
   );

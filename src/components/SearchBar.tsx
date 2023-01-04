@@ -5,7 +5,7 @@ const SearchBar: React.FC = () => {
   return (
     <form
       id="top"
-      className="flex flex-row justify-between content-center bg-slate-200 py-2 px-4 rounded-full shadow-md hover:shadow-lg w-[70%] sm:mt-6 gap-2 scroll-m-6"
+      className="flex flex-row justify-between content-center bg-slate-200 py-2 px-4 rounded-full shadow-md hover:shadow-lg w-[70%] max-w-[500px] min-w-[270px] sm:mt-6 gap-2 scroll-m-6"
     >
       <input
         type="text"
