@@ -2,10 +2,15 @@
 module.exports = {
   content: ["./index.html", "./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    // screens: {
-    //   "2xl": { raw: "(min-width: 800px)" },
-    //   // => @media (min-height: 800px) { ... }
-    // },
+    keyframes: {
+      "open-menu": {
+        "0%": { transform: "scaleX(0)" },
+        "100%": { transform: "scaleX(100%)" },
+      },
+    },
+    animation: {
+      "open-menu": "open-menu 0.2s ease-in-out forwards",
+    },
   },
   plugins: [require("tailwind-scrollbar")],
 };
