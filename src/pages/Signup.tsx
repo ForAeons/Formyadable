@@ -7,17 +7,17 @@ const Signup: React.FC = () => {
         <h1 className="font-bold text-3xl text-slate-700">Sign Up</h1>
         <input
           type="text"
-          className="font-semibold text-xl dark:text-slate-400 px-5 py-1 rounded-md shadow-md border-none"
+          className="font-semibold text-xl dark:text-slate-400 px-5 py-1 rounded-md shadow-md "
           placeholder="Username"
         ></input>
         <input
           type="password"
-          className="font-semibold text-xl dark:text-slate-400 px-5 py-1 rounded-md shadow-md border-none"
+          className="font-semibold text-xl dark:text-slate-400 px-5 py-1 rounded-md shadow-md"
           placeholder="Password"
         ></input>
         <input
           type="password"
-          className="font-semibold text-xl dark:text-slate-400 px-5 py-1 rounded-md shadow-md border-none"
+          className="font-semibold text-xl dark:text-slate-400 px-5 py-1 rounded-md shadow-md"
           placeholder="Confirm Password"
         ></input>
         <input

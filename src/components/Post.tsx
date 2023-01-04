@@ -2,7 +2,7 @@ import React from "react";
 
 const Post: React.FC = () => {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col mx-3">
       {/* <!-- title section --> */}
       <div className="justify-left flex flex-row items-center gap-4 px-6 py-3">
         <div className="rounded-full bg-slate-600 p-4"></div>

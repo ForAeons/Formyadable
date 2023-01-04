@@ -7,5 +7,5 @@ module.exports = {
     //   // => @media (min-height: 800px) { ... }
     // },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar")],
 };
