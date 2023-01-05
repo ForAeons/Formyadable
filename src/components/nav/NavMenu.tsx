@@ -2,8 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
 
-import { categories } from "../types/type";
-import categoryConvertor from "../utility/categoryConvertor";
+import { categories } from "../../types/type";
+import categoryConvertor from "../../utility/categoryConvertor";
 
 interface Props {
   isMobile: boolean;

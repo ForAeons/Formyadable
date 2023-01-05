@@ -1,4 +1,5 @@
 import React from "react";
+import { BtnLike, BtnComment, BtnEdit } from "../.././components";
 
 const Post: React.FC = () => {
   return (
@@ -10,6 +11,7 @@ const Post: React.FC = () => {
           Interesting Title
         </h3>
       </div>
+
       <div className="flex min-h-[20%] min-w-[40%] flex-col justify-start gap-3 rounded-2xl bg-slate-200 p-6 shadow-lg hover:shadow-xl">
         {/* <!-- Body --> */}
         <div className="w-f font-sans text-lg text-slate-600">
@@ -21,19 +23,15 @@ const Post: React.FC = () => {
           doloremque maiores voluptatum laboriosam. Totam in, molestiae dolore
           id repudiandae rem tenetur rerum recusandae accusantium officia.
         </div>
+
         {/* <!-- Hr --> */}
         <hr className="rounded-full border-t-2 border-slate-300" />
+
         {/* <!-- utilities --> */}
         <div className="flex flex-row justify-between">
-          <button className="rounded-md bg-blue-400 px-5 py-1 text-sm font-bold text-slate-600 shadow-md hover:bg-blue-300">
-            Like
-          </button>
-          <div className="rounded-md bg-slate-300 px-5 py-1 text-sm font-bold text-slate-600 shadow-md">
-            <p>21 Comments</p>
-          </div>
-          <button className="rounded-md bg-slate-400 px-5 py-1 text-sm font-bold text-slate-600 shadow-md hover:bg-slate-300">
-            Edit
-          </button>
+          <BtnLike />
+          <BtnComment />
+          <BtnEdit />
         </div>
       </div>
 
