@@ -8,6 +8,7 @@ import {
   CommentForm,
   Navbar,
   SearchBar,
+  BtnCreatePost,
 } from "../components";
 
 const Content: React.FC = () => {
@@ -17,9 +18,7 @@ const Content: React.FC = () => {
       <div className="flex flex-row flex-wrap content-start items-center justify-center gap-4 my-3 ">
         <div className="flex w-full flex-row justify-between content-center mx-3 gap-3">
           <SearchBar />
-          <button className="rounded-lg sm:mt-6 bg-emerald-400 py-1 px-4 shadow-md text-sm font-bold text-slate-800">
-            Create Post
-          </button>
+          <BtnCreatePost />
         </div>
         <Post />
         <PostLoading />

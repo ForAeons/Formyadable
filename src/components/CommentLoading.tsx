@@ -16,7 +16,7 @@ const CommentLoading: React.FC = () => {
         <hr className="rounded-full border-t-2 border-slate-300" />
         {/* Fake utilities */}
         <div className="flex flex-row justify-between">
-          <div className="rounded-md opacity-75 bg-red-400 py-3  shadow-md px-8"></div>
+          <div className="rounded-md opacity-75 bg-blue-400 py-3  shadow-md px-8"></div>
           <div className="rounded-md opacity-75 bg-slate-300 px-12 py-3 shadow-md"></div>
           <div className="rounded-md opacity-75 bg-slate-400 px-8 py-3 shadow-md "></div>
         </div>

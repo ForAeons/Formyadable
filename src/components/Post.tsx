@@ -25,7 +25,7 @@ const Post: React.FC = () => {
         <hr className="rounded-full border-t-2 border-slate-300" />
         {/* <!-- utilities --> */}
         <div className="flex flex-row justify-between">
-          <button className="rounded-md bg-red-400 px-5 py-1 text-sm font-bold text-slate-600 shadow-md hover:bg-red-300">
+          <button className="rounded-md bg-blue-400 px-5 py-1 text-sm font-bold text-slate-600 shadow-md hover:bg-blue-300">
             Like
           </button>
           <div className="rounded-md bg-slate-300 px-5 py-1 text-sm font-bold text-slate-600 shadow-md">

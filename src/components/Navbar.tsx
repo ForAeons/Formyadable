@@ -19,6 +19,7 @@ const Navbar: React.FC = () => {
 
         <hr className="rounded-full border-t-2 w-[100%] border-slate-300 hidden sm:block" />
 
+        {/* Renders Hamburger button depending on state */}
         {!openMenu && (
           <button
             id="hamburger-button"

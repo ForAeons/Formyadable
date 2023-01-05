@@ -47,7 +47,7 @@ const NavMenu: React.FC<Props> = ({ isMobile }) => {
       </div>
       <a
         href="#top"
-        className="rounded-md bg-red-400 px-5 py-1 text-sm font-bold text-slate-600 shadow-md hover:bg-red-300 mt-auto"
+        className="rounded-md bg-slate-400 px-5 py-1 text-sm font-bold text-slate-600 shadow-md hover:bg-red-300 mt-auto"
       >
         Back to Top
       </a>
