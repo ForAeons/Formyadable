@@ -1,9 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
+import axios from "axios";
+
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
+import App from "./App";
 import { Content, Login, Signup, PageNotFound } from "./pages";
+import { BACKEND_BASE_URL } from "./utility/global";
+
+// specify config default baseURL
+axios.defaults.baseURL = BACKEND_BASE_URL;
 
 const router = createBrowserRouter([
   {
@@ -20,7 +26,7 @@ const router = createBrowserRouter([
         element: <Signup />,
       },
       {
-        path: "/post/*",
+        path: "/posts/*",
         element: <Content />,
       },
       {

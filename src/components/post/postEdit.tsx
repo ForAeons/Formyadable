@@ -1,28 +1,40 @@
 import React, { useState } from "react";
 import { XCircleIcon } from "@heroicons/react/24/solid";
 
-import { createPost } from "../../utility/postApi";
-import { category, TPostApiResponse } from "../../types/type";
+import { updatePost } from "../../utility/postApi";
+import { category, TPostApiResponse, TPost } from "../../types/type";
 
 interface Props {
-  setCreatePost: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
   posts: TPostApiResponse[];
   setPosts: React.Dispatch<React.SetStateAction<TPostApiResponse[]>>;
+  thisPost: TPost;
 }
 
-const PostForm: React.FC<Props> = ({ setCreatePost, posts, setPosts }) => {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [category, setCategory] = useState<category>("");
+const PostEdit: React.FC<Props> = ({
+  setIsEditing,
+  posts,
+  setPosts,
+  thisPost,
+}) => {
+  const [title, setTitle] = useState(thisPost.title);
+  const [content, setContent] = useState(thisPost.content);
+  const [category, setCategory] = useState(thisPost.category);
   const [message, setMessage] = useState("");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
 
-    createPost({ title: title, content: content, category: "theorycrafting" })
+    updatePost({
+      title: title,
+      content: content,
+      category: category,
+      id: thisPost.id,
+    })
       .then((result: TPostApiResponse) => {
+        setMessage("Post edited!");
         setPosts([result, ...posts]);
-        setCreatePost(false);
+        setIsEditing(false);
       })
       .catch((err) => {
         console.log(err);
@@ -50,7 +62,7 @@ const PostForm: React.FC<Props> = ({ setCreatePost, posts, setPosts }) => {
           Your Title
         </label>
         {/* Close button */}
-        <button onClick={() => setCreatePost(false)}>
+        <button onClick={() => setIsEditing(false)}>
           <XCircleIcon className="h-9 w-9  hover:text-slate-500 text-slate-600 self-center " />
         </button>
       </div>
@@ -63,7 +75,7 @@ const PostForm: React.FC<Props> = ({ setCreatePost, posts, setPosts }) => {
           rows={3}
           onChange={(e) => setTitle(e.target.value)}
         >
-          {""}
+          {title}
         </textarea>
       </div>
       {/* <!-- Post status --> */}
@@ -85,7 +97,7 @@ const PostForm: React.FC<Props> = ({ setCreatePost, posts, setPosts }) => {
           rows={9}
           onChange={(e) => setContent(e.target.value)}
         >
-          {""}
+          {content}
         </textarea>
       </div>
       {/* <!-- Hr --> */}
@@ -105,4 +117,4 @@ const PostForm: React.FC<Props> = ({ setCreatePost, posts, setPosts }) => {
   );
 };
 
-export default PostForm;
+export default PostEdit;

@@ -1,6 +1,7 @@
 export { default as Post } from "./post/Post";
 export { default as PostLoading } from "./post/PostLoading";
 export { default as PostForm } from "./post/PostForm";
+export { default as PostEdit } from "./post/postEdit";
 export { default as Comment } from "./comment/Comment";
 export { default as CommentLoading } from "./comment/CommentLoading";
 export { default as CommentForm } from "./comment/CommentForm";
@@ -11,4 +12,5 @@ export { default as NavMenu } from "./nav/NavMenu";
 export { default as BtnCreatePost } from "./button/BtnCreatePost";
 export { default as BtnLike } from "./button/BtnLike";
 export { default as BtnComment } from "./button/BtnComment";
-export { default as BtnEdit } from "./button/BtnLike";
+export { default as BtnEdit } from "./button/BtnEdit";
+export { default as BtnDelete } from "./button/BtnDelete";
