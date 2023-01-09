@@ -16,6 +16,7 @@ const CommentContainer: React.FC<Props> = ({
 }) => {
   const [isEditing, setIsEditing] = useState(false);
 
+  // renders different component based on editing status
   if (isEditing)
     return (
       <CommentForm
