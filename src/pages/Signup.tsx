@@ -20,8 +20,15 @@ const Signup: React.FC = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
 
+    // password check
     if (password !== passwordC) {
       setMessage("Both passwords must be the same!");
+      return;
+    }
+
+    // username check
+    if (userName.length < 6 || userName.length > 30) {
+      setMessage("Username must be between 6 and 30 characters long!");
       return;
     }
 
@@ -31,7 +38,7 @@ const Signup: React.FC = () => {
         setMessage("Account successfully created!\nRedirecting to home page.");
         setTimeout(() => {
           navigator("/");
-        }, 3000);
+        }, 2000);
       })
       .catch((err) => {
         console.log(err);

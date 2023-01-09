@@ -8,6 +8,7 @@
 
 Frontend: React.js, ~~MUI~~ Tailwind
 
+- Installed locally: run: `npm run dev` to start
 - Hosted by Netlify
 
 Backend: Ruby on Rails  
@@ -17,17 +18,18 @@ Database: PostgreSQL
 
 ---
 
-### Todo list
+## Todo list
 
-## User
+### User
 
 - [x] Sign up
 - [x] Login
 - [x] Staying logged in
 - [ ] Edit bio
 - [ ] Edit username / password
+- [ ] Error handling for taken username
 
-## Post
+### Post
 
 - [x] Get all post
 - [ ] Get post by category
@@ -35,22 +37,22 @@ Database: PostgreSQL
 - [x] create post (Pending adding category)
 - [x] edit post (Pending adding category)
 - [x] Delete post
+- [ ] Fetch more posts function
 
-## Comment
+### Comment
 
 - [x] Get comment by post id
 - [x] Post comments
 - [x] Edit comments
 - [x] Delete comments
+- [ ] Fetch more comments function
 
-## General
+### General
 
 - [ ] Code refactoring
-- [ ] Fetch more comments function
-- [ ] Fetch more posts function
 - [ ] Better error handling, displaying human readable errors
 
-## Potential Add Ons
+### Potential Add Ons
 
 - [ ] Like system
 - [ ] Comment reply system
