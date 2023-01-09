@@ -11,8 +11,8 @@ interface Props {
   comment: TCommentApiResponse;
   comments: TCommentApiResponse[];
   setComments: React.Dispatch<React.SetStateAction<TCommentApiResponse[]>>;
-  isEditing: boolean;
-  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+  isEditingComment: boolean;
+  setIsEditingComment: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface Context {
@@ -23,8 +23,8 @@ const Comment: React.FC<Props> = ({
   comment,
   comments,
   setComments,
-  isEditing,
-  setIsEditing,
+  isEditingComment,
+  setIsEditingComment,
 }) => {
   const { user }: Context = useOutletContext();
 
@@ -69,7 +69,7 @@ const Comment: React.FC<Props> = ({
             {/* <!-- Hr --> */}
             <hr className="rounded-full border-t-2 border-slate-300" />
             <div className="flex flex-row justify-between">
-              <BtnEdit handleClick={() => setIsEditing(true)} />
+              <BtnEdit handleClick={() => setIsEditingComment(true)} />
               <BtnDelete handleClick={handleDeleteComment(comment.id)} />
             </div>
           </>

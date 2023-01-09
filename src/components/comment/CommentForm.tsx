@@ -9,8 +9,8 @@ interface Props {
   thisComment: TCommentApiResponse;
   setComments: React.Dispatch<React.SetStateAction<TCommentApiResponse[]>>;
   comments: TCommentApiResponse[];
-  isEditing?: boolean;
-  setIsEditing?: React.Dispatch<React.SetStateAction<boolean>>;
+  isEditingComment?: boolean;
+  setIsEditingComment?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const CommentForm: React.FC<Props> = ({
@@ -18,8 +18,8 @@ const CommentForm: React.FC<Props> = ({
   thisComment,
   comments,
   setComments,
-  isEditing,
-  setIsEditing,
+  isEditingComment,
+  setIsEditingComment,
 }) => {
   const [content, setContent] = useState("");
   const [message, setMessage] = useState("");
@@ -32,7 +32,7 @@ const CommentForm: React.FC<Props> = ({
     console.log("Close btn clicked");
 
     // checks for undefined
-    if (setIsEditing) setIsEditing(false);
+    if (setIsEditingComment) setIsEditingComment(false);
   };
 
   const handleEdit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -51,7 +51,7 @@ const CommentForm: React.FC<Props> = ({
             (eachComment) => eachComment.id !== thisComment.id
           ),
         ]);
-        if (setIsEditing) setIsEditing(false);
+        if (setIsEditingComment) setIsEditingComment(false);
       })
       .catch((err) => {
         console.log(err);
@@ -100,10 +100,10 @@ const CommentForm: React.FC<Props> = ({
           className="text-2xl px-6 font-bold text-slate-700 font-Raleway tracking-wide"
         >
           {/* Display different prompt text based on mode */}
-          {`${isEditing ? "Edit your comment" : "New comment"}`}
+          {`${isEditingComment ? "Edit your comment" : "New comment"}`}
         </label>
         {/* only displays close btn when in edit mode */}
-        {isEditing && <BtnClose handleClick={handleClose} />}
+        {isEditingComment && <BtnClose handleClick={handleClose} />}
       </div>
       <div className="justify-left flex flex-row justify-between items-center gap-4 px-6 py-3 rounded-2xl shadow-md bg-slate-50">
         <textarea
@@ -121,7 +121,7 @@ const CommentForm: React.FC<Props> = ({
       <hr className="rounded-full border-t-2 border-transparent" />
       <div className="flex flex-row justify-between">
         {/* displays different button based whether creating new comment or editing existing one */}
-        {isEditing ? (
+        {isEditingComment ? (
           <BtnEdit handleClick={handleEdit} />
         ) : (
           <BtnPost handleClick={handleSubmit} />

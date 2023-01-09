@@ -14,18 +14,18 @@ const CommentContainer: React.FC<Props> = ({
   comments,
   setComments,
 }) => {
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditingComment, setIsEditingComment] = useState(false);
 
-  // renders different component based on editing status
-  if (isEditing)
+  // renders different component based on editingComment status
+  if (isEditingComment)
     return (
       <CommentForm
         postID={comment.post_id}
         thisComment={comment}
         comments={comments}
         setComments={setComments}
-        isEditing={isEditing}
-        setIsEditing={setIsEditing}
+        isEditingComment={isEditingComment}
+        setIsEditingComment={setIsEditingComment}
       />
     );
   else
@@ -34,8 +34,8 @@ const CommentContainer: React.FC<Props> = ({
         comment={comment}
         comments={comments}
         setComments={setComments}
-        isEditing={isEditing}
-        setIsEditing={setIsEditing}
+        isEditingComment={isEditingComment}
+        setIsEditingComment={setIsEditingComment}
       />
     );
 };
