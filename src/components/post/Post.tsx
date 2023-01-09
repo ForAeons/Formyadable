@@ -11,12 +11,14 @@ import {
   CommentForm,
   CommentLoading,
 } from "../.././components";
+import { CommentContainer } from "../../containers";
 import iconTextGenerator from "../../utility/iconTextGeneator";
 import { creationDateGen, updateDateGen } from "../../utility/date";
 import {
   TUserApiResponse,
   TPostApiResponse,
   TCommentApiResponse,
+  emptyComment,
 } from "../../types/type";
 import { getCommentsByPostID } from "../../utility/commentApi";
 import { deletePost } from "../../utility/postApi";
@@ -72,11 +74,11 @@ const Post: React.FC<Props> = ({ post, posts, setPosts }) => {
         })
         .catch((err) => {
           console.log(err);
-          setIsFetching(false);
         });
     };
   };
 
+  // Editing mode will return PostForm
   if (isEditing) {
     return (
       <PostEdit
@@ -91,6 +93,7 @@ const Post: React.FC<Props> = ({ post, posts, setPosts }) => {
         setIsEditing={setIsEditing}
       />
     );
+    // otherwise will return normal post
   } else
     return (
       <div className="flex flex-col mx-3 w-full items-center">
@@ -157,14 +160,19 @@ const Post: React.FC<Props> = ({ post, posts, setPosts }) => {
               .fill(1)
               .map((_) => <CommentLoading />)
           ) : (
-            <>
+            <div className="flex flex-row flex-wrap content-start items-center justify-center gap-4 my-3 ">
               <CommentForm
+                thisComment={emptyComment}
                 postID={post.id}
                 setComments={setComments}
                 comments={comments}
               />
               {comments.map((comment) => (
-                <Comment comment={comment} />
+                <CommentContainer
+                  comment={comment}
+                  comments={comments}
+                  setComments={setComments}
+                />
               ))}
               {/* only show the show more comments button  */}
               {comments.length > 0 && (
@@ -178,7 +186,7 @@ const Post: React.FC<Props> = ({ post, posts, setPosts }) => {
                   Show more comments
                 </button>
               )}
-            </>
+            </div>
           ))}
       </div>
     );

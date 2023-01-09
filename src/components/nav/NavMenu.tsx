@@ -3,7 +3,7 @@ import { Link, useOutletContext } from "react-router-dom";
 import {} from "react-router-dom";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
 
-import { categories, emptyUser } from "../../types/type";
+import { categories, nullUser } from "../../types/type";
 import categoryConvertor from "../../utility/categoryConvertor";
 import iconTextGenerator from "../../utility/iconTextGeneator";
 
@@ -36,7 +36,7 @@ const NavMenu: React.FC<Props> = ({ isMobile }) => {
             <Link
               to="/"
               className="font-Raleway font-bold tracking-wide text-lg text-slate-600 hover:text-red-500 "
-              onClick={() => setUser(emptyUser)}
+              onClick={() => setUser(nullUser)}
             >
               Log Out
             </Link>

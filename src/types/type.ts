@@ -9,15 +9,15 @@ export const categories: category[] = [
   "Fan Art",
 ];
 
-export type TError = {
-  error: string;
-};
+// export type TError = {
+//   error: string;
+// };
 
-export function isError(
-  toBeDetermined: TError | any
-): toBeDetermined is TError {
-  return !!(toBeDetermined as TError)?.error;
-}
+// export function isError(
+//   toBeDetermined: TError | any
+// ): toBeDetermined is TError {
+//   return !!(toBeDetermined as TError)?.error;
+// }
 
 export type TPost = {
   id?: number;
@@ -70,7 +70,7 @@ export type TUserApiResponse = {
   token: string;
 };
 
-export const emptyUser = {
+export const nullUser = {
   user: {
     id: -1,
     username: "",
@@ -79,6 +79,16 @@ export const emptyUser = {
     updated_at: "",
   },
   token: "",
+};
+
+export const emptyComment = {
+  author: "",
+  id: -1,
+  post_id: -1,
+  user_id: -1,
+  content: "",
+  updated_at: "",
+  created_at: "",
 };
 
 export interface IAxiosResponse<T = any> {

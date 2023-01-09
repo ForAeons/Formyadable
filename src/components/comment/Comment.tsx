@@ -1,20 +1,50 @@
 import React from "react";
 import { useOutletContext } from "react-router-dom";
 
+import { BtnDelete, BtnEdit } from "../../components";
 import { TCommentApiResponse, TUserApiResponse } from "../../types/type";
 import iconTextGenerator from "../../utility/iconTextGeneator";
 import { creationDateGen, updateDateGen } from "../../utility/date";
+import { deleteComment } from "../../utility/commentApi";
 
 interface Props {
   comment: TCommentApiResponse;
+  comments: TCommentApiResponse[];
+  setComments: React.Dispatch<React.SetStateAction<TCommentApiResponse[]>>;
+  isEditing: boolean;
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface Context {
   user: TUserApiResponse;
 }
 
-const Comment: React.FC<Props> = ({ comment }) => {
+const Comment: React.FC<Props> = ({
+  comment,
+  comments,
+  setComments,
+  isEditing,
+  setIsEditing,
+}) => {
   const { user }: Context = useOutletContext();
+
+  // DELETE post
+  const handleDeleteComment = (commentID: number) => {
+    return () => {
+      console.log("Delete Btn clicked");
+      deleteComment(commentID)
+        .then(() => {
+          setComments(
+            comments.filter((eachcomment) => eachcomment.id !== comment.id)
+          );
+          console.log("Comment Deleted!");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+  };
+
   return (
     <div className="flex flex-col mx-3">
       {/* <!-- title section --> */}
@@ -31,20 +61,19 @@ const Comment: React.FC<Props> = ({ comment }) => {
         <div className="w-f font-sans text-lg text-slate-600">
           {comment.content}
         </div>
-        {/* <!-- Hr --> */}
-        <hr className="rounded-full border-t-2 border-slate-300" />
         {/* <!-- utilities --> */}
-        <div className="flex flex-row justify-between">
-          <button className="rounded-md bg-blue-400 px-5 py-1 text-sm font-bold text-slate-600 shadow-md hover:bg-blue-300">
-            Like
-          </button>
-          {/* only shows edit button if current user is the author of the post */}
-          {comment.user_id === user.user.id && (
-            <button className="rounded-md bg-slate-400 px-5 py-1 text-sm font-bold text-slate-600 shadow-md hover:bg-slate-300">
-              Edit
-            </button>
-          )}
-        </div>
+
+        {/* only shows edit button if current user is the author of the post */}
+        {comment.user_id === user.user.id && (
+          <>
+            {/* <!-- Hr --> */}
+            <hr className="rounded-full border-t-2 border-slate-300" />
+            <div className="flex flex-row justify-between">
+              <BtnEdit handleClick={() => setIsEditing(true)} />
+              <BtnDelete handleClick={handleDeleteComment(comment.id)} />
+            </div>
+          </>
+        )}
       </div>
 
       {/* <!-- Comment status --> */}

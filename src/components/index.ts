@@ -13,4 +13,6 @@ export { default as BtnCreatePost } from "./button/BtnCreatePost";
 export { default as BtnLike } from "./button/BtnLike";
 export { default as BtnComment } from "./button/BtnComment";
 export { default as BtnEdit } from "./button/BtnEdit";
+export { default as BtnPost } from "./button/BtnPost";
 export { default as BtnDelete } from "./button/BtnDelete";
+export { default as BtnClose } from "./button/BtnClose";

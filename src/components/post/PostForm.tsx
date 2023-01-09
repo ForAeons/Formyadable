@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { XCircleIcon } from "@heroicons/react/24/solid";
 
 import { createPost } from "../../utility/postApi";
 import { category, TPostApiResponse } from "../../types/type";
+import { BtnClose, BtnPost } from "../../components";
 
 interface Props {
   setCreatePost: React.Dispatch<React.SetStateAction<boolean>>;
@@ -16,7 +16,16 @@ const PostForm: React.FC<Props> = ({ setCreatePost, posts, setPosts }) => {
   const [category, setCategory] = useState<category>("");
   const [message, setMessage] = useState("");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+  const handleClose = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ): void => {
+    e.preventDefault();
+    setCreatePost(false);
+  };
+
+  const handleSubmit = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ): void => {
     e.preventDefault();
 
     createPost({ title: title, content: content, category: "theorycrafting" })
@@ -37,10 +46,7 @@ const PostForm: React.FC<Props> = ({ setCreatePost, posts, setPosts }) => {
   };
 
   return (
-    <form
-      className="flex flex-col w-full m-3 bg-slate-200 rounded-3xl p-6 shadow-lg  hover:shadow-xl gap-3"
-      onSubmit={handleSubmit}
-    >
+    <form className="flex flex-col w-full m-3 bg-slate-200 rounded-3xl p-6 shadow-lg  hover:shadow-xl gap-3">
       <div className="flex justify-between">
         {/* <!-- title section --> */}
         <label
@@ -50,9 +56,7 @@ const PostForm: React.FC<Props> = ({ setCreatePost, posts, setPosts }) => {
           Your Title
         </label>
         {/* Close button */}
-        <button onClick={() => setCreatePost(false)}>
-          <XCircleIcon className="h-9 w-9  hover:text-slate-500 text-slate-600 self-center " />
-        </button>
+        <BtnClose handleClick={handleClose} />
       </div>
       <div className="justify-left flex flex-row justify-between items-center gap-4 px-6 py-3 rounded-2xl shadow-md bg-slate-50">
         <textarea
@@ -91,11 +95,7 @@ const PostForm: React.FC<Props> = ({ setCreatePost, posts, setPosts }) => {
       {/* <!-- Hr --> */}
       <hr className="rounded-full border-t-2 border-transparent" />
       <div className="flex flex-row justify-between">
-        <input
-          type="submit"
-          className="rounded-md bg-slate-400 px-5 py-1 text-sm font-bold text-slate-600 shadow-md hover:bg-slate-200"
-          value="Post"
-        ></input>
+        <BtnPost handleClick={handleSubmit} />
         {/* Renders a error message depending when necessary */}
         {message && <p>{message}</p>}
         {/* <!-- Post status --> */}

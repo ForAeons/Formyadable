@@ -45,17 +45,14 @@ Database: PostgreSQL
 
 ```
 root
-└──>Navbar component
+└──>Navbar component (responsive)
 │   └>  Logo
 │   └>  App name
-│   └>  Login button
+│   └>  Login/sign/logout buttons
 │   └>  User status (login status)
 │   └>  Displays categories of posts
 │
 └──>Main body component
-    │
-    └──>ALert component
-    │   └>  displays errors, stays hidden until an error occurs
     │
     └──>Login component
     │   └>  Forum for logging in, mutually exclusive with content component
@@ -77,6 +74,40 @@ root
 
 ---
 
+### Todo list
+
+## User
+
+- [x] Sign up
+- [x] Login
+- [x] Staying logged in
+- [ ] Edit bio
+- [ ] Edit username / password
+
+## Post
+
+- [x] Get all post
+- [ ] Get post by category
+- [ ] Get post by title
+- [x] create post (Pending adding category)
+- [x] edit post (Pending adding category)
+- [x] Delete post
+
+## Comment
+
+- [x] Get comment by post id
+- [x] Post comments
+- [x] Edit comments
+- [x] Delete comments
+
+## General
+
+- [ ] Refactor components into containers for components
+- [ ] Fetch more comments function
+- [ ] Fetch more posts function
+
+---
+
 ## Credits
 
 - Jonas Schmedtmann's [complete javascript course](https://www.udemy.com/course/the-complete-javascript-course/)
@@ -85,7 +116,7 @@ root
 
 - [Reacts Docs](https://beta.reactjs.org/learn)
 
-- [Web Dev Simplified](https://www.youtube.com/@WebDevSimplified) lectures on React Routers, Flexbox and many more
+- [Web Dev Simplified](https://www.youtube.com/@WebDevSimplified) lectures on React Routers and more
 
 - [freeCodeCamp.com](https://www.youtube.com/@freecodecamp)'s TypeScript courses
 
