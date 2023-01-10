@@ -34,7 +34,6 @@ const CommentContainer: React.FC<Props> = ({
         comment={comment}
         comments={comments}
         setComments={setComments}
-        isEditingComment={isEditingComment}
         setIsEditingComment={setIsEditingComment}
       />
     );

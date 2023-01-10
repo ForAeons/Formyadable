@@ -91,6 +91,17 @@ export const emptyComment = {
   created_at: "",
 };
 
+export const emptyPost = {
+  author: "",
+  category: "",
+  content: "",
+  created_at: "",
+  id: -1,
+  title: "",
+  updated_at: "",
+  user_id: -1,
+};
+
 export interface IAxiosResponse<T = any> {
   data: T;
   status: number;

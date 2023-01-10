@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 
-import { Post, PostEdit, CommentForm, CommentLoading } from ".././components";
+import { Post, CommentForm, CommentLoading, PostForm } from ".././components";
 import { CommentContainer } from "../containers";
 import {
   TPostApiResponse,
@@ -59,70 +59,65 @@ const PostContainer: React.FC<Props> = ({ post, posts, setPosts }) => {
     };
   };
 
-  // Editing mode will return PostForm
-  if (isEditing) {
-    return (
-      <PostEdit
-        thisPost={{
-          title: post.title,
-          content: post.content,
-          category: post.category,
-          id: post.id,
-        }}
-        setPosts={setPosts}
-        posts={posts}
-        setIsEditing={setIsEditing}
-      />
-    );
-    // otherwise will return normal post
-  } else
-    return (
-      <div className="flex flex-col mx-3 w-full items-center">
+  return (
+    <div className="flex flex-col mx-3 w-full items-center">
+      {/* Renders post based on editing mode */}
+      {isEditing ? (
+        <PostForm
+          thisPost={post}
+          posts={posts}
+          setPosts={setPosts}
+          isEditingPost={true}
+          setForumStatus={setIsEditing}
+        />
+      ) : (
         <Post
-          showComments={showComments}
           post={post}
+          showComments={showComments}
           setIsEditing={setIsEditing}
           handleGetComments={handleGetComments}
           handleDeletePost={handleDeletePost}
         />
+      )}
 
-        {/* showComment: display loading comment or actual comments */}
-        {showComments &&
-          (isFetching ? (
-            Array(Math.floor(Math.random() * 4 + 1))
-              .fill(1)
-              .map((_) => <CommentLoading />)
-          ) : (
-            <div className="flex flex-row flex-wrap content-start items-center justify-center gap-4 my-3 ">
-              <CommentForm
-                thisComment={emptyComment}
-                postID={post.id}
-                setComments={setComments}
+      {/* showComment: display loading comment or actual comments */}
+      {showComments &&
+        (isFetching ? (
+          Array(Math.floor(Math.random() * 4 + 1))
+            .fill(1)
+            .map((_) => <CommentLoading />)
+        ) : (
+          <div className="flex flex-row flex-wrap content-start items-center justify-center gap-4 my-3 ">
+            <CommentForm
+              postID={post.id}
+              thisComment={emptyComment}
+              comments={comments}
+              setComments={setComments}
+            />
+            {comments.map((comment) => (
+              <CommentContainer
+                comment={comment}
                 comments={comments}
+                setComments={setComments}
               />
-              {comments.map((comment) => (
-                <CommentContainer
-                  comment={comment}
-                  comments={comments}
-                  setComments={setComments}
-                />
-              ))}
-              {/* only show the show more comments button  */}
-              {comments.length > 0 && (
-                <button
-                  className="rounded-md bg-blue-400 px-5 py-1 text-sm font-bold text-slate-600 shadow-md hover:bg-blue-300"
-                  onClick={() => {
-                    page.current += 1;
-                    fetchComments(page.current);
-                  }}
-                >
-                  Show more comments
-                </button>
-              )}
-            </div>
-          ))}
-      </div>
-    );
+            ))}
+
+            {/* only show the show more comments button  */}
+            {comments.length > 0 && (
+              <button
+                className="rounded-md bg-blue-400 px-5 py-1 text-sm font-bold text-slate-600 shadow-md hover:bg-blue-300"
+                onClick={() => {
+                  page.current += 1;
+                  fetchComments(page.current);
+                }}
+              >
+                Show more comments
+              </button>
+            )}
+          </div>
+        ))}
+    </div>
+  );
 };
 
 export default PostContainer;

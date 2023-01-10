@@ -1,7 +1,6 @@
 export { default as Post } from "./post/Post";
 export { default as PostLoading } from "./post/PostLoading";
 export { default as PostForm } from "./post/PostForm";
-export { default as PostEdit } from "./post/postEdit";
 export { default as Comment } from "./comment/Comment";
 export { default as CommentLoading } from "./comment/CommentLoading";
 export { default as CommentForm } from "./comment/CommentForm";

@@ -11,7 +11,6 @@ interface Props {
   comment: TCommentApiResponse;
   comments: TCommentApiResponse[];
   setComments: React.Dispatch<React.SetStateAction<TCommentApiResponse[]>>;
-  isEditingComment: boolean;
   setIsEditingComment: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -23,7 +22,6 @@ const Comment: React.FC<Props> = ({
   comment,
   comments,
   setComments,
-  isEditingComment,
   setIsEditingComment,
 }) => {
   const { user }: Context = useOutletContext();

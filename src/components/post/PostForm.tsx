@@ -1,26 +1,34 @@
 import React, { useState } from "react";
 
-import { createPost } from "../../utility/postApi";
-import { category, TPostApiResponse } from "../../types/type";
-import { BtnClose, BtnPost } from "../../components";
+import { createPost, updatePost } from "../../utility/postApi";
+import { category, TPostApiResponse, TPost } from "../../types/type";
+import { BtnClose, BtnPost, BtnEdit } from "../../components";
 
 interface Props {
-  setCreatePost: React.Dispatch<React.SetStateAction<boolean>>;
+  thisPost: TPost;
   posts: TPostApiResponse[];
   setPosts: React.Dispatch<React.SetStateAction<TPostApiResponse[]>>;
+  isEditingPost: boolean;
+  setForumStatus: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const PostForm: React.FC<Props> = ({ setCreatePost, posts, setPosts }) => {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [category, setCategory] = useState<category>("");
+const PostForm: React.FC<Props> = ({
+  thisPost,
+  posts,
+  setPosts,
+  isEditingPost,
+  setForumStatus,
+}) => {
+  const [title, setTitle] = useState(thisPost.title);
+  const [content, setContent] = useState(thisPost.content);
+  const [category, setCategory] = useState(thisPost.category);
   const [message, setMessage] = useState("");
 
   const handleClose = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): void => {
     e.preventDefault();
-    setCreatePost(false);
+    setForumStatus(false);
   };
 
   const handleSubmit = (
@@ -31,7 +39,38 @@ const PostForm: React.FC<Props> = ({ setCreatePost, posts, setPosts }) => {
     createPost({ title: title, content: content, category: "theorycrafting" })
       .then((result: TPostApiResponse) => {
         setPosts([result, ...posts]);
-        setCreatePost(false);
+        setForumStatus(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.request.statusText === "Unauthorized") {
+          setMessage("Please login first!");
+          return;
+        }
+        if (err.message) {
+          setMessage(err.message);
+        }
+      });
+  };
+
+  const handleEdit = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ): void => {
+    e.preventDefault();
+
+    updatePost({
+      title: title,
+      content: content,
+      category: category,
+      id: thisPost.id,
+    })
+      .then((result: TPostApiResponse) => {
+        setMessage("Post edited!");
+        setPosts([
+          result,
+          ...posts.filter((eachPost) => eachPost.id !== thisPost.id),
+        ]);
+        setForumStatus(false);
       })
       .catch((err) => {
         console.log(err);
@@ -55,6 +94,7 @@ const PostForm: React.FC<Props> = ({ setCreatePost, posts, setPosts }) => {
         >
           Your Title
         </label>
+
         {/* Close button */}
         <BtnClose handleClick={handleClose} />
       </div>
@@ -67,9 +107,10 @@ const PostForm: React.FC<Props> = ({ setCreatePost, posts, setPosts }) => {
           rows={3}
           onChange={(e) => setTitle(e.target.value)}
         >
-          {""}
+          {title}
         </textarea>
       </div>
+
       {/* <!-- Post status --> */}
       <h4 className="font-sans font-bold text-xs text-slate-500 self-end">
         {`${title.length}/300`}
@@ -89,15 +130,23 @@ const PostForm: React.FC<Props> = ({ setCreatePost, posts, setPosts }) => {
           rows={9}
           onChange={(e) => setContent(e.target.value)}
         >
-          {""}
+          {content}
         </textarea>
       </div>
+
       {/* <!-- Hr --> */}
       <hr className="rounded-full border-t-2 border-transparent" />
       <div className="flex flex-row justify-between">
-        <BtnPost handleClick={handleSubmit} />
+        {/* displays different button based whether creating new post or editing existing one */}
+        {isEditingPost ? (
+          <BtnEdit handleClick={handleEdit} />
+        ) : (
+          <BtnPost handleClick={handleSubmit} />
+        )}
+
         {/* Renders a error message depending when necessary */}
         {message && <p>{message}</p>}
+
         {/* <!-- Post status --> */}
         <h4 className="font-sans font-bold text-xs text-slate-500">{`${content.length}/5000`}</h4>
       </div>
