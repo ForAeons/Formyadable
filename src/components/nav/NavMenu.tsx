@@ -4,7 +4,7 @@ import {} from "react-router-dom";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
 
 import { categories, nullUser } from "../../types/type";
-import categoryConvertor from "../../utility/categoryConvertor";
+import { categoryConvertor } from "../../utility/categoryApi";
 import iconTextGenerator from "../../utility/iconTextGeneator";
 
 import { TUserApiResponse } from "../../types/type";

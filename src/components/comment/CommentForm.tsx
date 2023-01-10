@@ -113,9 +113,8 @@ const CommentForm: React.FC<Props> = ({
           placeholder=""
           rows={9}
           onChange={(e) => setContent(e.target.value)}
-        >
-          {thisComment.content}
-        </textarea>
+          defaultValue={thisComment.content}
+        />
       </div>
       {/* <!-- Hr --> */}
       <hr className="rounded-full border-t-2 border-transparent" />

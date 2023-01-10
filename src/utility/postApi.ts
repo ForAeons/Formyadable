@@ -34,7 +34,7 @@ export const getPostByID = async (id: number) => {
   }
 };
 
-export const getPostByCategory = async (cat: category, pageNum: number = 1) => {
+export const getPostByCategory = async (cat: string, pageNum: number = 1) => {
   const res: IAxiosResponse = await axios.get(
     `/posts?cat=${cat}&page=${pageNum}`
   );

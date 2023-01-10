@@ -15,3 +15,4 @@ export { default as BtnEdit } from "./button/BtnEdit";
 export { default as BtnPost } from "./button/BtnPost";
 export { default as BtnDelete } from "./button/BtnDelete";
 export { default as BtnClose } from "./button/BtnClose";
+export { default as BtnCategory } from "./button/BtnCategory";

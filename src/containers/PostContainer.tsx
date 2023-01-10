@@ -64,6 +64,7 @@ const PostContainer: React.FC<Props> = ({ post, posts, setPosts }) => {
       {/* Renders post based on editing mode */}
       {isEditing ? (
         <PostForm
+          key={post.id}
           thisPost={post}
           posts={posts}
           setPosts={setPosts}
@@ -72,6 +73,7 @@ const PostContainer: React.FC<Props> = ({ post, posts, setPosts }) => {
         />
       ) : (
         <Post
+          key={post.id}
           post={post}
           showComments={showComments}
           setIsEditing={setIsEditing}
@@ -85,9 +87,9 @@ const PostContainer: React.FC<Props> = ({ post, posts, setPosts }) => {
         (isFetching ? (
           Array(Math.floor(Math.random() * 4 + 1))
             .fill(1)
-            .map((_) => <CommentLoading />)
+            .map((_, i) => <CommentLoading key={i} />)
         ) : (
-          <div className="flex flex-row flex-wrap content-start items-center justify-center gap-4 my-3 ">
+          <div className="flex flex-row w-full flex-wrap content-start items-center justify-center gap-4 my-3 ">
             <CommentForm
               postID={post.id}
               thisComment={emptyComment}
@@ -96,6 +98,7 @@ const PostContainer: React.FC<Props> = ({ post, posts, setPosts }) => {
             />
             {comments.map((comment) => (
               <CommentContainer
+                key={comment.id}
                 comment={comment}
                 comments={comments}
                 setComments={setComments}

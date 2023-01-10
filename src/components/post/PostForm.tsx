@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
+import { TPostApiResponse, TPost, categories } from "../../types/type";
+import { BtnClose, BtnPost, BtnEdit, BtnCategory } from "../../components";
 import { createPost, updatePost } from "../../utility/postApi";
-import { category, TPostApiResponse, TPost } from "../../types/type";
-import { BtnClose, BtnPost, BtnEdit } from "../../components";
 
 interface Props {
   thisPost: TPost;
@@ -36,7 +36,7 @@ const PostForm: React.FC<Props> = ({
   ): void => {
     e.preventDefault();
 
-    createPost({ title: title, content: content, category: "theorycrafting" })
+    createPost({ title: title, content: content, category: category })
       .then((result: TPostApiResponse) => {
         setPosts([result, ...posts]);
         setForumStatus(false);
@@ -106,22 +106,25 @@ const PostForm: React.FC<Props> = ({
           maxLength={300}
           rows={3}
           onChange={(e) => setTitle(e.target.value)}
-        >
-          {title}
-        </textarea>
+          defaultValue={title}
+        />
       </div>
 
-      {/* <!-- Post status --> */}
+      {/* <!-- title length status --> */}
       <h4 className="font-sans font-bold text-xs text-slate-500 self-end">
         {`${title.length}/300`}
       </h4>
+
+      {/* <!-- Hr --> */}
+      <hr className="rounded-full border-t-2 border-slate-300" />
+
       <label
         htmlFor="body"
-        className="text-2xl px-6  font-bold text-slate-700 font-Raleway tracking-wide"
+        className="text-2xl px-6 font-bold text-slate-700 font-Raleway tracking-wide"
       >
         Body
       </label>
-      <div className="justify-left flex flex-row justify-between items-center gap-4 px-6 py-3 rounded-2xl shadow-md bg-slate-50">
+      <div className="flex flex-row justify-between items-center gap-4 px-6 py-3 rounded-2xl shadow-md bg-slate-50">
         <textarea
           id="body"
           className="text-lg text-slate-700 font-sans tracking-wide flex-grow bg-transparent my-1 focus:outline-none"
@@ -129,13 +132,38 @@ const PostForm: React.FC<Props> = ({
           placeholder="Text (optional)"
           rows={9}
           onChange={(e) => setContent(e.target.value)}
-        >
-          {content}
-        </textarea>
+          defaultValue={content}
+        />
+      </div>
+
+      {/* <!-- body length status --> */}
+      <h4 className="font-sans font-bold text-xs text-slate-500 self-end">{`${content.length}/5000`}</h4>
+
+      {/* <!-- Hr --> */}
+      <hr className="rounded-full border-t-2 border-slate-300" />
+
+      {/* <!-- Hr --> */}
+      {/* <hr className="rounded-full border-t-2 border-transparent" /> */}
+      <label
+        htmlFor="body"
+        className="text-2xl px-6 font-bold text-slate-700 font-Raleway tracking-wide"
+      >
+        Category
+      </label>
+      <div className="flex flex-row justify-start items-center gap-4 px-4 py-3 rounded-2xl shadow-md bg-slate-50">
+        {categories.map((cat, i) => (
+          <BtnCategory
+            key={i}
+            category={cat}
+            curCategory={category}
+            setCategory={setCategory}
+          />
+        ))}
       </div>
 
       {/* <!-- Hr --> */}
-      <hr className="rounded-full border-t-2 border-transparent" />
+      <hr className="rounded-full border-t-2 border-slate-300" />
+
       <div className="flex flex-row justify-between">
         {/* displays different button based whether creating new post or editing existing one */}
         {isEditingPost ? (
@@ -146,9 +174,6 @@ const PostForm: React.FC<Props> = ({
 
         {/* Renders a error message depending when necessary */}
         {message && <p>{message}</p>}
-
-        {/* <!-- Post status --> */}
-        <h4 className="font-sans font-bold text-xs text-slate-500">{`${content.length}/5000`}</h4>
       </div>
     </form>
   );

@@ -33,7 +33,7 @@ Database: PostgreSQL
 
 - [x] Get all post
 - [ ] Get post by category
-- [ ] Get post by title
+- [x] Get post by title
 - [x] create post (Pending adding category)
 - [x] edit post (Pending adding category)
 - [x] Delete post
@@ -49,7 +49,8 @@ Database: PostgreSQL
 
 ### General
 
-- [ ] Code refactoring
+- [x] Code refactoring
+- [ ] Adding animations
 - [ ] Better error handling, displaying human readable errors
 
 ### Potential Add Ons
