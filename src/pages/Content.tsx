@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
+import { useParams } from "react-router-dom";
 
 import {
   PostLoading,
@@ -7,6 +7,7 @@ import {
   Navbar,
   SearchBar,
   BtnCreatePost,
+  Alert,
 } from "../components";
 import { PostContainer } from "../containers";
 import {
@@ -15,51 +16,69 @@ import {
   getPostByCategory,
 } from "../utility/postApi";
 import { getLoadingForumCount } from "../utility/loadingForumCount";
-import { TPostApiResponse, emptyPost, category } from "../types/type";
+import { TPostApiResponse, emptyPost, severityLevel } from "../types/type";
 
 const Content: React.FC = () => {
   const [createPost, setCreatePost] = useState(false);
   const [posts, setPosts] = useState<TPostApiResponse[]>([]);
   const [isLoadingPosts, setIsLoadingPosts] = useState(false);
   const [searchValue, setSearchValue] = useState("");
-  const [categoryParam, setCategoryParam] = useState("");
-
-  // getting category from route
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
+  const [alert, setAlert] = useState({ message: "", severity: -1 });
+  const { category: categoryParam } = useParams();
 
   console.log(categoryParam);
+
+  ////////////////////////////////////////////////////////////////////////
+  // Actions on mount
+  ////////////////////////////////////////////////////////////////////////
 
   // fetches posts on mount
   useEffect(() => {
     setIsLoadingPosts(true);
 
-    setCategoryParam(searchParams.get("cat") || "");
-
     // no category restriction, get all posts
     if (!categoryParam) {
       getAllPost()
         .then((result: TPostApiResponse[]) => {
-          setPosts([...posts, ...result]);
-          setIsLoadingPosts(false);
+          console.log(result);
+          setPosts(result);
+          // removes error message
+          setAlert({ message: "", severity: -1 });
         })
         .catch((err) => {
           console.log(err);
+          if (err.message) {
+            // display error message
+            setAlert({ message: err.message, severity: severityLevel.high });
+          }
+        })
+        .finally(() => {
           setIsLoadingPosts(false);
         });
     } else {
       // get posts by category
       getPostByCategory(categoryParam)
         .then((result: TPostApiResponse[]) => {
-          setPosts([...posts, ...result]);
-          setIsLoadingPosts(false);
+          console.log(result);
+          setPosts(result);
         })
         .catch((err) => {
           console.log(err);
+          // display error message
+          if (err.message) {
+            setAlert({ message: err.message, severity: severityLevel.high });
+          }
+        })
+        .finally(() => {
           setIsLoadingPosts(false);
         });
     }
-  }, []);
+    // trigger reload when categoryParam changes
+  }, [categoryParam]);
+
+  ////////////////////////////////////////////////////////////////////////
+  // HANDLERS
+  ////////////////////////////////////////////////////////////////////////
 
   const handleSearch = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
@@ -75,10 +94,11 @@ const Content: React.FC = () => {
       .then((result: TPostApiResponse[]) => {
         // overrides existing posts
         setPosts(result);
-        setIsLoadingPosts(false);
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
         setIsLoadingPosts(false);
       });
   };
@@ -106,6 +126,19 @@ const Content: React.FC = () => {
             // is in edit mode: false
             isEditingPost={false}
             setForumStatus={setCreatePost}
+          />
+        )}
+
+        {/* displays error */}
+        {alert.message && (
+          <Alert message={alert.message} severity={alert.severity} />
+        )}
+
+        {/* displays prompt to post */}
+        {posts.length === 0 && isLoadingPosts === false && (
+          <Alert
+            message={"No posts here.\nBe the first to post!"}
+            severity={severityLevel.low}
           />
         )}
 

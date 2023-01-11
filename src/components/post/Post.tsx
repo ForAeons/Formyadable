@@ -1,9 +1,9 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import { useOutletContext } from "react-router-dom";
 
 import { BtnComment, BtnEdit, BtnDelete } from "../../components";
 import iconTextGenerator from "../../utility/iconTextGeneator";
-import { categoryNormaliser } from "../../utility/categoryApi";
+import { titleCase } from "../../utility/strings";
 import { creationDateGen, updateDateGen } from "../../utility/date";
 import { TUserApiResponse, TPostApiResponse } from "../../types/type";
 
@@ -48,7 +48,7 @@ const Post: React.FC<Props> = ({
       {/* Content card */}
       <div className="flex min-h-[20%] min-w-[40%] flex-col justify-start gap-3 rounded-2xl bg-slate-200 p-6 shadow-lg hover:shadow-xl">
         <div className="text-md sm:text-xl font-bold text-slate-600 font-Raleway tracking-wide">
-          {categoryNormaliser(post.category)}
+          {titleCase(post.category)}
         </div>
 
         {/* <!-- Hr --> */}

@@ -1,9 +1,6 @@
 import React from "react";
 
-import {
-  categoryNormaliser,
-  categoryConvertor,
-} from "../../utility/categoryApi";
+import { titleCase, snakeCase } from "../../utility/strings";
 
 interface Props {
   category: string;
@@ -18,16 +15,16 @@ const BtnCategory: React.FC<Props> = ({
 }) => {
   return (
     <div
-      className={`px-5 py-1 rounded-md shadow-md text-sm font-bold text-slate-600 hover:bg-teal-300 hover:cursor-pointer ${
+      className={`px-5 py-1 rounded-md shadow-md text-sm font-bold text-slate-600 hover:bg-teal-300 hover:cursor-pointer whitespace-nowrap ${
         curCategory === category ? "bg-teal-200" : "bg-teal-400"
       }`}
       onClick={() =>
         curCategory === category
           ? setCategory("")
-          : setCategory(categoryConvertor(category))
+          : setCategory(snakeCase(category))
       }
     >
-      {categoryNormaliser(category)}
+      {titleCase(category)}
     </div>
   );
 };

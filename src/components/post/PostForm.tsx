@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { TPostApiResponse, TPost, categories } from "../../types/type";
 import { BtnClose, BtnPost, BtnEdit, BtnCategory } from "../../components";
 import { createPost, updatePost } from "../../utility/postApi";
+import { snakeCase } from "../../utility/strings";
 
 interface Props {
   thisPost: TPost;
@@ -150,11 +151,11 @@ const PostForm: React.FC<Props> = ({
       >
         Category
       </label>
-      <div className="flex flex-row justify-start items-center gap-4 px-4 py-3 rounded-2xl shadow-md bg-slate-50">
+      <div className="flex flex-row flex-wrap justify-start items-center gap-4 px-4 py-3 rounded-2xl shadow-md bg-slate-50">
         {categories.map((cat, i) => (
           <BtnCategory
             key={i}
-            category={cat}
+            category={snakeCase(cat)}
             curCategory={category}
             setCategory={setCategory}
           />
@@ -173,7 +174,7 @@ const PostForm: React.FC<Props> = ({
         )}
 
         {/* Renders a error message depending when necessary */}
-        {message && <p>{message}</p>}
+        {message && <p className="text-lg font-bold text-red-500">{message}</p>}
       </div>
     </form>
   );

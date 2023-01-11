@@ -125,8 +125,8 @@ const CommentForm: React.FC<Props> = ({
         ) : (
           <BtnPost handleClick={handleSubmit} />
         )}
-        {/* Renders a message depending when necessary */}
-        {message && <p>{message}</p>}
+        {/* Renders a error message depending when necessary */}
+        {message && <p className="text-md font-bold text-red-500">{message}</p>}
         {/* <!-- Post status --> */}
         <h4 className="font-sans font-bold text-xs text-slate-500">{`${content.length}/3000`}</h4>
       </div>

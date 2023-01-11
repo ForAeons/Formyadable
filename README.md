@@ -9,7 +9,7 @@
 Frontend: React.js, ~~MUI~~ Tailwind
 
 - Installed locally: run: `npm run dev` to start
-- Hosted by Netlify
+- Demo by Netlify: _to be filled_
 
 Backend: Ruby on Rails  
 Database: PostgreSQL
@@ -32,10 +32,10 @@ Database: PostgreSQL
 ### Post
 
 - [x] Get all post
-- [ ] Get post by category
+- [x] Get post by category
 - [x] Get post by title
-- [x] create post (Pending adding category)
-- [x] edit post (Pending adding category)
+- [x] create post
+- [x] edit post
 - [x] Delete post
 - [ ] Fetch more posts function
 
@@ -50,7 +50,7 @@ Database: PostgreSQL
 ### General
 
 - [x] Code refactoring
-- [ ] Adding animations
+- [x] Adding animations
 - [ ] Better error handling, displaying human readable errors
 
 ### Potential Add Ons

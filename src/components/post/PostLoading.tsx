@@ -2,7 +2,7 @@ import React from "react";
 
 const PostLoading: React.FC = () => {
   return (
-    <div className="flex flex-col mx-3 w-[100%]">
+    <div className="flex flex-col mx-3 w-[100%] animate-pulse">
       {/* Fake title section */}
       <div className="justify-left opacity-75 w-[100%] flex flex-row items-center gap-4 px-6 py-3 ">
         <div className="rounded-full bg-slate-300 shadow-md p-4"></div>

@@ -3,11 +3,10 @@ import { Link, useOutletContext } from "react-router-dom";
 import {} from "react-router-dom";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
 
-import { categories, nullUser } from "../../types/type";
-import { categoryConvertor } from "../../utility/categoryApi";
+import { TUserApiResponse, categories, nullUser } from "../../types/type";
 import iconTextGenerator from "../../utility/iconTextGeneator";
+import { snakeCase } from "../../utility/strings";
 
-import { TUserApiResponse } from "../../types/type";
 interface Context {
   user: TUserApiResponse;
   setUser: React.Dispatch<React.SetStateAction<TUserApiResponse>>;
@@ -69,7 +68,7 @@ const NavMenu: React.FC<Props> = ({ isMobile }) => {
           return (
             <Link
               key={i}
-              to={`/posts?cat=${categoryConvertor(cat)}`}
+              to={`/posts/${snakeCase(cat)}`}
               className="font-Raleway font-bold tracking-wide text-lg text-slate-600 hover:text-slate-500 "
             >
               {cat}
@@ -79,7 +78,7 @@ const NavMenu: React.FC<Props> = ({ isMobile }) => {
       </div>
       <a
         href="#top"
-        className="rounded-md bg-slate-400 px-5 py-1 text-sm font-bold text-slate-600 shadow-md hover:bg-red-300 mt-auto"
+        className="rounded-md bg-indigo-300 px-5 py-1 text-sm font-bold text-slate-600 shadow-md hover:bg-indigo-200 mt-auto"
       >
         Back to Top
       </a>

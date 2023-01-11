@@ -1,11 +1,18 @@
 import React, { useRef, useState } from "react";
 
-import { Post, CommentForm, CommentLoading, PostForm } from ".././components";
+import {
+  Post,
+  CommentForm,
+  CommentLoading,
+  PostForm,
+  Alert,
+} from ".././components";
 import { CommentContainer } from "../containers";
 import {
   TPostApiResponse,
   TCommentApiResponse,
   emptyComment,
+  severityLevel,
 } from "../types/type";
 import { getCommentsByPostID } from "../utility/commentApi";
 import { deletePost } from "../utility/postApi";
@@ -19,21 +26,23 @@ interface Props {
 const PostContainer: React.FC<Props> = ({ post, posts, setPosts }) => {
   const [showComments, setShowComments] = useState(false);
   const [comments, setComments] = useState<TCommentApiResponse[]>([]);
-  const [isFetching, setIsFetching] = useState(false);
+  const [isFetchingComments, setIsFetchingComments] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [alert, setAlert] = useState({ message: "", severity: -1 });
   const page = useRef(1);
 
   const fetchComments = (page: number) => {
-    setIsFetching(true);
+    setIsFetchingComments(true);
 
     getCommentsByPostID(post.id, page)
       .then((result: TCommentApiResponse[]) => {
         setComments(result);
-        setIsFetching(false);
       })
       .catch((err) => {
         console.log(err);
-        setIsFetching(false);
+      })
+      .finally(() => {
+        setIsFetchingComments(false);
       });
   };
 
@@ -41,7 +50,7 @@ const PostContainer: React.FC<Props> = ({ post, posts, setPosts }) => {
   const handleGetComments = () => {
     setShowComments(!showComments);
 
-    if (isFetching) return; // guard clause
+    if (isFetchingComments) return; // guard clause
 
     fetchComments(page.current);
   };
@@ -84,12 +93,25 @@ const PostContainer: React.FC<Props> = ({ post, posts, setPosts }) => {
 
       {/* showComment: display loading comment or actual comments */}
       {showComments &&
-        (isFetching ? (
+        (isFetchingComments ? (
           Array(Math.floor(Math.random() * 4 + 1))
             .fill(1)
             .map((_, i) => <CommentLoading key={i} />)
         ) : (
           <div className="flex flex-row w-full flex-wrap content-start items-center justify-center gap-4 my-3 ">
+            {/* displays error */}
+            {alert.message && (
+              <Alert message={alert.message} severity={alert.severity} />
+            )}
+
+            {/* displays prompt to post */}
+            {comments.length === 0 && (
+              <Alert
+                message={"No comments here.\nBe the first to comment!"}
+                severity={severityLevel.low}
+              />
+            )}
+
             <CommentForm
               postID={post.id}
               thisComment={emptyComment}

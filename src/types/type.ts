@@ -1,13 +1,32 @@
 // import React from "react";
 import { AxiosRequestConfig } from "axios";
 
-export type category = "Discussion" | "Theorycrafting" | "Fan Art" | "";
+export type category =
+  | "Discussion"
+  | "Theorycrafting"
+  | "Fan Art"
+  | "Lore"
+  | "Guide"
+  | "Meme"
+  | "Question"
+  | "News";
 
 export const categories: category[] = [
   "Discussion",
   "Theorycrafting",
   "Fan Art",
+  "Lore",
+  "Guide",
+  "Meme",
+  "Question",
+  "News",
 ];
+
+export enum severityLevel {
+  low,
+  medium,
+  high,
+}
 
 // export type TError = {
 //   error: string;

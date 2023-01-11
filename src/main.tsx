@@ -26,7 +26,7 @@ const router = createBrowserRouter([
         element: <Signup />,
       },
       {
-        path: "/posts/*",
+        path: "/posts/:category",
         element: <Content />,
       },
       {
