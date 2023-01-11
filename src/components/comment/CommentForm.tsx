@@ -105,7 +105,7 @@ const CommentForm: React.FC<Props> = ({
         {/* only displays close btn when in edit mode */}
         {isEditingComment && <BtnClose handleClick={handleClose} />}
       </div>
-      <div className="justify-left flex flex-row justify-between items-center gap-4 px-6 py-3 rounded-2xl shadow-md bg-slate-50">
+      <div className="justify-left flex flex-row justify-between items-center gap-4 px-6 py-3 rounded-2xl shadow-inner bg-white">
         <textarea
           id="body"
           className="text-lg text-slate-700 font-sans tracking-wide flex-grow bg-transparent my-1 focus:outline-none"

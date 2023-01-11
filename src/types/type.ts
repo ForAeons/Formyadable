@@ -77,7 +77,7 @@ export type TUser = {
   bio?: string;
 };
 
-export type TUserApiResponse = {
+export type TUserApiResponseWithToken = {
   user: {
     id: number;
     username: string;
@@ -87,6 +87,15 @@ export type TUserApiResponse = {
     bio?: string;
   };
   token: string;
+};
+
+export type TUserApiResponse = {
+  id: number;
+  username: string;
+  password_digest: string;
+  created_at: string;
+  updated_at: string;
+  bio?: string;
 };
 
 export const nullUser = {

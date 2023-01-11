@@ -29,8 +29,8 @@ export const login = async (user: TUser) => {
   }
 };
 
-export const updateBio = async (user: TUser) => {
-  const res: IAxiosResponse = await axios.patch("/edit_bio", user);
+export const updateBio = async (user: TUser, userID: number) => {
+  const res: IAxiosResponse = await axios.patch(`/users/${userID}`, user);
   // for debugging
   console.log(res);
 

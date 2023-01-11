@@ -7,7 +7,7 @@ interface Props {
 const BtnEdit: React.FC<Props> = ({ handleClick }) => {
   return (
     <button
-      className="rounded-md bg-slate-400 px-5 py-1 text-sm font-bold text-slate-600 shadow-md hover:bg-slate-300"
+      className="rounded-md bg-amber-400 px-5 py-1 text-sm font-bold text-slate-600 shadow-md hover:bg-amber-300 w-fit"
       onClick={handleClick}
     >
       Edit

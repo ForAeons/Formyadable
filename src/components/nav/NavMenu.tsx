@@ -3,13 +3,17 @@ import { Link, useOutletContext } from "react-router-dom";
 import {} from "react-router-dom";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
 
-import { TUserApiResponse, categories, nullUser } from "../../types/type";
+import {
+  TUserApiResponseWithToken,
+  categories,
+  nullUser,
+} from "../../types/type";
 import iconTextGenerator from "../../utility/iconTextGeneator";
 import { snakeCase } from "../../utility/strings";
 
 interface Context {
-  user: TUserApiResponse;
-  setUser: React.Dispatch<React.SetStateAction<TUserApiResponse>>;
+  user: TUserApiResponseWithToken;
+  setUser: React.Dispatch<React.SetStateAction<TUserApiResponseWithToken>>;
 }
 
 interface Props {
@@ -32,6 +36,12 @@ const NavMenu: React.FC<Props> = ({ isMobile }) => {
             <div className="rounded-full bg-slate-600 hover:bg-slate-500 self-center flex justify-center items-center font-Raleway text-2xl font-extrabold text-slate-200 h-24 w-24 sm:h-12 sm:w-12 mb-2">
               {iconTextGenerator(user.user.username)}
             </div>
+            <Link
+              to={`/profile/${user.user.id}`}
+              className="font-Raleway font-bold tracking-wide text-lg text-slate-600 hover:text-slate-500 "
+            >
+              Profile
+            </Link>
             <Link
               to="/"
               className="font-Raleway font-bold tracking-wide text-lg text-slate-600 hover:text-red-500 "
@@ -78,7 +88,7 @@ const NavMenu: React.FC<Props> = ({ isMobile }) => {
       </div>
       <a
         href="#top"
-        className="rounded-md bg-indigo-300 px-5 py-1 text-sm font-bold text-slate-600 shadow-md hover:bg-indigo-200 mt-auto"
+        className="rounded-md bg-zinc-400 px-5 py-1 text-sm font-bold text-slate-600 shadow-md hover:bg-zinc-300 mt-auto"
       >
         Back to Top
       </a>

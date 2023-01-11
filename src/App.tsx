@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import axios from "axios";
 
-import { TUserApiResponse, nullUser } from "./types/type";
+import { TUserApiResponseWithToken, nullUser } from "./types/type";
 
 const App: React.FC = () => {
   // user is initialised to not logged in state
-  const [user, setUser] = useState<TUserApiResponse>(nullUser);
+  const [user, setUser] = useState<TUserApiResponseWithToken>(nullUser);
 
   // Restore the user state from local storage when the component mounts.
   useEffect(() => {

@@ -25,8 +25,8 @@ Database: PostgreSQL
 - [x] Sign up
 - [x] Login
 - [x] Staying logged in
-- [ ] Edit bio
-- [ ] Edit username / password
+- [x] Edit bio / username
+- [ ] Viewing other user's profile
 - [ ] Error handling for taken username
 
 ### Post
