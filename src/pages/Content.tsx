@@ -38,7 +38,7 @@ const Content: React.FC = () => {
   const [alert, setAlert] = useState({ message: "", severity: -1 });
   const { category: categoryParam } = useParams();
 
-  console.log(categoryParam);
+  console.log("Category", categoryParam);
 
   ////////////////////////////////////////////////////////////////////////
   // Actions on mount

@@ -1,5 +1,5 @@
 import React from "react";
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, Link } from "react-router-dom";
 
 import { BtnComment, BtnEdit, BtnDelete } from "../../components";
 import iconTextGenerator from "../../utility/iconTextGeneator";
@@ -38,10 +38,13 @@ const Post: React.FC<Props> = ({
     <div className="flex flex-col">
       {/* <!-- title section --> */}
       <div className="justify-left flex flex-row items-center gap-4 px-6 py-3">
-        <div className="rounded-full bg-slate-300 flex justify-center items-center h-8 w-8 flex-shrink-0">
-          <h2 className="font-Raleway text-md font-extrabold text-slate-500">
+        <div className="rounded-full bg-slate-300 hover:bg-slate-200 flex justify-center items-center h-8 w-8 flex-shrink-0">
+          <Link
+            to={`/profile/${post.author}`}
+            className="font-Raleway text-md font-extrabold text-slate-500"
+          >
             {iconTextGenerator(post.author)}
-          </h2>
+          </Link>
         </div>
         <h3 className="text-lg sm:text-2xl font-bold text-slate-700 font-Raleway tracking-wide">
           {post.title}

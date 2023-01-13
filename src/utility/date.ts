@@ -9,8 +9,8 @@ const year = month * 12;
 
 /**
  * Takes in the time diference in milliseconds and returns a neatly formatted, human readable time/date
- * @param timeDif
- * @param action
+ * @param timeDif integer, milliseconds
+ * @param action string, verb
  * @returns String
  */
 
@@ -51,8 +51,8 @@ const timeFromNow = (timeDif: number, action: string): string => {
 
 /**
  * Takes in the creation date and action (verb in passive state, e.g."Posted","Commented") and returns a neatly formatted, human readable time/date
- * @param date
- * @param action
+ * @param date String, only the ISO 8601 format
+ * @param action string, verb
  * @returns string
  */
 
@@ -62,8 +62,8 @@ export const creationDateGen = (date: string, action: string): string => {
 
 /**
  * Takes in the updated date and action (verb in passive state, e.g."Posted","Commented") and returns a neatly formatted, human readable time/date
- * @param date
- * @param action
+ * @param date String, only the ISO 8601 format
+ * @param action string, verb
  * @returns string
  */
 

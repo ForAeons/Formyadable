@@ -26,3 +26,4 @@ export { default as Alert } from "./Alert";
 
 export { default as ProfileCard } from "./profile/ProfileCard";
 export { default as ProfileForm } from "./profile/ProfileForm";
+export { default as ProfileLoading } from "./profile/ProfileLoading";

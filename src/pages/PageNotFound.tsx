@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import { BtnBack, BtnHome } from "../components";
+
 /**
  * Error 404 page
  * - If the route does not exist, users will be directed to this page
@@ -18,12 +20,10 @@ const PageNotFound: React.FC = () => {
         <p className="font-Raleway sm:text-3xl text-xl text-center text-slate-800">
           THIS PAGE DOESNT'T EXIST OR IS UNAVAILABLE
         </p>
-        <Link
-          to="/"
-          className="font-Raleway sm:text-lg text-sm rounded-md bg-slate-700 px-7 py-3  font-bold text-slate-200 shadow-md hover:bg-slate-600 mt-3 sm:tracking-[4px] tracking-wider"
-        >
-          Back to Home
-        </Link>
+        <div className="flex w-full justify-evenly">
+          <BtnBack />
+          <BtnHome />
+        </div>
       </div>
     </div>
   );

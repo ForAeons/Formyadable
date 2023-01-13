@@ -29,7 +29,21 @@ export const login = async (user: TUser) => {
   }
 };
 
-export const updateBio = async (user: TUser, userID: number) => {
+export const getUserInfo = async (username: string) => {
+  const res: IAxiosResponse = await axios.get(`/users/${username}`);
+  // for debugging
+  console.log(res);
+
+  if (res.statusText == "OK") {
+    // the request was successful
+    return res.data;
+  } else {
+    // the request was not successful
+    throw Error(res.data.statusText || res.data.error);
+  }
+};
+
+export const updateUserInfo = async (user: TUser, userID: number) => {
   const res: IAxiosResponse = await axios.patch(`/users/${userID}`, user);
   // for debugging
   console.log(res);

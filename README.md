@@ -27,7 +27,7 @@ Database: PostgreSQL
 - [x] Login
 - [x] Staying logged in
 - [x] Edit bio / username
-- [ ] Viewing other user's profile
+- [x] Viewing other user's profile
 - [ ] Error handling for taken username
 
 ### Post
@@ -59,7 +59,6 @@ Database: PostgreSQL
 ### Potential Add Ons
 
 - [ ] Like system
-- [ ] Comment reply system
 
 ---
 

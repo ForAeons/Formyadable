@@ -37,7 +37,7 @@ const NavMenu: React.FC<Props> = ({ isMobile }) => {
               {iconTextGenerator(user.user.username)}
             </div>
             <Link
-              to={`/profile/${user.user.id}`}
+              to={`/profile/${user.user.username}`}
               className="font-Raleway font-bold tracking-wide text-lg text-slate-600 hover:text-slate-500 "
             >
               Profile
@@ -88,7 +88,7 @@ const NavMenu: React.FC<Props> = ({ isMobile }) => {
       </div>
       <a
         href="#top"
-        className="rounded-md bg-zinc-400 px-5 py-1 text-sm font-bold text-slate-600 shadow-md hover:bg-zinc-300 mt-auto"
+        className="rounded-md bg-slate-400 px-5 py-1 text-sm font-bold text-slate-600 shadow-md hover:bg-slate-300 mt-auto"
       >
         Back to Top
       </a>

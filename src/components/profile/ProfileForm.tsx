@@ -4,7 +4,7 @@ import { useOutletContext } from "react-router-dom";
 import { BtnEdit, BtnHome, BtnBack } from "../../components";
 import { TUserApiResponseWithToken, TUserApiResponse } from "../../types/type";
 import iconTextGenerator from "../../utility/iconTextGeneator";
-import { updateBio } from "../../utility/userApi";
+import { updateUserInfo } from "../../utility/userApi";
 
 interface Context {
   user: TUserApiResponseWithToken;
@@ -13,9 +13,13 @@ interface Context {
 
 interface Props {
   setIsEditingProfile: React.Dispatch<React.SetStateAction<boolean>>;
+  setDisplayedUser: React.Dispatch<React.SetStateAction<TUserApiResponse>>;
 }
 
-const ProfileForm: React.FC<Props> = ({ setIsEditingProfile }) => {
+const ProfileForm: React.FC<Props> = ({
+  setIsEditingProfile,
+  setDisplayedUser,
+}) => {
   let { user, setUser }: Context = useOutletContext();
 
   const [newUsername, setNewUsername] = useState(user.user.username);
@@ -27,12 +31,13 @@ const ProfileForm: React.FC<Props> = ({ setIsEditingProfile }) => {
   const handleEdit = () => {
     if (password !== passwordC) return;
 
-    updateBio(
+    updateUserInfo(
       { username: newUsername, password: password, bio: newBio },
       user.user.id
     )
       .then((result: TUserApiResponse) => {
         setUser({ ...user, user: result });
+        setDisplayedUser(result);
       })
       .catch((err) => {
         console.log(err);

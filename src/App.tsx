@@ -14,6 +14,8 @@ const App: React.FC = () => {
     if (userString) setUser(JSON.parse(userString));
   }, []);
 
+  // Resets the user in the localstorage upon logging out
+  // adds Auth token to axios headers upon logging in
   useEffect(() => {
     // empty user's token will have a falsy empty string
     if (user.token) {
