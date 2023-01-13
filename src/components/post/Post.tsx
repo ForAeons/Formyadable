@@ -5,10 +5,10 @@ import { BtnComment, BtnEdit, BtnDelete } from "../../components";
 import iconTextGenerator from "../../utility/iconTextGeneator";
 import { titleCase } from "../../utility/strings";
 import { creationDateGen, updateDateGen } from "../../utility/date";
-import { TUserApiResponse, TPostApiResponse } from "../../types/type";
+import { TUserApiResponseWithToken, TPostApiResponse } from "../../types/type";
 
 interface Context {
-  user: TUserApiResponse;
+  user: TUserApiResponseWithToken;
 }
 
 interface Props {
@@ -18,6 +18,12 @@ interface Props {
   handleGetComments: () => void;
   handleDeletePost: (postID: number) => () => void;
 }
+
+/**
+ * Displays a single post.
+ * Ability to delete post or enter edit mode for creator of the post.
+ * Ability to fetch comments belong to this post.
+ */
 
 const Post: React.FC<Props> = ({
   showComments,

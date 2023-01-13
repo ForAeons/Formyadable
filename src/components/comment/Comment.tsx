@@ -2,7 +2,10 @@ import React from "react";
 import { useOutletContext } from "react-router-dom";
 
 import { BtnDelete, BtnEdit } from "../../components";
-import { TCommentApiResponse, TUserApiResponse } from "../../types/type";
+import {
+  TCommentApiResponse,
+  TUserApiResponseWithToken,
+} from "../../types/type";
 import iconTextGenerator from "../../utility/iconTextGeneator";
 import { creationDateGen, updateDateGen } from "../../utility/date";
 import { deleteComment } from "../../utility/commentApi";
@@ -15,8 +18,13 @@ interface Props {
 }
 
 interface Context {
-  user: TUserApiResponse;
+  user: TUserApiResponseWithToken;
 }
+
+/**
+ * Displays a single comment.
+ * Ability to delete comment or enter edit mode for creator of the comment
+ */
 
 const Comment: React.FC<Props> = ({
   comment,

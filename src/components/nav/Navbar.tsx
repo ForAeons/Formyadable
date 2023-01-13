@@ -5,6 +5,10 @@ import MobileMenu from "./MobileMenu";
 import NavMenu from "./NavMenu";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * Navigation bar for users to navigate the page
+ */
+
 const Navbar: React.FC = () => {
   const [openMenu, setOpenMenu] = useState(false);
 

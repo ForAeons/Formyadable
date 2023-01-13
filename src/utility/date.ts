@@ -7,6 +7,13 @@ const week = day * 7;
 const month = week * 30;
 const year = month * 12;
 
+/**
+ * Takes in the time diference in milliseconds and returns a neatly formatted, human readable time/date
+ * @param timeDif
+ * @param action
+ * @returns String
+ */
+
 const timeFromNow = (timeDif: number, action: string): string => {
   if (timeDif < minute) {
     const number = Math.round(timeDif / second);
@@ -42,9 +49,23 @@ const timeFromNow = (timeDif: number, action: string): string => {
   }
 };
 
+/**
+ * Takes in the creation date and action (verb in passive state, e.g."Posted","Commented") and returns a neatly formatted, human readable time/date
+ * @param date
+ * @param action
+ * @returns string
+ */
+
 export const creationDateGen = (date: string, action: string): string => {
   return timeFromNow(Date.now() - Date.parse(date), action);
 };
+
+/**
+ * Takes in the updated date and action (verb in passive state, e.g."Posted","Commented") and returns a neatly formatted, human readable time/date
+ * @param date
+ * @param action
+ * @returns string
+ */
 
 export const updateDateGen = (date: string, action: string): string => {
   return timeFromNow(Date.now() - Date.parse(date), action);

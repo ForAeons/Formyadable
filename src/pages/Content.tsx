@@ -18,6 +18,18 @@ import {
 import { getLoadingForumCount } from "../utility/loadingForumCount";
 import { TPostApiResponse, emptyPost, severityLevel } from "../types/type";
 
+/**
+ * Index page.
+ * It contains:
+ * - Navbar (responsive to various screensize)
+ * - Search bar (to fetch posts filtered by their title)
+ * - a post form (toggleable through the create post button)
+ * - an array of potentially to-be-fetched post (containers)
+ *
+ * Upon mounting, posts will be automatically fetched, the posts will be rendered beneath the searchbar.
+ * Upon fetching more posts, the additional posts will be added to the state without the need to refetch the previous posts.
+ */
+
 const Content: React.FC = () => {
   const [createPost, setCreatePost] = useState(false);
   const [posts, setPosts] = useState<TPostApiResponse[]>([]);

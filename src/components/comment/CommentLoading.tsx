@@ -1,5 +1,9 @@
 import React from "react";
 
+/**
+ * Visual place holder for comments while comments are being fetched
+ */
+
 const CommentLoading: React.FC = () => {
   return (
     <div className="flex flex-col w-[100%] mx-3 animate-pulse">

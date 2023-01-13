@@ -7,7 +7,14 @@ interface Props {
   thisUser?: TUserApiResponseWithToken;
 }
 
-const profile: React.FC<Props> = ({ thisUser }) => {
+/**
+ * Profile page
+ * - View user's profile
+ * - Edit user profile (for the logged in user)
+ * - Holds the state of edit or view mode (default to view)
+ */
+
+const Profile: React.FC<Props> = ({ thisUser }) => {
   const [isEditingProfile, setIsEditingProfile] = useState(false);
 
   return (
@@ -24,4 +31,4 @@ const profile: React.FC<Props> = ({ thisUser }) => {
   );
 };
 
-export default profile;
+export default Profile;

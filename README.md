@@ -1,14 +1,15 @@
 # Just A Forum
 
-## Description
-
-### Minimalist, Responsive forum website
+## Minimalist, Responsive forum website
 
 ## Deployement
 
 Frontend: React.js, ~~MUI~~ Tailwind
 
-- Installed locally: run: `npm run dev` to start
+- Installed locally:
+- run: `npm i` to install dependencies
+- run: `npm run dev` to start
+
 - Demo by Netlify: _to be filled_
 
 Backend: Ruby on Rails  
@@ -49,8 +50,10 @@ Database: PostgreSQL
 
 ### General
 
-- [x] Code refactoring
 - [x] Adding animations
+- [x] Code refactoring
+- [x] Better documentation
+- [ ] Better code organization for api requests
 - [ ] Better error handling, displaying human readable errors
 
 ### Potential Add Ons

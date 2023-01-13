@@ -8,6 +8,12 @@ interface Context {
   setUser: (user: TUserApiResponse) => void;
 }
 
+/**
+ * Sign up page
+ * - Ability to create new accounts
+ * - Ability to navigate to login page
+ */
+
 const Signup: React.FC = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");

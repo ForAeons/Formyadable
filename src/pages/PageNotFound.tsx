@@ -1,6 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+/**
+ * Error 404 page
+ * - If the route does not exist, users will be directed to this page
+ * - Option to go the home page
+ */
+
 const PageNotFound: React.FC = () => {
   return (
     <div className="flex flex-col h-[100vh] w-[100vw] justify-center items-center">

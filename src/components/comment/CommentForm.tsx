@@ -13,6 +13,13 @@ interface Props {
   setIsEditingComment?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+/**
+ * Displays a single comment form.
+ * Ability to post new comment.
+ * Ability edit existing comment for creator of the comment.
+ * Ability leave edit mode for creator of the comment.
+ */
+
 const CommentForm: React.FC<Props> = ({
   postID,
   thisComment,

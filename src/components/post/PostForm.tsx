@@ -13,6 +13,13 @@ interface Props {
   setForumStatus: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+/**
+ * Displays a single post form.
+ * Ability to post new post.
+ * Ability edit existing post for creator of the post.
+ * Ability leave edit mode for creator of the post.
+ */
+
 const PostForm: React.FC<Props> = ({
   thisPost,
   posts,

@@ -23,6 +23,19 @@ interface Props {
   setPosts: React.Dispatch<React.SetStateAction<TPostApiResponse[]>>;
 }
 
+/**
+ * Container for a single post, which holds the state of the post.
+ * A post is either in edit or view mode. It defaults to view mode.
+ * Edit mode is only accessible by creator of the post.
+ *
+ *  A post container also contains:
+ * - a comment form
+ * - an array of potentially to-be-fetched comment (containers)
+ *
+ * Upon fetch, the comments will be rendered beneath the post without the need to go to a separate page, disrupting the viewing experience.
+ * Comments are lazy loaded and toggleable.
+ */
+
 const PostContainer: React.FC<Props> = ({ post, posts, setPosts }) => {
   const [showComments, setShowComments] = useState(false);
   const [comments, setComments] = useState<TCommentApiResponse[]>([]);

@@ -1,5 +1,9 @@
 import React from "react";
 
+/**
+ * Visual place holder for posts while posts are being fetched
+ */
+
 const PostLoading: React.FC = () => {
   return (
     <div className="flex flex-col mx-3 w-[100%] animate-pulse">

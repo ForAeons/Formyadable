@@ -1,3 +1,9 @@
+/**
+ * Takes in a username and returns first two starting letter of the username. This is used to display the username as an icon.
+ * @param username
+ * @returns string
+ */
+
 export default function iconTextGenerator(username: string): string {
   return username
     .split(" ") // split by spacing
