@@ -8,6 +8,7 @@ export { default as BtnClose } from "./button/BtnClose";
 export { default as BtnCategory } from "./button/BtnCategory";
 export { default as BtnHome } from "./button/BtnHome";
 export { default as BtnBack } from "./button/BtnBack";
+export { default as BtnShowMore } from "./button/BtnShowMore";
 
 export { default as Navbar } from "./nav/Navbar";
 export { default as MobileMenu } from "./nav/MobileMenu";

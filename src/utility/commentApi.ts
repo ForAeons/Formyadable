@@ -1,13 +1,8 @@
 import axios from "axios";
 import { TComment, IAxiosResponse } from "../types/type";
 
-export const getCommentsByPostID = async (
-  PostID: number,
-  pageNum: number = 1
-) => {
-  const res: IAxiosResponse = await axios.get(
-    `/comments?post_id=${PostID}&page=${pageNum}`
-  );
+export const getCommentsByPostID = async (PostID: number) => {
+  const res: IAxiosResponse = await axios.get(`/comments?post_id=${PostID}`);
 
   // for debugging
   console.log(res);

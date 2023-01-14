@@ -42,14 +42,13 @@ const PostContainer: React.FC<Props> = ({ post, posts, setPosts }) => {
   const [isFetchingComments, setIsFetchingComments] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [alert, setAlert] = useState({ message: "", severity: -1 });
-  const page = useRef(1);
 
-  const fetchComments = (page: number) => {
+  const fetchComments = () => {
     setIsFetchingComments(true);
 
-    getCommentsByPostID(post.id, page)
+    getCommentsByPostID(post.id)
       .then((result: TCommentApiResponse[]) => {
-        setComments(result);
+        setComments([...comments, ...result]);
       })
       .catch((err) => {
         console.log(err);
@@ -64,8 +63,9 @@ const PostContainer: React.FC<Props> = ({ post, posts, setPosts }) => {
     setShowComments(!showComments);
 
     if (isFetchingComments) return; // guard clause
+    if (comments.length > 0) return; // no need to refetch
 
-    fetchComments(page.current);
+    fetchComments();
   };
 
   // DELETE post
@@ -105,55 +105,51 @@ const PostContainer: React.FC<Props> = ({ post, posts, setPosts }) => {
       )}
 
       {/* showComment: display loading comment or actual comments */}
-      {showComments &&
-        (isFetchingComments ? (
-          Array(Math.floor(Math.random() * 4 + 1))
-            .fill(1)
-            .map((_, i) => <CommentLoading key={i} />)
-        ) : (
-          <div className="flex flex-row w-full flex-wrap content-start items-center justify-center gap-4 my-3 ">
-            {/* displays error */}
-            {alert.message && (
-              <Alert message={alert.message} severity={alert.severity} />
-            )}
+      {showComments && (
+        <>
+          <div className="flex flex-row w-full flex-wrap content-start items-center justify-center gap-4 my-3">
+            {isFetchingComments ? (
+              // comment place holders
+              Array(Math.floor(Math.random() * 4 + 1))
+                .fill(1)
+                .map((_, i) => <CommentLoading key={i} />)
+            ) : (
+              <>
+                {/* displays error */}
+                {alert.message && (
+                  <Alert message={alert.message} severity={alert.severity} />
+                )}
 
-            {/* displays prompt to post */}
-            {comments.length === 0 && (
-              <Alert
-                message={"No comments here.\nBe the first to comment!"}
-                severity={severityLevel.low}
-              />
-            )}
+                {/* displays prompt to post */}
+                {comments.length === 0 && (
+                  <Alert
+                    message={"No comments here.\nBe the first to comment!"}
+                    severity={severityLevel.low}
+                  />
+                )}
 
-            <CommentForm
-              postID={post.id}
-              thisComment={emptyComment}
-              comments={comments}
-              setComments={setComments}
-            />
-            {comments.map((comment) => (
-              <CommentContainer
-                key={comment.id}
-                comment={comment}
-                comments={comments}
-                setComments={setComments}
-              />
-            ))}
+                {/* Comment submission form */}
+                <CommentForm
+                  postID={post.id}
+                  thisComment={emptyComment}
+                  comments={comments}
+                  setComments={setComments}
+                />
 
-            {/* only show the show more comments button  */}
-            {comments.length > 0 && (
-              <button
-                className="rounded-md bg-blue-400 px-5 py-1 text-sm font-bold text-slate-600 shadow-md hover:bg-blue-300"
-                onClick={() => {
-                  page.current += 1;
-                  fetchComments(page.current);
-                }}
-              >
-                Show more comments
-              </button>
+                {/* Comments */}
+                {comments.map((comment) => (
+                  <CommentContainer
+                    key={comment.id}
+                    comment={comment}
+                    comments={comments}
+                    setComments={setComments}
+                  />
+                ))}
+              </>
             )}
           </div>
-        ))}
+        </>
+      )}
     </div>
   );
 };

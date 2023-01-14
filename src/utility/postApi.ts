@@ -34,10 +34,8 @@ export const getPostByID = async (id: number) => {
   }
 };
 
-export const getPostByCategory = async (cat: string, pageNum: number = 1) => {
-  const res: IAxiosResponse = await axios.get(
-    `/posts?cat=${cat}&page=${pageNum}`
-  );
+export const getPostByCategory = async (cat: string) => {
+  const res: IAxiosResponse = await axios.get(`/posts?cat=${cat}`);
   // for debugging
   console.log(res);
 
@@ -50,10 +48,8 @@ export const getPostByCategory = async (cat: string, pageNum: number = 1) => {
   }
 };
 
-export const getPostByTitle = async (title: string, pageNum: number = 1) => {
-  const res: IAxiosResponse = await axios.get(
-    `/posts?q=${title}&page=${pageNum}`
-  );
+export const getPostByTitle = async (title: string) => {
+  const res: IAxiosResponse = await axios.get(`/posts?q=${title}`);
   // for debugging
   console.log(res);
 

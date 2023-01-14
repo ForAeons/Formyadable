@@ -38,7 +38,6 @@ Database: PostgreSQL
 - [x] create post
 - [x] edit post
 - [x] Delete post
-- [ ] Fetch more posts function
 
 ### Comment
 
@@ -46,7 +45,6 @@ Database: PostgreSQL
 - [x] Post comments
 - [x] Edit comments
 - [x] Delete comments
-- [ ] Fetch more comments function
 
 ### General
 
