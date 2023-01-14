@@ -52,7 +52,7 @@ const Comment: React.FC<Props> = ({
   };
 
   return (
-    <div className="flex flex-col mx-3">
+    <div className="flex flex-col w-fit mx-3">
       {/* <!-- title section --> */}
       <div className="justify-left flex flex-row items-center gap-4 px-6 py-3">
         <Link to={`/profile/${comment.author}`}>
@@ -62,7 +62,7 @@ const Comment: React.FC<Props> = ({
           by {comment.author}
         </h3>
       </div>
-      <div className="flex min-h-[20%] min-w-[40%] flex-col justify-start gap-3 rounded-2xl bg-slate-50 p-6 shadow-md hover:shadow-xl  transition-shadow">
+      <div className="flex min-h-[20%] min-w-[40%] flex-col justify-start gap-3 rounded-2xl bg-slate-50 p-6 shadow-md hover:shadow-xl transition-shadow">
         {/* <!-- Body --> */}
         <div className="w-f font-sans text-lg text-slate-600">
           {comment.content}

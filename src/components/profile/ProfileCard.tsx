@@ -20,7 +20,7 @@ const ProfileCard: React.FC<Props> = ({ user, setIsEditingProfile }) => {
   return (
     <div className="flex flex-col h-fit items-start justify-center gap-4 mx-12 sm:max-w-lg bg-slate-100 rounded-2xl shadow-2xl p-6">
       {/* Profile pic */}
-      <div className="rounded-full bg-slate-600 hover:bg-slate-500 flex justify-center items-center font-Raleway text-2xl font-extrabold text-slate-200 h-24 w-24 self-center shadow-lg">
+      <div className="rounded-full bg-slate-600 hover:bg-slate-500 flex justify-center items-center font-Raleway text-2xl font-extrabold text-slate-200 h-24 w-24 self-center shadow-lg transition-colors">
         {iconTextGenerator(user.username)}
       </div>
 

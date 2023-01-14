@@ -2,7 +2,6 @@ import React from "react";
 import { useOutletContext, Link } from "react-router-dom";
 
 import { BtnComment, BtnEdit, BtnDelete, ProfileIcon } from "../../components";
-import iconTextGenerator from "../../utility/iconTextGeneator";
 import { titleCase } from "../../utility/strings";
 import { creationDateGen, updateDateGen } from "../../utility/date";
 import { TUserApiResponseWithToken, TPostApiResponse } from "../../types/type";
@@ -35,7 +34,7 @@ const Post: React.FC<Props> = ({
   const { user }: Context = useOutletContext();
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-fit relative animate-SlideDown">
       {/* <!-- title section --> */}
       <div className="justify-left flex flex-row items-center gap-4 px-6 py-3">
         <Link to={`/profile/${post.author}`}>

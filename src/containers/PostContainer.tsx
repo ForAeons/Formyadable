@@ -118,7 +118,7 @@ const PostContainer: React.FC<Props> = ({ post, posts, setPosts }) => {
   };
 
   return (
-    <div className="flex flex-col mx-3 w-full items-center">
+    <div className="flex flex-col mx-3 w-full items-center animate-FadeIn">
       {/* Renders post based on editing mode */}
       {isEditing ? (
         <PostForm

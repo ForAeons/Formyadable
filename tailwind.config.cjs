@@ -16,8 +16,25 @@ module.exports = {
       keyframes: {
         slideInKeyFrame: {
           "0%": { transform: "translateX(-100%)" },
-          // "66%": { transform: "translateX(-85%)" },
           "100%": { transform: "translateX(0px)" },
+        },
+        slideDownKeyFrame: {
+          "0%": {
+            transform: "translateY(-50%)",
+            opacity: "0",
+          },
+          "100%": {
+            transform: "translatY(0px)",
+            opacity: "1",
+          },
+        },
+        FadeInKeyframe: {
+          "0%": {
+            opacity: "0",
+          },
+          "100%": {
+            opacity: "1",
+          },
         },
         WiggleKeyframe: {
           "0%": {
@@ -64,6 +81,7 @@ module.exports = {
       },
       animation: {
         SlideIn: "slideInKeyFrame 0.2s cubic-bezier(0, 0.2, 0.9, 1) forwards",
+        FadeIn: "FadeInKeyframe 1s cubic-bezier(0, 0.3, 0.9, 1) forwards",
         Wiggle: "WiggleKeyframe 0.2s cubic-bezier(0, 0.4, 0.6, 1) infinite",
         WiggleOnce: "WiggleOnceKeyframe 0.3s ease-in-out forwards",
         customBounce: "Bouncy 0.7s infinite",
