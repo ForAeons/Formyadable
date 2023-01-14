@@ -28,7 +28,7 @@ Database: PostgreSQL
 - [x] Staying logged in
 - [x] Edit bio / username
 - [x] Viewing other user's profile
-- [ ] Error handling for taken username
+- [x] Error handling for taken username
 
 ### Post
 
@@ -51,8 +51,8 @@ Database: PostgreSQL
 - [x] Adding animations
 - [x] Code refactoring
 - [x] Better documentation
+- [x] Better error handling, displaying human readable errors
 - [ ] Better code organization for api requests
-- [ ] Better error handling, displaying human readable errors
 
 ### Potential Add Ons
 

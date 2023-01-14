@@ -10,6 +10,7 @@ import {
 } from "../../types/type";
 import iconTextGenerator from "../../utility/iconTextGeneator";
 import { snakeCase } from "../../utility/strings";
+import ProfileIcon from "../profile/ProfileIcon";
 
 interface Context {
   user: TUserApiResponseWithToken;
@@ -33,18 +34,16 @@ const NavMenu: React.FC<Props> = ({ isMobile }) => {
         {user.token ? (
           //  logged in
           <>
-            <div className="rounded-full bg-slate-600 hover:bg-slate-500 self-center flex justify-center items-center font-Raleway text-2xl font-extrabold text-slate-200 h-24 w-24 sm:h-12 sm:w-12 mb-2">
-              {iconTextGenerator(user.user.username)}
-            </div>
+            <ProfileIcon username={user.user.username} size="lg" />
             <Link
               to={`/profile/${user.user.username}`}
-              className="font-Raleway font-bold tracking-wide text-lg text-slate-600 hover:text-slate-500 "
+              className="font-Raleway font-bold tracking-wide text-lg text-slate-600 hover:text-slate-500 hover:-translate-x-1 transition-transform "
             >
               Profile
             </Link>
             <Link
               to="/"
-              className="font-Raleway font-bold tracking-wide text-lg text-slate-600 hover:text-red-500 "
+              className="font-Raleway font-bold tracking-wide text-lg text-slate-600 hover:text-red-500 hover:-translate-x-1 transition"
               onClick={() => setUser(nullUser)}
             >
               Log Out
@@ -56,13 +55,13 @@ const NavMenu: React.FC<Props> = ({ isMobile }) => {
             <UserCircleIcon className="h-24 w-24 sm:h-12 sm:w-12  hover:text-slate-500 text-slate-600 self-center mb-2" />
             <Link
               to="/signup"
-              className="font-Raleway font-bold tracking-wide text-lg text-slate-600 hover:text-slate-500 "
+              className="font-Raleway font-bold tracking-wide text-lg text-slate-600 hover:text-slate-500 hover:-translate-x-1 transition-transform"
             >
               Sign Up
             </Link>
             <Link
               to="/login"
-              className="font-Raleway font-bold tracking-wide text-lg text-slate-600 hover:text-slate-500 "
+              className="font-Raleway font-bold tracking-wide text-lg text-slate-600 hover:text-slate-500 hover:-translate-x-1 transition-transform"
             >
               Login
             </Link>
@@ -74,21 +73,19 @@ const NavMenu: React.FC<Props> = ({ isMobile }) => {
         <h1 className="font-Raleway text-xl tracking-widest sm:tracking-tight font-extrabold text-slate-700 whitespace-nowrap self-center mb-2">
           Categories
         </h1>
-        {categories.map((cat, i) => {
-          return (
-            <Link
-              key={i}
-              to={`/posts/${snakeCase(cat)}`}
-              className="font-Raleway font-bold tracking-wide text-lg text-slate-600 hover:text-slate-500 "
-            >
-              {cat}
-            </Link>
-          );
-        })}
+        {categories.map((cat, i) => (
+          <Link
+            key={i}
+            to={`/posts/${snakeCase(cat)}`}
+            className="font-Raleway font-bold tracking-wide text-lg text-slate-600 hover:text-slate-500 hover:-translate-x-1 transition-transform"
+          >
+            {cat}
+          </Link>
+        ))}
       </div>
       <a
         href="#top"
-        className="rounded-md bg-slate-400 px-5 py-1 text-sm font-bold text-slate-600 shadow-md hover:bg-slate-300 mt-auto"
+        className="rounded-md bg-slate-400 px-5 py-1 text-sm font-bold text-slate-600 shadow-md hover:bg-slate-300 mt-auto transition-colors"
       >
         Back to Top
       </a>

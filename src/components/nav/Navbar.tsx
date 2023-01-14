@@ -16,7 +16,7 @@ const Navbar: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-6 w-full sm:w-auto sm:sticky sm:top-0">
-      <nav className="sm:h-screen flex sm:flex-col flex-row-reverse sm:justify-start justify-between items-center sm:p-4 py-2 px-4 bg-slate-200 shadow-md sm:shadow-xl sm:hover:shadow-2xl gap-4 2xl:m-6 2xl:rounded-lg 2xl:h-[calc(100vh-3rem)] flex-grow-0">
+      <nav className="sm:h-screen flex sm:flex-col flex-row-reverse sm:justify-start justify-between items-center sm:p-4 py-2 px-4 bg-slate-200 shadow-md hover:shadow-xl gap-4 2xl:m-6 2xl:rounded-lg 2xl:h-[calc(100vh-3rem)] flex-grow-0 transition-shadow">
         {/* Logo, also act as home button*/}
         <ChatBubbleOvalLeftEllipsisIcon
           className="h-8 w-8 sm:h-16 sm:w-16 text-slate-700 hover:cursor-pointer hover:text-slate-600"

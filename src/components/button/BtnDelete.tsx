@@ -7,7 +7,7 @@ interface Props {
 const BtnDelete: React.FC<Props> = ({ handleClick }) => {
   return (
     <button
-      className="px-5 py-1 rounded-md shadow-md text-sm font-bold bg-red-400 hover:bg-red-500  text-slate-600"
+      className="px-5 py-1 rounded-md shadow-md text-sm font-bold bg-red-400 hover:bg-red-500  text-slate-600 hover:animate-Wiggle transition-colors"
       onClick={handleClick}
     >
       Delete

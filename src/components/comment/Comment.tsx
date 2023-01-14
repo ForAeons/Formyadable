@@ -1,7 +1,7 @@
 import React from "react";
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, Link } from "react-router-dom";
 
-import { BtnDelete, BtnEdit } from "../../components";
+import { BtnDelete, BtnEdit, ProfileIcon } from "../../components";
 import {
   TCommentApiResponse,
   TUserApiResponseWithToken,
@@ -55,14 +55,14 @@ const Comment: React.FC<Props> = ({
     <div className="flex flex-col mx-3">
       {/* <!-- title section --> */}
       <div className="justify-left flex flex-row items-center gap-4 px-6 py-3">
-        <div className="rounded-full bg-slate-300  flex justify-center items-center font-Raleway text-md font-extrabold text-slate-500 h-8 w-8">
-          {iconTextGenerator(comment.author)}
-        </div>
+        <Link to={`/profile/${comment.author}`}>
+          <ProfileIcon username={comment.author} size="sm" />
+        </Link>
         <h3 className=" text-md sm:text-lg font-bold text-slate-500 font-Raleway tracking-wide">
           by {comment.author}
         </h3>
       </div>
-      <div className="flex min-h-[20%] min-w-[40%] flex-col justify-start gap-3 rounded-2xl bg-slate-50 p-6 shadow-md hover:shadow-xl">
+      <div className="flex min-h-[20%] min-w-[40%] flex-col justify-start gap-3 rounded-2xl bg-slate-50 p-6 shadow-md hover:shadow-xl  transition-shadow">
         {/* <!-- Body --> */}
         <div className="w-f font-sans text-lg text-slate-600">
           {comment.content}

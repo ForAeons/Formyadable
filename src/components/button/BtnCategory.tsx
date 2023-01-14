@@ -15,7 +15,7 @@ const BtnCategory: React.FC<Props> = ({
 }) => {
   return (
     <div
-      className={`px-5 py-1 rounded-md shadow-md text-sm font-bold text-slate-600 hover:bg-teal-300 hover:cursor-pointer whitespace-nowrap ${
+      className={`px-5 py-1 rounded-md shadow-md text-sm font-bold text-slate-600 hover:bg-teal-300 hover:cursor-pointer whitespace-nowrap transition-colors ${
         curCategory === category ? "bg-teal-200" : "bg-teal-400"
       }`}
       onClick={() => {

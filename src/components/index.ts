@@ -23,6 +23,7 @@ export { default as CommentForm } from "./comment/CommentForm";
 export { default as ProfileCard } from "./profile/ProfileCard";
 export { default as ProfileForm } from "./profile/ProfileForm";
 export { default as ProfileLoading } from "./profile/ProfileLoading";
+export { default as ProfileIcon } from "./profile/ProfileIcon";
 
 export { default as SearchBar } from "./SearchBar";
 export { default as Alert } from "./Alert";

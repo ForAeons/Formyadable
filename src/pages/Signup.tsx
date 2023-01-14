@@ -91,9 +91,9 @@ const Signup: React.FC = () => {
   };
 
   return (
-    <div className="bg-slate-50 h-screen w-screen flex flex-col justify-center items-center gap-6">
+    <div className="bg-slate-50 h-screen w-screen flex flex-col justify-center items-center gap-6 ">
       <form
-        className="p-6 min-w-[30%] bg-slate-200 rounded-2xl shadow-xl flex flex-col items-center justify-between gap-6 hover:shadow-2xl"
+        className="p-12 w-fit bg-slate-200 rounded-2xl shadow-xl flex flex-col items-center justify-between gap-6 hover:shadow-2xl transition-shadow"
         onSubmit={handleSubmit}
       >
         <h1 className="font-bold text-3xl text-slate-700">Sign Up</h1>
@@ -118,12 +118,12 @@ const Signup: React.FC = () => {
         <div className="flex flex-row justify-evenly w-full">
           <input
             type="submit"
-            className="bg-slate-600 text-md font-bold text-slate-200 px-5 py-1 rounded-md shadow-md hover:cursor-pointer hover:bg-slate-500"
+            className="bg-slate-600 text-md font-bold text-slate-200 px-5 py-1 rounded-md shadow-md hover:cursor-pointer hover:bg-slate-500 transition-colors"
             value="Signup"
           ></input>
           <Link
             to="/login"
-            className="bg-slate-600 text-md font-bold text-slate-200 px-5 py-1 rounded-md shadow-md hover:cursor-pointer hover:bg-slate-500"
+            className="bg-slate-600 text-md font-bold text-slate-200 px-5 py-1 rounded-md shadow-md hover:cursor-pointer hover:bg-slate-500 transition-colors"
           >
             Login
           </Link>

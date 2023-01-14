@@ -1,7 +1,7 @@
 import React from "react";
 import { useOutletContext, Link } from "react-router-dom";
 
-import { BtnComment, BtnEdit, BtnDelete } from "../../components";
+import { BtnComment, BtnEdit, BtnDelete, ProfileIcon } from "../../components";
 import iconTextGenerator from "../../utility/iconTextGeneator";
 import { titleCase } from "../../utility/strings";
 import { creationDateGen, updateDateGen } from "../../utility/date";
@@ -38,14 +38,9 @@ const Post: React.FC<Props> = ({
     <div className="flex flex-col">
       {/* <!-- title section --> */}
       <div className="justify-left flex flex-row items-center gap-4 px-6 py-3">
-        <div className="rounded-full bg-slate-300 hover:bg-slate-200 flex justify-center items-center h-8 w-8 flex-shrink-0">
-          <Link
-            to={`/profile/${post.author}`}
-            className="font-Raleway text-md font-extrabold text-slate-500"
-          >
-            {iconTextGenerator(post.author)}
-          </Link>
-        </div>
+        <Link to={`/profile/${post.author}`}>
+          <ProfileIcon username={post.author} size="sm" />
+        </Link>
         <h3 className="text-lg sm:text-2xl font-bold text-slate-700 font-Raleway tracking-wide">
           {post.title}
         </h3>
@@ -55,7 +50,7 @@ const Post: React.FC<Props> = ({
       </div>
 
       {/* Content card */}
-      <div className="flex min-h-[20%] min-w-[40%] flex-col justify-start gap-3 rounded-2xl bg-slate-200 p-6 shadow-lg hover:shadow-xl">
+      <div className="flex min-h-[20%] min-w-[40%] flex-col justify-start gap-3 rounded-2xl bg-slate-200 p-6 shadow-lg hover:shadow-xl transition-shadow">
         <div className="text-md sm:text-xl font-bold text-slate-600 font-Raleway tracking-wide">
           {titleCase(post.category)}
         </div>
