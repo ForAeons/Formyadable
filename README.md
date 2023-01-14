@@ -10,7 +10,7 @@ Frontend: React.js, ~~MUI~~ Tailwind
 - run: `npm i` to install dependencies
 - run: `npm run dev` to start
 
-- Demo by Netlify: _to be filled_
+- [Demo by Netlify for v3.1](https://63c220099ccdc72e1619a78f--justforum.netlify.app/)
 
 Backend: Ruby on Rails  
 Database: PostgreSQL
@@ -28,7 +28,7 @@ Database: PostgreSQL
 - [x] Staying logged in
 - [x] Edit bio / username
 - [x] Viewing other user's profile
-- [x] Error handling for taken username
+- [ ] Error handling for taken username
 
 ### Post
 
@@ -52,7 +52,7 @@ Database: PostgreSQL
 - [x] Code refactoring
 - [x] Better documentation
 - [ ] Better code organization for api requests
-- [x] Better error handling, displaying human readable errors
+- [ ] Better error handling, displaying human readable errors
 
 ### Potential Add Ons
 
