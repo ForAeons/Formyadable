@@ -36,7 +36,6 @@ const CommentForm: React.FC<Props> = ({
   setAlert,
 }) => {
   const [content, setContent] = useState("");
-  const [message, setMessage] = useState("");
 
   const handleClose = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -57,7 +56,6 @@ const CommentForm: React.FC<Props> = ({
       thisComment.id
     )
       .then((result: TCommentApiResponse) => {
-        setMessage("Post edited!");
         setComments([
           result,
           ...comments.filter(
@@ -103,7 +101,6 @@ const CommentForm: React.FC<Props> = ({
     console.log("Post btn clicked");
     createComment({ content: content, post_id: postID })
       .then((result: TCommentApiResponse) => {
-        setMessage("Comment posted!");
         setComments([result, ...comments]);
       })
       .catch((err) => {
@@ -170,15 +167,13 @@ const CommentForm: React.FC<Props> = ({
       </div>
       {/* <!-- Hr --> */}
       <hr className="rounded-full border-t-2 border-transparent" />
-      <div className="flex flex-row justify-between">
+      <div className="flex flex-row justify-between gap-4">
         {/* displays different button based whether creating new comment or editing existing one */}
         {isEditingComment ? (
           <BtnEdit handleClick={handleEdit} />
         ) : (
           <BtnPost handleClick={handleSubmit} />
         )}
-        {/* Renders a error message depending when necessary */}
-        {message && <p className="text-md font-bold text-red-500">{message}</p>}
         {/* <!-- Post status --> */}
         <h4 className="font-sans font-bold text-xs text-slate-500">{`${content.length}/3000`}</h4>
       </div>

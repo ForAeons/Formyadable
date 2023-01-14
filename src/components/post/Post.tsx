@@ -34,7 +34,7 @@ const Post: React.FC<Props> = ({
   const { user }: Context = useOutletContext();
 
   return (
-    <div className="flex flex-col w-fit relative animate-SlideDown">
+    <div className="flex flex-col w-fit relative">
       {/* <!-- title section --> */}
       <div className="justify-left flex flex-row items-center gap-4 px-6 py-3">
         <Link to={`/profile/${post.author}`}>
