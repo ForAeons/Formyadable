@@ -18,11 +18,12 @@ const BtnCategory: React.FC<Props> = ({
       className={`px-5 py-1 rounded-md shadow-md text-sm font-bold text-slate-600 hover:bg-teal-300 hover:cursor-pointer whitespace-nowrap ${
         curCategory === category ? "bg-teal-200" : "bg-teal-400"
       }`}
-      onClick={() =>
+      onClick={() => {
         curCategory === category
           ? setCategory("")
-          : setCategory(snakeCase(category))
-      }
+          : setCategory(snakeCase(category));
+        console.log(curCategory, category);
+      }}
     >
       {titleCase(category)}
     </div>

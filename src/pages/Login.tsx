@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import { Link, useOutletContext, useNavigate } from "react-router-dom";
 
+import { Alert } from "../components";
 import { login } from "../utility/userApi";
-import { TUserApiResponse } from "../types/type";
+import {
+  IAxiosError,
+  TUserApiResponse,
+  alert,
+  severityLevel,
+} from "../types/type";
 
 interface Context {
   setUser: (user: TUserApiResponse) => void;
@@ -17,7 +23,7 @@ interface Context {
 const Login: React.FC = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
+  const [alert, setAlert] = useState<alert>({ message: "", severity: -1 });
 
   const { setUser }: Context = useOutletContext();
   const navigator = useNavigate();
@@ -28,21 +34,41 @@ const Login: React.FC = () => {
     login({ username: userName, password: password })
       .then((result) => {
         setUser(result);
-        setMessage("Successfully logged in!\nRedirecting to home page.");
+        setAlert({
+          message: "Successfully logged in!\nRedirecting to home page.",
+          severity: severityLevel.low,
+        });
         setTimeout(() => {
           navigator("/");
-        }, 3000);
+        }, 1000);
       })
-      .catch((err) => {
+      .catch((err: IAxiosError) => {
         console.log(err);
+        if (err.response.statusText === "Unauthorized") {
+          setAlert({
+            message: "Invalid credentials",
+            severity: severityLevel.medium,
+          });
+          return;
+        }
+        if (err.response.statusText) {
+          setAlert({
+            message: err.response.statusText,
+            severity: severityLevel.high,
+          });
+          return;
+        }
         if (err.message) {
-          setMessage(err.message);
+          setAlert({
+            message: err.message,
+            severity: severityLevel.high,
+          });
         }
       });
   };
 
   return (
-    <div className="bg-slate-50 h-screen w-screen flex flex-col justify-center items-center">
+    <div className="bg-slate-50 h-screen w-screen flex flex-col justify-center items-center gap-6">
       <form
         className="p-6 min-w-[30%] bg-slate-200 rounded-2xl shadow-xl flex flex-col items-center justify-between gap-6 hover:shadow-2xl"
         onSubmit={handleSubmit}
@@ -76,8 +102,9 @@ const Login: React.FC = () => {
           </Link>
         </div>
       </form>
+
       {/* Renders a error message depending when necessary */}
-      {message && <p>{message}</p>}
+      {alert.message && <Alert alert={alert} />}
     </div>
   );
 };

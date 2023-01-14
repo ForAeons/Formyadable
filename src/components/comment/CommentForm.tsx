@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 
 import { createComment, updateComment } from "../../utility/commentApi";
-import { TCommentApiResponse } from "../../types/type";
+import {
+  TCommentApiResponse,
+  alert,
+  severityLevel,
+  IAxiosError,
+} from "../../types/type";
 import { BtnClose, BtnEdit, BtnPost } from "../../components";
 
 interface Props {
@@ -11,6 +16,7 @@ interface Props {
   comments: TCommentApiResponse[];
   isEditingComment?: boolean;
   setIsEditingComment?: React.Dispatch<React.SetStateAction<boolean>>;
+  setAlert: React.Dispatch<React.SetStateAction<alert>>;
 }
 
 /**
@@ -27,6 +33,7 @@ const CommentForm: React.FC<Props> = ({
   setComments,
   isEditingComment,
   setIsEditingComment,
+  setAlert,
 }) => {
   const [content, setContent] = useState("");
   const [message, setMessage] = useState("");
@@ -35,7 +42,6 @@ const CommentForm: React.FC<Props> = ({
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): void => {
     e.preventDefault();
-
     console.log("Close btn clicked");
 
     // checks for undefined
@@ -60,14 +66,27 @@ const CommentForm: React.FC<Props> = ({
         ]);
         if (setIsEditingComment) setIsEditingComment(false);
       })
-      .catch((err) => {
+      .catch((err: IAxiosError) => {
         console.log(err);
         if (err.request.statusText === "Unauthorized") {
-          setMessage("Please login first!");
+          setAlert({
+            message: "You may not edit comments from others!",
+            severity: severityLevel.medium,
+          });
+          return;
+        }
+        if (err.response.statusText) {
+          setAlert({
+            message: err.response.statusText,
+            severity: severityLevel.high,
+          });
           return;
         }
         if (err.message) {
-          setMessage(err.message);
+          setAlert({
+            message: err.message,
+            severity: severityLevel.high,
+          });
         }
       });
   };
@@ -90,11 +109,24 @@ const CommentForm: React.FC<Props> = ({
       .catch((err) => {
         console.log(err);
         if (err.request.statusText === "Unauthorized") {
-          setMessage("Please login first!");
+          setAlert({
+            message: "Please login first!",
+            severity: severityLevel.medium,
+          });
+          return;
+        }
+        if (err.response.statusText) {
+          setAlert({
+            message: err.response.statusText,
+            severity: severityLevel.high,
+          });
           return;
         }
         if (err.message) {
-          setMessage(err.message);
+          setAlert({
+            message: err.message,
+            severity: severityLevel.high,
+          });
         }
       });
   };

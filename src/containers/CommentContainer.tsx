@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Comment, CommentForm } from "../components";
+import { Alert, Comment, CommentForm } from "../components";
 
-import { TCommentApiResponse } from "../types/type";
+import { TCommentApiResponse, alert } from "../types/type";
 
 interface Props {
   comment: TCommentApiResponse;
@@ -21,28 +21,33 @@ const CommentContainer: React.FC<Props> = ({
   setComments,
 }) => {
   const [isEditingComment, setIsEditingComment] = useState(false);
+  const [alert, setAlert] = useState<alert>({ message: "", severity: -1 });
 
   // renders different component based on editingComment status
-  if (isEditingComment)
-    return (
-      <CommentForm
-        postID={comment.post_id}
-        thisComment={comment}
-        comments={comments}
-        setComments={setComments}
-        isEditingComment={isEditingComment}
-        setIsEditingComment={setIsEditingComment}
-      />
-    );
-  else
-    return (
-      <Comment
-        comment={comment}
-        comments={comments}
-        setComments={setComments}
-        setIsEditingComment={setIsEditingComment}
-      />
-    );
+
+  return (
+    <>
+      {isEditingComment ? (
+        <CommentForm
+          postID={comment.post_id}
+          thisComment={comment}
+          comments={comments}
+          setComments={setComments}
+          isEditingComment={isEditingComment}
+          setIsEditingComment={setIsEditingComment}
+          setAlert={setAlert}
+        />
+      ) : (
+        <Comment
+          comment={comment}
+          comments={comments}
+          setComments={setComments}
+          setIsEditingComment={setIsEditingComment}
+        />
+      )}
+      {alert.message && <Alert alert={alert} />}
+    </>
+  );
 };
 
 export default CommentContainer;

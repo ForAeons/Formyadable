@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Link, useOutletContext, useNavigate } from "react-router-dom";
 
+import { Alert } from "../components";
 import { signUp } from "../utility/userApi";
-import { TUserApiResponse } from "../types/type";
+import { TUserApiResponse, severityLevel } from "../types/type";
 
 interface Context {
   setUser: (user: TUserApiResponse) => void;
@@ -18,7 +19,7 @@ const Signup: React.FC = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [passwordC, setPasswordC] = useState("");
-  const [message, setMessage] = useState("");
+  const [alert, setAlert] = useState({ message: "", severity: -1 });
 
   const { setUser }: Context = useOutletContext();
   const navigator = useNavigate();
@@ -28,28 +29,63 @@ const Signup: React.FC = () => {
 
     // password check
     if (password !== passwordC) {
-      setMessage("Both passwords must be the same!");
+      setAlert({
+        message: "Both passwords must be the same!",
+        severity: severityLevel.medium,
+      });
       return;
     }
 
     // username check
     if (userName.length < 6 || userName.length > 30) {
-      setMessage("Username must be between 6 and 30 characters long!");
+      setAlert({
+        message: "Username must be between 6 and 30 characters long!",
+        severity: severityLevel.medium,
+      });
+      return;
+    }
+
+    // password check
+    if (password.length < 8 || password.length > 30) {
+      setAlert({
+        message: "Password must be between 8 and 30 characters long!",
+        severity: severityLevel.medium,
+      });
       return;
     }
 
     signUp({ username: userName, password: password })
       .then((result) => {
         setUser(result);
-        setMessage("Account successfully created!\nRedirecting to home page.");
+        setAlert({
+          message: "Account successfully created!\nRedirecting to home page.",
+          severity: severityLevel.low,
+        });
         setTimeout(() => {
           navigator("/");
-        }, 2000);
+        }, 1000);
       })
       .catch((err) => {
         console.log(err);
+        if (err.response.status == 422) {
+          setAlert({
+            message: "This username may have been taken.\nTry a new one!",
+            severity: severityLevel.medium,
+          });
+          return;
+        }
+        if (err.response.statusText) {
+          setAlert({
+            message: err.response.statusText,
+            severity: severityLevel.high,
+          });
+          return;
+        }
         if (err.message) {
-          setMessage(err.message);
+          setAlert({
+            message: err.message,
+            severity: severityLevel.high,
+          });
         }
       });
   };
@@ -93,8 +129,9 @@ const Signup: React.FC = () => {
           </Link>
         </div>
       </form>
+
       {/* Renders a error message depending when necessary */}
-      {message && <p>{message}</p>}
+      {alert.message && <Alert alert={alert} />}
     </div>
   );
 };

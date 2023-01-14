@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 
-import { TPostApiResponse, TPost, categories } from "../../types/type";
+import {
+  TPostApiResponse,
+  TPost,
+  categories,
+  alert,
+  IAxiosError,
+  severityLevel,
+} from "../../types/type";
 import { BtnClose, BtnPost, BtnEdit, BtnCategory } from "../../components";
 import { createPost, updatePost } from "../../utility/postApi";
 import { snakeCase } from "../../utility/strings";
@@ -11,6 +18,7 @@ interface Props {
   setPosts: React.Dispatch<React.SetStateAction<TPostApiResponse[]>>;
   isEditingPost: boolean;
   setForumStatus: React.Dispatch<React.SetStateAction<boolean>>;
+  setAlert: React.Dispatch<React.SetStateAction<alert>>;
 }
 
 /**
@@ -26,6 +34,7 @@ const PostForm: React.FC<Props> = ({
   setPosts,
   isEditingPost,
   setForumStatus,
+  setAlert,
 }) => {
   const [title, setTitle] = useState(thisPost.title);
   const [content, setContent] = useState(thisPost.content);
@@ -49,14 +58,20 @@ const PostForm: React.FC<Props> = ({
         setPosts([result, ...posts]);
         setForumStatus(false);
       })
-      .catch((err) => {
+      .catch((err: IAxiosError) => {
         console.log(err);
-        if (err.request.statusText === "Unauthorized") {
-          setMessage("Please login first!");
+        if (err.response.statusText) {
+          setAlert({
+            message: err.response.statusText,
+            severity: severityLevel.high,
+          });
           return;
         }
         if (err.message) {
-          setMessage(err.message);
+          setAlert({
+            message: err.message,
+            severity: severityLevel.high,
+          });
         }
       });
   };

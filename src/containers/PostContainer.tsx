@@ -1,4 +1,5 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
+import { useOutletContext } from "react-router-dom";
 
 import {
   Post,
@@ -13,9 +14,16 @@ import {
   TCommentApiResponse,
   emptyComment,
   severityLevel,
+  alert,
+  IAxiosError,
+  TUserApiResponseWithToken,
 } from "../types/type";
 import { getCommentsByPostID } from "../utility/commentApi";
 import { deletePost } from "../utility/postApi";
+
+interface Context {
+  user: TUserApiResponseWithToken;
+}
 
 interface Props {
   post: TPostApiResponse;
@@ -41,7 +49,9 @@ const PostContainer: React.FC<Props> = ({ post, posts, setPosts }) => {
   const [comments, setComments] = useState<TCommentApiResponse[]>([]);
   const [isFetchingComments, setIsFetchingComments] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [alert, setAlert] = useState({ message: "", severity: -1 });
+  const [alert, setAlert] = useState<alert>({ message: "", severity: -1 });
+
+  const { user }: Context = useOutletContext();
 
   const fetchComments = () => {
     setIsFetchingComments(true);
@@ -50,8 +60,21 @@ const PostContainer: React.FC<Props> = ({ post, posts, setPosts }) => {
       .then((result: TCommentApiResponse[]) => {
         setComments([...comments, ...result]);
       })
-      .catch((err) => {
+      .catch((err: IAxiosError) => {
         console.log(err);
+        if (err.response.statusText) {
+          setAlert({
+            message: err.response.statusText,
+            severity: severityLevel.high,
+          });
+          return;
+        }
+        if (err.message) {
+          setAlert({
+            message: err.message,
+            severity: severityLevel.high,
+          });
+        }
       })
       .finally(() => {
         setIsFetchingComments(false);
@@ -75,8 +98,21 @@ const PostContainer: React.FC<Props> = ({ post, posts, setPosts }) => {
         .then(() => {
           setPosts(posts.filter((eachpost) => eachpost.id !== post.id));
         })
-        .catch((err) => {
+        .catch((err: IAxiosError) => {
           console.log(err);
+          if (err.response.statusText) {
+            setAlert({
+              message: err.response.statusText,
+              severity: severityLevel.high,
+            });
+            return;
+          }
+          if (err.message) {
+            setAlert({
+              message: err.message,
+              severity: severityLevel.high,
+            });
+          }
         });
     };
   };
@@ -92,6 +128,7 @@ const PostContainer: React.FC<Props> = ({ post, posts, setPosts }) => {
           setPosts={setPosts}
           isEditingPost={true}
           setForumStatus={setIsEditing}
+          setAlert={setAlert}
         />
       ) : (
         <Post
@@ -104,6 +141,9 @@ const PostContainer: React.FC<Props> = ({ post, posts, setPosts }) => {
         />
       )}
 
+      {/* displays error */}
+      {alert.message && <Alert alert={alert} />}
+
       {/* showComment: display loading comment or actual comments */}
       {showComments && (
         <>
@@ -115,26 +155,26 @@ const PostContainer: React.FC<Props> = ({ post, posts, setPosts }) => {
                 .map((_, i) => <CommentLoading key={i} />)
             ) : (
               <>
-                {/* displays error */}
-                {alert.message && (
-                  <Alert message={alert.message} severity={alert.severity} />
-                )}
-
                 {/* displays prompt to post */}
                 {comments.length === 0 && (
                   <Alert
-                    message={"No comments here.\nBe the first to comment!"}
-                    severity={severityLevel.low}
+                    alert={{
+                      message: "No comments here.\nBe the first to comment!",
+                      severity: severityLevel.low,
+                    }}
                   />
                 )}
 
-                {/* Comment submission form */}
-                <CommentForm
-                  postID={post.id}
-                  thisComment={emptyComment}
-                  comments={comments}
-                  setComments={setComments}
-                />
+                {/* Comment submission form, shows only when logging in */}
+                {user.token != "" && (
+                  <CommentForm
+                    postID={post.id}
+                    thisComment={emptyComment}
+                    comments={comments}
+                    setComments={setComments}
+                    setAlert={setAlert}
+                  />
+                )}
 
                 {/* Comments */}
                 {comments.map((comment) => (

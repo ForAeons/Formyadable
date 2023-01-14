@@ -23,7 +23,6 @@ const ProfileLoading: React.FC = () => {
       {/* Fake Utils */}
       <div className="w-full self-center flex justify-evenly">
         <div className="rounded-md opacity-75 bg-teal-300 py-3 shadow-md px-8 animate-pulse"></div>
-        <div className="rounded-md opacity-75 bg-teal-300 px-8 py-3 shadow-md animate-pulse"></div>
         <div className="rounded-md opacity-75 bg-slate-400 px-8 py-3 shadow-md animate-pulse"></div>
       </div>
     </div>

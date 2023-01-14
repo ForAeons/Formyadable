@@ -2,7 +2,13 @@ import React, { useState } from "react";
 import { useOutletContext } from "react-router-dom";
 
 import { BtnEdit, BtnHome, BtnBack } from "../../components";
-import { TUserApiResponseWithToken, TUserApiResponse } from "../../types/type";
+import {
+  TUserApiResponseWithToken,
+  TUserApiResponse,
+  IAxiosError,
+  severityLevel,
+  alert,
+} from "../../types/type";
 import iconTextGenerator from "../../utility/iconTextGeneator";
 import { updateUserInfo } from "../../utility/userApi";
 
@@ -14,11 +20,13 @@ interface Context {
 interface Props {
   setIsEditingProfile: React.Dispatch<React.SetStateAction<boolean>>;
   setDisplayedUser: React.Dispatch<React.SetStateAction<TUserApiResponse>>;
+  setAlert: React.Dispatch<React.SetStateAction<alert>>;
 }
 
 const ProfileForm: React.FC<Props> = ({
   setIsEditingProfile,
   setDisplayedUser,
+  setAlert,
 }) => {
   let { user, setUser }: Context = useOutletContext();
 
@@ -26,7 +34,6 @@ const ProfileForm: React.FC<Props> = ({
   const [newBio, setNewBio] = useState(user.user.bio);
   const [password, setPassword] = useState("");
   const [passwordC, setPasswordC] = useState("");
-  const [message, setMessage] = useState("");
 
   const handleEdit = () => {
     if (password !== passwordC) return;
@@ -39,14 +46,20 @@ const ProfileForm: React.FC<Props> = ({
         setUser({ ...user, user: result });
         setDisplayedUser(result);
       })
-      .catch((err) => {
+      .catch((err: IAxiosError) => {
         console.log(err);
-        if (err.request.statusText === "Unauthorized") {
-          setMessage("Please login first!");
+        if (err.response.statusText) {
+          setAlert({
+            message: err.response.statusText,
+            severity: severityLevel.high,
+          });
           return;
         }
         if (err.message) {
-          setMessage(err.message);
+          setAlert({
+            message: err.message,
+            severity: severityLevel.high,
+          });
         }
       })
       .finally(() => setIsEditingProfile(false));

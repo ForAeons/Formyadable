@@ -6,6 +6,8 @@ import {
   TUserApiResponseWithToken,
   TUserApiResponse,
   severityLevel,
+  alert,
+  IAxiosError,
 } from "../types/type";
 import { getUserInfo } from "../utility/userApi";
 
@@ -23,7 +25,7 @@ interface Context {
 const Profile: React.FC = () => {
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [isFetchingUser, setIsFetchingUser] = useState(true);
-  const [alert, setAlert] = useState({ message: "", severity: -1 });
+  const [alert, setAlert] = useState<alert>({ message: "", severity: -1 });
 
   const {
     user: { user },
@@ -44,11 +46,20 @@ const Profile: React.FC = () => {
       .then((data: TUserApiResponse) => {
         setDisplayedUser(data);
       })
-      .catch((err) => {
+      .catch((err: IAxiosError) => {
         console.log(err);
+        if (err.response.statusText) {
+          setAlert({
+            message: err.response.statusText,
+            severity: severityLevel.high,
+          });
+          return;
+        }
         if (err.message) {
-          // display error message
-          setAlert({ message: err.message, severity: severityLevel.high });
+          setAlert({
+            message: err.message,
+            severity: severityLevel.high,
+          });
         }
       })
       .finally(() => {
@@ -65,6 +76,7 @@ const Profile: React.FC = () => {
         <ProfileForm
           setIsEditingProfile={setIsEditingProfile}
           setDisplayedUser={setDisplayedUser}
+          setAlert={setAlert}
         />
       ) : (
         <ProfileCard
@@ -72,9 +84,7 @@ const Profile: React.FC = () => {
           setIsEditingProfile={setIsEditingProfile}
         />
       )}
-      {alert.message && (
-        <Alert message={alert.message} severity={alert.severity} />
-      )}
+      {alert.message && <Alert alert={alert} />}
     </div>
   );
 };

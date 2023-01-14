@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useParams, useOutletContext } from "react-router-dom";
 
 import {
   PostLoading,
@@ -16,7 +16,18 @@ import {
   getPostByCategory,
 } from "../utility/postApi";
 import { getLoadingForumCount } from "../utility/loadingForumCount";
-import { TPostApiResponse, emptyPost, severityLevel } from "../types/type";
+import {
+  TUserApiResponseWithToken,
+  TPostApiResponse,
+  emptyPost,
+  severityLevel,
+  alert,
+  IAxiosError,
+} from "../types/type";
+
+interface Context {
+  user: TUserApiResponseWithToken;
+}
 
 /**
  * Index page.
@@ -35,8 +46,10 @@ const Content: React.FC = () => {
   const [posts, setPosts] = useState<TPostApiResponse[]>([]);
   const [isLoadingPosts, setIsLoadingPosts] = useState(false);
   const [searchValue, setSearchValue] = useState("");
-  const [alert, setAlert] = useState({ message: "", severity: -1 });
+  const [alert, setAlert] = useState<alert>({ message: "", severity: -1 });
   const { category: categoryParam } = useParams();
+
+  const { user }: Context = useOutletContext();
 
   console.log("Category", categoryParam);
 
@@ -57,11 +70,20 @@ const Content: React.FC = () => {
           // removes error message
           setAlert({ message: "", severity: -1 });
         })
-        .catch((err) => {
+        .catch((err: IAxiosError) => {
           console.log(err);
+          if (err.response.statusText) {
+            setAlert({
+              message: err.response.statusText,
+              severity: severityLevel.high,
+            });
+            return;
+          }
           if (err.message) {
-            // display error message
-            setAlert({ message: err.message, severity: severityLevel.high });
+            setAlert({
+              message: err.message,
+              severity: severityLevel.high,
+            });
           }
         })
         .finally(() => {
@@ -74,11 +96,21 @@ const Content: React.FC = () => {
           console.log(result);
           setPosts(result);
         })
-        .catch((err) => {
+        .catch((err: IAxiosError) => {
           console.log(err);
           // display error message
+          if (err.response.statusText) {
+            setAlert({
+              message: err.response.statusText,
+              severity: severityLevel.high,
+            });
+            return;
+          }
           if (err.message) {
-            setAlert({ message: err.message, severity: severityLevel.high });
+            setAlert({
+              message: err.message,
+              severity: severityLevel.high,
+            });
           }
         })
         .finally(() => {
@@ -107,12 +139,38 @@ const Content: React.FC = () => {
         // overrides existing posts
         setPosts(result);
       })
-      .catch((err) => {
+      .catch((err: IAxiosError) => {
         console.log(err);
+        if (err.response.statusText) {
+          setAlert({
+            message: err.response.statusText,
+            severity: severityLevel.high,
+          });
+          return;
+        }
+        if (err.message) {
+          setAlert({
+            message: err.message,
+            severity: severityLevel.high,
+          });
+        }
       })
       .finally(() => {
         setIsLoadingPosts(false);
       });
+  };
+
+  const handleCreatePost = () => {
+    // checking for logged in status
+    if (user.token === "") {
+      setAlert({
+        message: "Please log in first!",
+        severity: severityLevel.low,
+      });
+      return;
+    }
+
+    setCreatePost(true);
   };
 
   return (
@@ -125,7 +183,7 @@ const Content: React.FC = () => {
             searchValue={searchValue}
             setSearchValue={setSearchValue}
           />
-          <BtnCreatePost setCreatePost={setCreatePost} />
+          <BtnCreatePost handleClick={handleCreatePost} />
         </div>
 
         {createPost && (
@@ -138,19 +196,20 @@ const Content: React.FC = () => {
             // is in edit mode: false
             isEditingPost={false}
             setForumStatus={setCreatePost}
+            setAlert={setAlert}
           />
         )}
 
         {/* displays error */}
-        {alert.message && (
-          <Alert message={alert.message} severity={alert.severity} />
-        )}
+        {alert.message && <Alert alert={alert} />}
 
         {/* displays prompt to post */}
         {posts.length === 0 && isLoadingPosts === false && (
           <Alert
-            message={"No posts here.\nBe the first to post!"}
-            severity={severityLevel.low}
+            alert={{
+              message: "No posts here.\nBe the first to post!",
+              severity: severityLevel.low,
+            }}
           />
         )}
 

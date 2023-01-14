@@ -1,7 +1,7 @@
 import React from "react";
 import { useOutletContext } from "react-router-dom";
 
-import { BtnEdit, BtnHome, BtnBack } from "../../components";
+import { BtnEdit, BtnBack } from "../../components";
 import { TUserApiResponse, TUserApiResponseWithToken } from "../../types/type";
 import iconTextGenerator from "../../utility/iconTextGeneator";
 

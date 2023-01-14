@@ -28,6 +28,11 @@ export enum severityLevel {
   high,
 }
 
+export type alert = {
+  message: string;
+  severity: number;
+};
+
 // export type TError = {
 //   error: string;
 // };
@@ -137,4 +142,13 @@ export interface IAxiosResponse<T = any> {
   headers: any;
   config: AxiosRequestConfig;
   request?: any;
+}
+
+export interface IAxiosError {
+  code: string;
+  config: AxiosRequestConfig;
+  message: string;
+  name: string;
+  request?: any;
+  response: IAxiosResponse;
 }
