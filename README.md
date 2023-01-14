@@ -10,7 +10,7 @@ Frontend: React.js, ~~MUI~~ Tailwind
 - run: `npm i` to install dependencies
 - run: `npm run dev` to start
 
-- [Demo by Netlify for v3.1.1](https://63c2ae8a9ccdc7067619a761--justforum.netlify.app/)
+- [Demo by Netlify for v3.1.1](https://63c2b54624cc8a08d8dff5aa--justforum.netlify.app/)
 
 Backend: Ruby on Rails  
 Database: PostgreSQL

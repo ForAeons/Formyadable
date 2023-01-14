@@ -62,7 +62,7 @@ const Comment: React.FC<Props> = ({
           by {comment.author}
         </h3>
       </div>
-      <div className="flex min-h-[20%] min-w-[40%] flex-col justify-start gap-3 rounded-2xl bg-slate-50 p-6 shadow-md hover:shadow-xl transition-shadow">
+      <div className="flex min-h-[20%] min-w-[40%] flex-col justify-start gap-3 rounded-2xl bg-slate-50 p-6 shadow-md hover:shadow-lg transition-shadow">
         {/* <!-- Body --> */}
         <div className="w-f font-sans text-lg text-slate-600">
           {comment.content}
@@ -74,7 +74,7 @@ const Comment: React.FC<Props> = ({
           <>
             {/* <!-- Hr --> */}
             <hr className="rounded-full border-t-2 border-slate-300" />
-            <div className="flex flex-row justify-between">
+            <div className="flex flex-row justify-between gap-3">
               <BtnEdit handleClick={() => setIsEditingComment(true)} />
               <BtnDelete handleClick={handleDeleteComment(comment.id)} />
             </div>

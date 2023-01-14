@@ -140,7 +140,7 @@ const CommentForm: React.FC<Props> = ({
   };
 
   return (
-    <form className="flex flex-col w-full mx-3 bg-slate-200 rounded-3xl p-6 shadow-lg  hover:shadow-xl gap-3">
+    <form className="flex flex-col w-full mx-3 bg-slate-200 rounded-3xl p-6 shadow-lg  hover:shadow-xl gap-3 transition-shadow">
       <div className="flex flex-row justify-between">
         <label
           htmlFor="body"
@@ -167,7 +167,7 @@ const CommentForm: React.FC<Props> = ({
       </div>
       {/* <!-- Hr --> */}
       <hr className="rounded-full border-t-2 border-transparent" />
-      <div className="flex flex-row justify-between gap-4">
+      <div className="flex flex-row justify-between">
         {/* displays different button based whether creating new comment or editing existing one */}
         {isEditingComment ? (
           <BtnEdit handleClick={handleEdit} />
