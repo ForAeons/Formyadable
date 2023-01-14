@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useOutletContext } from "react-router-dom";
 
 import { BtnEdit, BtnHome, BtnBack } from "../../components";
@@ -65,6 +65,17 @@ const ProfileForm: React.FC<Props> = ({
       .finally(() => setIsEditingProfile(false));
   };
 
+  const textareaBioRef = useRef<HTMLTextAreaElement>(null);
+
+  // Allows textfields to expand upon reaching its size limit
+  const handleOnInput = () => {
+    if (textareaBioRef.current) {
+      textareaBioRef.current.style.height = "auto";
+      textareaBioRef.current.style.height =
+        textareaBioRef.current.scrollHeight + "px";
+    }
+  };
+
   return (
     <div className="flex flex-col w-fit items-start justify-center gap-4 mx-12 sm:max-w-lg bg-slate-100 rounded-2xl shadow-2xl p-6">
       {/* Profile pic */}
@@ -101,11 +112,14 @@ const ProfileForm: React.FC<Props> = ({
           </label>
           <div className="px-3 py-1 w-full h-fit rounded-lg shadow-inner bg-white">
             <textarea
-              className="w-full text-slate-700 font-sans tracking-wide flex-grow bg-transparent my-1 focus:outline-none h-48"
+              className="w-full text-slate-700 font-sans tracking-wide flex-grow bg-transparent my-1 focus:outline-none"
               name="username"
               id="username"
+              rows={3}
               onChange={(e) => setNewBio(e.target.value)}
               defaultValue={newBio}
+              ref={textareaBioRef}
+              onInput={handleOnInput}
               placeholder="Tell us more about you"
             />
           </div>

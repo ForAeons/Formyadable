@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 import { createComment, updateComment } from "../../utility/commentApi";
 import {
@@ -131,6 +131,17 @@ const CommentForm: React.FC<Props> = ({
       });
   };
 
+  const textareaCommentRef = useRef<HTMLTextAreaElement>(null);
+
+  // Allows textfields to expand upon reaching its size limit
+  const handleOnInput = () => {
+    if (textareaCommentRef.current) {
+      textareaCommentRef.current.style.height = "auto";
+      textareaCommentRef.current.style.height =
+        textareaCommentRef.current.scrollHeight + "px";
+    }
+  };
+
   return (
     <form className="flex flex-col w-full mx-3 bg-slate-200 rounded-3xl p-6 shadow-lg  hover:shadow-xl gap-3">
       <div className="flex flex-row justify-between">
@@ -150,8 +161,10 @@ const CommentForm: React.FC<Props> = ({
           className="text-lg text-slate-700 font-sans tracking-wide flex-grow bg-transparent my-1 focus:outline-none"
           maxLength={5000}
           placeholder=""
-          rows={9}
+          rows={4}
           onChange={(e) => setContent(e.target.value)}
+          ref={textareaCommentRef}
+          onInput={handleOnInput}
           defaultValue={thisComment.content}
         />
       </div>

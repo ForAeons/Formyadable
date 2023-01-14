@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 import {
   TPostApiResponse,
@@ -107,13 +107,24 @@ const PostForm: React.FC<Props> = ({
       });
   };
 
+  const textareaTitleRef = useRef<HTMLTextAreaElement>(null);
+  const textareaBodyRef = useRef<HTMLTextAreaElement>(null);
+
+  // Allows textfields to expand upon reaching its size limit
+  const handleOnInput = (Ref: React.RefObject<HTMLTextAreaElement>) => {
+    if (Ref.current) {
+      Ref.current.style.height = "auto";
+      Ref.current.style.height = Ref.current.scrollHeight + "px";
+    }
+  };
+
   return (
     <form className="flex flex-col w-full m-3 bg-slate-200 rounded-3xl p-6 shadow-lg  hover:shadow-xl gap-3">
       <div className="flex justify-between">
         {/* <!-- title section --> */}
         <label
           htmlFor="newPost"
-          className="text-2xl px-6  font-bold text-slate-700 font-Raleway tracking-wide"
+          className="text-xl px-6 font-bold text-slate-700 font-Raleway tracking-wide"
         >
           Your Title
         </label>
@@ -124,11 +135,13 @@ const PostForm: React.FC<Props> = ({
       <div className="justify-left flex flex-row justify-between items-center gap-4 px-6 py-3 rounded-2xl shadow-inner bg-white">
         <textarea
           id="newPost"
-          className="text-2xl font-bold text-slate-700 font-Raleway tracking-wide flex-grow bg-transparent my-1 focus:outline-none"
+          className="text-xl font-bold text-slate-700 font-Raleway tracking-wide flex-grow bg-transparent my-1 focus:outline-none"
           placeholder="An interesting title"
           maxLength={300}
-          rows={3}
+          rows={2}
           onChange={(e) => setTitle(e.target.value)}
+          ref={textareaTitleRef}
+          onInput={() => handleOnInput(textareaTitleRef)}
           defaultValue={title}
         />
       </div>
@@ -143,7 +156,7 @@ const PostForm: React.FC<Props> = ({
 
       <label
         htmlFor="body"
-        className="text-2xl px-6 font-bold text-slate-700 font-Raleway tracking-wide"
+        className="text-xl px-6 font-bold text-slate-700 font-Raleway tracking-wide"
       >
         Body
       </label>
@@ -153,8 +166,10 @@ const PostForm: React.FC<Props> = ({
           className="text-lg text-slate-700 font-sans tracking-wide flex-grow bg-transparent my-1 focus:outline-none"
           maxLength={5000}
           placeholder="Text (optional)"
-          rows={9}
+          rows={5}
           onChange={(e) => setContent(e.target.value)}
+          ref={textareaBodyRef}
+          onInput={() => handleOnInput(textareaBodyRef)}
           defaultValue={content}
         />
       </div>

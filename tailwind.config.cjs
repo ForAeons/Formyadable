@@ -80,7 +80,7 @@ module.exports = {
         },
       },
       animation: {
-        SlideIn: "slideInKeyFrame 0.2s cubic-bezier(0, 0.2, 0.9, 1) forwards",
+        SlideIn: "slideInKeyFrame 0.2s cubic-bezier(0, 0.1, 0.6, 1) forwards",
         FadeIn: "FadeInKeyframe 1s cubic-bezier(0, 0.3, 0.9, 1) forwards",
         Wiggle: "WiggleKeyframe 0.2s cubic-bezier(0, 0.4, 0.6, 1) infinite",
         WiggleOnce: "WiggleOnceKeyframe 0.3s ease-in-out forwards",

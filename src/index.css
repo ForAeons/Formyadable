@@ -8,10 +8,6 @@ html {
   scroll-behavior: smooth;
 }
 
-.noscroll {
-  overflow-x: hidden;
-}
-
 input:focus {
   outline: none;
 }

@@ -1,6 +1,6 @@
 # Just A Forum
 
-## Minimalist, Responsive forum website
+## Minimalist, flat design and responsive forum website
 
 ## Deployement
 
@@ -64,12 +64,18 @@ Database: PostgreSQL
 
 - Jonas Schmedtmann's [complete javascript course](https://www.udemy.com/course/the-complete-javascript-course/)
 
-- Dave Gray's [CSS course](https://www.youtube.com/watch?v=n4R2E7O-Ngo) and Tailwind course
+- Dave Gray's [CSS course](https://www.youtube.com/watch?v=n4R2E7O-Ngo) and [Tailwind course](https://www.youtube.com/watch?v=lCxcTsOHrjo&t=6035s)
 
 - [Reacts Docs](https://beta.reactjs.org/learn)
+
+- [Tailwind Docs](https://tailwindcss.com/docs)
 
 - [Web Dev Simplified](https://www.youtube.com/@WebDevSimplified) lectures on React Routers and more
 
 - [freeCodeCamp.com](https://www.youtube.com/@freecodecamp)'s TypeScript courses and more
 
 - [Codemy.com](https://www.youtube.com/@Codemycom)
+
+## Special thanks
+
+- [Joe Eng](https://www.linkedin.com/in/yu-siang-eng/)'s feedback

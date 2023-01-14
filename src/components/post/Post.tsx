@@ -40,7 +40,7 @@ const Post: React.FC<Props> = ({
         <Link to={`/profile/${post.author}`}>
           <ProfileIcon username={post.author} size="sm" />
         </Link>
-        <h3 className="text-lg sm:text-2xl font-bold text-slate-700 font-Raleway tracking-wide">
+        <h3 className="text-lg sm:text-xl font-bold text-slate-700 font-Raleway tracking-wide">
           {post.title}
         </h3>
         <h3 className=" text-xs sm:text-sm font-light text-slate-500 ml-auto self-end font-Raleway tracking-wide">

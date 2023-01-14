@@ -174,7 +174,7 @@ const Content: React.FC = () => {
   };
 
   return (
-    <div className=" flex flex-col sm:flex-row items-center sm:items-start content-start 2xl:w-[1535px] 2xl:mx-auto 2xl:px-3">
+    <div className="content flex flex-col sm:flex-row items-center sm:items-start content-start 2xl:w-[1535px] 2xl:mx-auto 2xl:px-3">
       <Navbar />
       <div className="flex flex-col w-full items-center justify-start gap-4 my-3 px-3 sm:px-6">
         <div className="flex w-full flex-row justify-center content-center mx-3 gap-3">
