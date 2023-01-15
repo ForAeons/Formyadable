@@ -79,3 +79,7 @@ Database: PostgreSQL
 ## Special thanks
 
 - [Joe Eng](https://www.linkedin.com/in/yu-siang-eng/)'s feedback
+
+- kamihimmel#8918's suggestions on layout
+
+- tooLazyToShowUp#0194's feedback on bugs

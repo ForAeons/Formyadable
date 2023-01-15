@@ -28,7 +28,7 @@ const Comment: React.FC<Props> = ({ comment, setIsEditingComment }) => {
   const { user }: Context = useOutletContext();
 
   return (
-    <div className="flex flex-col w-full lg:min-w-[50%] mx-3">
+    <div className="flex flex-col w-full lg:w-fit lg:min-w-[50%] mx-3">
       <div className="ml-auto flex gap-2 items-center mx-3 mb-2">
         <Link
           to={`/profile/${comment.author}`}

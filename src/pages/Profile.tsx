@@ -9,13 +9,10 @@ import {
   alert,
   IAxiosError,
   nullAlert,
+  nullUser,
 } from "../types/type";
 import { getUserInfo } from "../utility/userApi";
 import { handleError } from "../utility/error";
-
-interface Context {
-  user: TUserApiResponseWithToken;
-}
 
 /**
  * Profile page
@@ -29,11 +26,7 @@ const Profile: React.FC = () => {
   const [isFetchingUser, setIsFetchingUser] = useState(true);
   const [alert, setAlert] = useState<alert>(nullAlert);
 
-  const {
-    user: { user },
-  }: Context = useOutletContext();
-
-  const [displayedUser, setDisplayedUser] = useState(user);
+  const [displayedUser, setDisplayedUser] = useState(nullUser.user);
 
   let { username } = useParams();
 

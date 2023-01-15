@@ -38,7 +38,7 @@ const ProfileForm: React.FC<Props> = ({
   const [passwordC, setPasswordC] = useState("");
 
   const handleEdit = () => {
-    if (password !== passwordC) return;
+    if (password !== passwordC || password === "") return;
 
     updateUserInfo(
       { username: newUsername, password: password, bio: newBio },
@@ -51,8 +51,8 @@ const ProfileForm: React.FC<Props> = ({
       })
       .catch((err: IAxiosError) => {
         handleError(err, setAlert, {
-          statusMessage: "Unprocessable Entity",
-          responseMessage: "This user does not exist!",
+          statusMessage: "Unauthorized",
+          responseMessage: "Invalid credentials.",
           severity: severityLevel.medium,
         });
       })
