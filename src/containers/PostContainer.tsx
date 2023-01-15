@@ -147,7 +147,7 @@ const PostContainer: React.FC<Props> = ({ post, posts, setPosts }) => {
       {/* showComment: display loading comment or actual comments */}
       {showComments && (
         <>
-          <div className="flex flex-row w-full flex-wrap content-start items-center justify-center gap-4 my-3">
+          <div className="flex flex-row w-full flex-wrap content-start items-center justify-center gap-4">
             {isFetchingComments ? (
               // comment place holders
               Array(Math.floor(Math.random() * 4 + 1))

@@ -12,14 +12,20 @@ const PostLoading: React.FC = () => {
         <div className="rounded-full bg-slate-300 shadow-md p-4"></div>
         <div className=" bg-slate-300 py-3 px-[150] rounded-md w-[50%]"></div>
       </div>
-      <div className="flex min-h-[20%] w-[100%] flex-col justify-start gap-3 rounded-2xl bg-slate-100 p-6 shadow-lg hover:shadow-xl">
+      <div className="flex min-h-[20%] w-[100%] flex-col justify-start gap-3 rounded-xl lg:rounded-2xl bg-slate-100 p-6 shadow-lg hover:shadow-xl">
+        {/* Fake category */}
+        <div className="bg-slate-300 py-3 max-w-[20%] rounded-md animate-pulse"></div>
+        {/* Hr */}
+        <hr className="rounded-full border-t-2 border-slate-300" />
         {/* Fake body */}
         <div className="bg-slate-300 py-3 ml-12 rounded-md animate-pulse"></div>
         <div className="bg-slate-300 py-3 rounded-md animate-pulse"></div>
         <div className="bg-slate-300 py-3 rounded-md animate-pulse"></div>
         <div className="bg-slate-300 py-3 max-w-[30%] rounded-md animate-pulse"></div>
+
         {/* Hr */}
         <hr className="rounded-full border-t-2 border-slate-300" />
+
         {/* Fake utilities */}
         <div className="flex flex-row justify-between">
           <div className="rounded-md opacity-75 bg-teal-400 py-3 shadow-md px-8 animate-pulse"></div>

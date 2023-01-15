@@ -119,12 +119,12 @@ const PostForm: React.FC<Props> = ({
   };
 
   return (
-    <form className="flex flex-col w-full m-3 bg-slate-200 rounded-3xl p-6 shadow-lg  hover:shadow-xl gap-3">
-      <div className="flex justify-between">
+    <form className="flex flex-col w-full mx-3 bg-slate-200 shadow-lg hover:shadow-xl rounded-xl lg:rounded-2xl p-4 lg:p-6 gap-2 lg:gap-3">
+      <div className="flex justify-between items-center">
         {/* <!-- title section --> */}
         <label
           htmlFor="newPost"
-          className="text-xl px-6 font-bold text-slate-700 font-Raleway tracking-wide"
+          className="text-xl px-4 lg:px-6 font-bold text-slate-700 font-Raleway tracking-wide"
         >
           Your Title
         </label>
@@ -132,10 +132,10 @@ const PostForm: React.FC<Props> = ({
         {/* Close button */}
         <BtnClose handleClick={handleClose} />
       </div>
-      <div className="justify-left flex flex-row justify-between items-center gap-4 px-6 py-3 rounded-2xl shadow-inner bg-white">
+      <div className="justify-left flex flex-row justify-between items-center gap-4 px-4 lg:px-6 py-1 lg:py-3 rounded-xl lg:rounded-2xl shadow-inner bg-white">
         <textarea
           id="newPost"
-          className="text-xl font-bold text-slate-700 font-Raleway tracking-wide flex-grow bg-transparent my-1 focus:outline-none"
+          className="text-lg text-slate-700 font-sans tracking-wide flex-grow bg-transparent my-1"
           placeholder="An interesting title"
           maxLength={300}
           rows={2}
@@ -151,19 +151,16 @@ const PostForm: React.FC<Props> = ({
         {`${title.length}/300`}
       </h4>
 
-      {/* <!-- Hr --> */}
-      <hr className="rounded-full border-t-2 border-slate-300" />
-
       <label
         htmlFor="body"
-        className="text-xl px-6 font-bold text-slate-700 font-Raleway tracking-wide"
+        className="text-xl px-4 lg:px-6 font-bold text-slate-700 font-Raleway tracking-wide"
       >
         Body
       </label>
-      <div className="flex flex-row justify-between items-center gap-4 px-6 py-3 rounded-2xl shadow-inner bg-white">
+      <div className="flex flex-row justify-between items-center gap-4 px-4 lg:px-6 py-1 lg:py-3 rounded-xl lg:rounded-2xl shadow-inner bg-white">
         <textarea
           id="body"
-          className="text-lg text-slate-700 font-sans tracking-wide flex-grow bg-transparent my-1 focus:outline-none"
+          className="text-lg text-slate-700 tracking-wide font-sans flex-grow bg-transparent my-1"
           maxLength={5000}
           placeholder="Text (optional)"
           rows={5}
@@ -177,18 +174,13 @@ const PostForm: React.FC<Props> = ({
       {/* <!-- body length status --> */}
       <h4 className="font-sans font-bold text-xs text-slate-500 self-end">{`${content.length}/5000`}</h4>
 
-      {/* <!-- Hr --> */}
-      <hr className="rounded-full border-t-2 border-slate-300" />
-
-      {/* <!-- Hr --> */}
-      {/* <hr className="rounded-full border-t-2 border-transparent" /> */}
       <label
-        htmlFor="body"
-        className="text-2xl px-6 font-bold text-slate-700 font-Raleway tracking-wide"
+        htmlFor="category"
+        className="text-xl px-6 font-bold text-slate-700 font-Raleway tracking-wide"
       >
         Category
       </label>
-      <div className="flex flex-row flex-wrap justify-start items-center gap-4 px-4 py-3 rounded-2xl shadow-inner bg-white">
+      <div className="flex flex-row flex-wrap justify-start items-center gap-4 px-4 py-3  rounded-xl lg:rounded-2xl shadow-inner bg-white">
         {categories.map((cat, i) => (
           <BtnCategory
             key={i}
@@ -200,8 +192,7 @@ const PostForm: React.FC<Props> = ({
       </div>
 
       {/* <!-- Hr --> */}
-      <hr className="rounded-full border-t-2 border-slate-300" />
-
+      <hr className="rounded-full border-t-2 border-transparent" />
       <div className="flex flex-row justify-between">
         {/* displays different button based whether creating new post or editing existing one */}
         {isEditingPost ? (

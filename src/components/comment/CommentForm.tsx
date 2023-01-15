@@ -140,11 +140,11 @@ const CommentForm: React.FC<Props> = ({
   };
 
   return (
-    <form className="flex flex-col w-full mx-3 bg-slate-200 rounded-3xl p-6 shadow-lg  hover:shadow-xl gap-3 transition-shadow">
+    <form className="flex flex-col w-full bg-slate-200 rounded-xl lg:rounded-2xl p-4 lg:p-6 shadow-lg hover:shadow-xl gap-2 lg:gap-3 transition-shadow">
       <div className="flex flex-row justify-between">
         <label
           htmlFor="body"
-          className="text-2xl px-6 font-bold text-slate-700 font-Raleway tracking-wide"
+          className="text-xl px-4 lg:px-6 font-bold text-slate-700 font-Raleway tracking-wide"
         >
           {/* Display different prompt text based on mode */}
           {`${isEditingComment ? "Edit your comment" : "New comment"}`}
@@ -152,10 +152,10 @@ const CommentForm: React.FC<Props> = ({
         {/* only displays close btn when in edit mode */}
         {isEditingComment && <BtnClose handleClick={handleClose} />}
       </div>
-      <div className="justify-left flex flex-row justify-between items-center gap-4 px-6 py-3 rounded-2xl shadow-inner bg-white">
+      <div className="justify-left flex flex-row justify-between items-center gap-4 px-4 lg:px-6 py-3 rounded-xl lg:rounded-2xl shadow-inner bg-white">
         <textarea
           id="body"
-          className="text-lg text-slate-700 font-sans tracking-wide flex-grow bg-transparent my-1 focus:outline-none"
+          className="text-lg text-slate-700 font-sans tracking-wide flex-grow bg-transparent my-1"
           maxLength={5000}
           placeholder=""
           rows={4}

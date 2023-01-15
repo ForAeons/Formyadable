@@ -8,7 +8,6 @@ import {
   categories,
   nullUser,
 } from "../../types/type";
-import iconTextGenerator from "../../utility/iconTextGeneator";
 import { snakeCase } from "../../utility/strings";
 import ProfileIcon from "../profile/ProfileIcon";
 
@@ -26,7 +25,7 @@ const NavMenu: React.FC<Props> = ({ isMobile }) => {
   return (
     <div
       className={`${
-        isMobile ? "flex sm:hidden" : "sm:flex hidden"
+        isMobile ? "flex lg:hidden" : "lg:flex hidden"
       } h-[100%] flex-col items-center justify-start gap-4`}
     >
       <div className="flex flex-col items-start w-full px-3 gap-1">

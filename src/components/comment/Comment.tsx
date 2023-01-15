@@ -6,7 +6,6 @@ import {
   TCommentApiResponse,
   TUserApiResponseWithToken,
 } from "../../types/type";
-import iconTextGenerator from "../../utility/iconTextGeneator";
 import { creationDateGen, updateDateGen } from "../../utility/date";
 import { deleteComment } from "../../utility/commentApi";
 
@@ -62,7 +61,7 @@ const Comment: React.FC<Props> = ({
           by {comment.author}
         </h3>
       </div>
-      <div className="flex min-h-[20%] min-w-[40%] flex-col justify-start gap-3 rounded-2xl bg-slate-50 p-6 shadow-md hover:shadow-lg transition-shadow">
+      <div className="flex min-h-[20%] min-w-[40%] flex-col justify-start bg-slate-50 shadow-md hover:shadow-lg transition-shadow rounded-xl lg:rounded-2xl p-4 lg:p-6 gap-2 lg:gap-3">
         {/* <!-- Body --> */}
         <div className="w-f font-sans text-lg text-slate-600">
           {comment.content}

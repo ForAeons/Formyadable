@@ -7,7 +7,7 @@ interface Props {
 const BtnCreatePost: React.FC<Props> = ({ handleClick }) => {
   return (
     <button
-      className="rounded-lg sm:mt-6 hover:bg-teal-300 bg-teal-400 py-2 px-4 shadow-md text-sm font-bold text-slate-700 transition hover:animate-customBounce"
+      className="rounded-lg hover:bg-teal-300 bg-teal-400 py-2 px-4 shadow-md text-sm font-bold text-slate-700 transition hover:animate-customBounce"
       onClick={handleClick}
     >
       Create Post

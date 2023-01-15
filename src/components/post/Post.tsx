@@ -34,7 +34,7 @@ const Post: React.FC<Props> = ({
   const { user }: Context = useOutletContext();
 
   return (
-    <div className="flex flex-col w-fit relative">
+    <div className="flex flex-col w-fit">
       {/* <!-- title section --> */}
       <div className="justify-left flex flex-row items-center gap-4 px-6 py-3">
         <Link to={`/profile/${post.author}`}>
@@ -49,7 +49,7 @@ const Post: React.FC<Props> = ({
       </div>
 
       {/* Content card */}
-      <div className="flex min-h-[20%] min-w-[40%] flex-col justify-start gap-3 rounded-2xl bg-slate-200 p-6 shadow-lg hover:shadow-xl transition-shadow">
+      <div className="flex min-h-[20%] min-w-[40%] flex-col justify-start bg-slate-200 shadow-lg hover:shadow-xl transition-shadow rounded-xl lg:rounded-2xl p-4 lg:p-6 gap-2 lg:gap-3">
         <div className="text-md sm:text-xl font-bold text-slate-600 font-Raleway tracking-wide">
           {titleCase(post.category)}
         </div>

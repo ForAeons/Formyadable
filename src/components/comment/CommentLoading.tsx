@@ -11,7 +11,7 @@ const CommentLoading: React.FC = () => {
       <div className="justify-left flex w-full flex-row items-center gap-4 px-6 py-3 animate-pulse">
         <div className="rounded-full bg-slate-300 shadow-md p-4"></div>
       </div>
-      <div className="flex min-h-[20%] w-[100%] flex-col justify-start gap-3 rounded-2xl bg-slate-50 p-6 shadow-md hover:shadow-xl">
+      <div className="flex min-h-[20%] w-[100%] flex-col justify-start gap-3 rounded-xl lg:rounded-2xl bg-slate-50 p-6 shadow-md hover:shadow-xl">
         {/* Fake body */}
         <div className="bg-slate-300 opacity-75 py-3 ml-12 rounded-md animate-pulse"></div>
         <div className="bg-slate-300 opacity-75 py-3 rounded-md animate-pulse"></div>
