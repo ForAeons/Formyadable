@@ -1,6 +1,9 @@
 # Just A Forum
 
-## Minimalist, flat design and responsive forum website
+Submission by: Wu Xiaoyun
+Matriculation Number: A0231121E
+
+## Minimalist and responsive forum website with a flat design
 
 ## Deployement
 
@@ -10,7 +13,7 @@ Frontend: React.js, ~~MUI~~ Tailwind
 - run: `npm i` to install dependencies
 - run: `npm run dev` to start
 
-- [Demo by Netlify for v3.1.1](https://justforum.netlify.app/)
+- [Demo by Netlify for v3.1.2](https://justforum.netlify.app/)
 
 Backend: Ruby on Rails  
 Database: PostgreSQL
@@ -52,11 +55,7 @@ Database: PostgreSQL
 - [x] Code refactoring
 - [x] Better documentation
 - [x] Better error handling, displaying human readable errors
-- [ ] Better code organization for api requests
-
-### Potential Add Ons
-
-- [ ] Like system
+- [x] Better code organization for api requests
 
 ---
 
@@ -78,7 +77,7 @@ Database: PostgreSQL
 
 ## Special thanks
 
-- [Joe Eng](https://www.linkedin.com/in/yu-siang-eng/)'s feedback
+- [Joe Eng](https://www.linkedin.com/in/yu-siang-eng/)'s feedback and encouragement
 
 - kamihimmel#8918's suggestions on layout
 

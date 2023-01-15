@@ -35,10 +35,9 @@ const ProfileForm: React.FC<Props> = ({
   const [newUsername, setNewUsername] = useState(user.user.username);
   const [newBio, setNewBio] = useState(user.user.bio);
   const [password, setPassword] = useState("");
-  const [passwordC, setPasswordC] = useState("");
 
   const handleEdit = () => {
-    if (password !== passwordC || password === "") return;
+    if (password === "") return;
 
     updateUserInfo(
       { username: newUsername, password: password, bio: newBio },
@@ -130,14 +129,8 @@ const ProfileForm: React.FC<Props> = ({
         <input
           type="password"
           className="font-semibold text-xl dark:text-slate-400 px-5 py-1 rounded-md shadow-md"
-          placeholder="Password"
+          placeholder="Current password"
           onChange={(e) => setPassword(e.target.value)}
-        />
-        <input
-          type="password"
-          className="font-semibold text-xl dark:text-slate-400 px-5 py-1 rounded-md shadow-md"
-          placeholder="Confirm Password"
-          onChange={(e) => setPasswordC(e.target.value)}
         />
       </form>
 
