@@ -1,7 +1,5 @@
 import React from "react";
 
-import { TCommentApiResponse } from "../../types/type";
-
 interface Props {
   showComments: boolean;
   handleClick: () => void;
@@ -10,7 +8,7 @@ interface Props {
 const BtnComment: React.FC<Props> = ({ showComments, handleClick }) => {
   return (
     <button
-      className="rounded-md bg-slate-300 hover:bg-slate-400 px-5 py-1 text-sm font-bold text-slate-600 shadow-md transition-colors"
+      className="rounded-md bg-slate-300 hover:bg-slate-400 px-5 py-1 text-sm font-bold text-slate-600 shadow-md transition-colors mx-auto"
       onClick={handleClick}
     >
       {showComments ? "Hide Comments" : "View Comments"}

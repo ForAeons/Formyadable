@@ -67,9 +67,9 @@ const Post: React.FC<Props> = ({
       </div>
 
       {/* <!-- Post status --> */}
-      <div className="flex items-center justify-between mx-3 mt-3 gap-2">
+      <div className="mx-3 mt-3 gap-2 grid grid-cols-3 justify-center items-center">
         {/* Creation date */}
-        <h4 className="font-sans text-xs text-slate-500">
+        <h4 className="font-sans text-xs text-slate-500 row-span-1">
           {creationDateGen(post.created_at, "Posted")}
         </h4>
 
@@ -80,7 +80,7 @@ const Post: React.FC<Props> = ({
 
         {/* Update date, only displayed if updated */}
         {post.created_at !== post.updated_at && (
-          <h4 className="font-sans text-xs text-slate-500 text-right">
+          <h4 className="font-sans text-xs text-slate-500 text-right row-span-1">
             {updateDateGen(post.updated_at, "Edited")}
           </h4>
         )}

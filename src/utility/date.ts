@@ -15,6 +15,11 @@ const year = month * 12;
  */
 
 const timeFromNow = (timeDif: number, action: string): string => {
+  if (timeDif < 10 * second) {
+    const number = Math.round(timeDif / second);
+    return `${action} just now`;
+  }
+
   if (timeDif < minute) {
     const number = Math.round(timeDif / second);
     return `${action} ${number} second${number === 1 ? "" : "s"} ago`;
