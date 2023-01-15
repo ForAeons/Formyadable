@@ -1,13 +1,18 @@
 import React, { useState, useRef } from "react";
 
-import { createComment, updateComment } from "../../utility/commentApi";
+import {
+  createComment,
+  updateComment,
+  deleteComment,
+} from "../../utility/commentApi";
 import {
   TCommentApiResponse,
   alert,
   severityLevel,
   IAxiosError,
 } from "../../types/type";
-import { BtnClose, BtnEdit, BtnPost } from "../../components";
+import { BtnClose, BtnDelete, BtnEdit, BtnPost } from "../../components";
+import { handleError } from "../../utility/error";
 
 interface Props {
   postID: number;
@@ -35,7 +40,7 @@ const CommentForm: React.FC<Props> = ({
   setIsEditingComment,
   setAlert,
 }) => {
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState(thisComment.content);
 
   const handleClose = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -65,27 +70,11 @@ const CommentForm: React.FC<Props> = ({
         if (setIsEditingComment) setIsEditingComment(false);
       })
       .catch((err: IAxiosError) => {
-        console.log(err);
-        if (err.request.statusText === "Unauthorized") {
-          setAlert({
-            message: "You may not edit comments from others!",
-            severity: severityLevel.medium,
-          });
-          return;
-        }
-        if (err.response.statusText) {
-          setAlert({
-            message: err.response.statusText,
-            severity: severityLevel.high,
-          });
-          return;
-        }
-        if (err.message) {
-          setAlert({
-            message: err.message,
-            severity: severityLevel.high,
-          });
-        }
+        handleError(err, setAlert, {
+          statusMessage: "Unauthorized",
+          responseMessage: "You may not edit comments from others!",
+          severity: severityLevel.medium,
+        });
       });
   };
 
@@ -94,38 +83,36 @@ const CommentForm: React.FC<Props> = ({
   ): void => {
     e.preventDefault();
 
-    // const target = (e.target as Element).closest(".btn__post");
-    // // Guard clause
-    // if (!target) return;
-
-    console.log("Post btn clicked");
     createComment({ content: content, post_id: postID })
       .then((result: TCommentApiResponse) => {
         setComments([result, ...comments]);
+
+        // clears the input field
+        setContent("");
       })
-      .catch((err) => {
-        console.log(err);
-        if (err.request.statusText === "Unauthorized") {
-          setAlert({
-            message: "Please login first!",
-            severity: severityLevel.medium,
-          });
-          return;
-        }
-        if (err.response.statusText) {
-          setAlert({
-            message: err.response.statusText,
-            severity: severityLevel.high,
-          });
-          return;
-        }
-        if (err.message) {
-          setAlert({
-            message: err.message,
-            severity: severityLevel.high,
-          });
-        }
+      .catch((err: IAxiosError) => {
+        handleError(err, setAlert, {
+          statusMessage: "Unauthorized",
+          responseMessage: "Please login first!",
+          severity: severityLevel.medium,
+        });
       });
+  };
+
+  // DELETE post
+  const handleDeleteComment = (commentID: number) => {
+    return () => {
+      console.log("Delete Btn clicked");
+      deleteComment(commentID)
+        .then(() => {
+          setComments(
+            comments.filter((eachcomment) => eachcomment.id !== thisComment.id)
+          );
+        })
+        .catch((err) => {
+          handleError(err, setAlert);
+        });
+    };
   };
 
   const textareaCommentRef = useRef<HTMLTextAreaElement>(null);
@@ -162,11 +149,12 @@ const CommentForm: React.FC<Props> = ({
           onChange={(e) => setContent(e.target.value)}
           ref={textareaCommentRef}
           onInput={handleOnInput}
-          defaultValue={thisComment.content}
+          value={content}
         />
       </div>
-      {/* <!-- Hr --> */}
-      <hr className="rounded-full border-t-2 border-transparent" />
+
+      <h4 className="font-sans font-bold text-xs text-slate-500 ml-auto">{`${content.length}/3000`}</h4>
+
       <div className="flex flex-row justify-between">
         {/* displays different button based whether creating new comment or editing existing one */}
         {isEditingComment ? (
@@ -174,8 +162,10 @@ const CommentForm: React.FC<Props> = ({
         ) : (
           <BtnPost handleClick={handleSubmit} />
         )}
+        {isEditingComment && (
+          <BtnDelete handleClick={() => handleDeleteComment(thisComment.id)} />
+        )}
         {/* <!-- Post status --> */}
-        <h4 className="font-sans font-bold text-xs text-slate-500">{`${content.length}/3000`}</h4>
       </div>
     </form>
   );

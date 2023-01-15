@@ -1,7 +1,7 @@
 import React from "react";
 
 interface Props {
-  handleClick: () => void;
+  handleClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
 const BtnDelete: React.FC<Props> = ({ handleClick }) => {

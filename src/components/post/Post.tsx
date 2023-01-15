@@ -1,7 +1,7 @@
 import React from "react";
 import { useOutletContext, Link } from "react-router-dom";
 
-import { BtnComment, BtnEdit, BtnDelete, ProfileIcon } from "../../components";
+import { BtnComment, BtnPencil, ProfileIcon } from "../../components";
 import { titleCase } from "../../utility/strings";
 import { creationDateGen, updateDateGen } from "../../utility/date";
 import { TUserApiResponseWithToken, TPostApiResponse } from "../../types/type";
@@ -15,7 +15,6 @@ interface Props {
   post: TPostApiResponse;
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
   handleGetComments: () => void;
-  handleDeletePost: (postID: number) => () => void;
 }
 
 /**
@@ -29,12 +28,11 @@ const Post: React.FC<Props> = ({
   post,
   setIsEditing,
   handleGetComments,
-  handleDeletePost,
 }) => {
   const { user }: Context = useOutletContext();
 
   return (
-    <div className="flex flex-col w-fit">
+    <div className="flex flex-col w-full lg:min-w-[50%]">
       {/* <!-- title section --> */}
       <div className="justify-left flex flex-row items-center gap-4 px-6 py-3">
         <Link to={`/profile/${post.author}`}>
@@ -50,8 +48,13 @@ const Post: React.FC<Props> = ({
 
       {/* Content card */}
       <div className="flex min-h-[20%] min-w-[40%] flex-col justify-start bg-slate-200 shadow-lg hover:shadow-xl transition-shadow rounded-xl lg:rounded-2xl p-4 lg:p-6 gap-2 lg:gap-3">
-        <div className="text-md sm:text-xl font-bold text-slate-600 font-Raleway tracking-wide">
-          {titleCase(post.category)}
+        <div className="flex justify-between">
+          <h3 className=" text-md sm:text-xl font-bold text-slate-600 font-Raleway tracking-wide">
+            {titleCase(post.category)}
+          </h3>
+          {user.user.id === post.user_id && (
+            <BtnPencil handleClick={() => setIsEditing(true)} />
+          )}
         </div>
 
         {/* <!-- Hr --> */}
@@ -61,37 +64,23 @@ const Post: React.FC<Props> = ({
         <div className="w-f font-sans text-lg text-slate-600">
           {post.content}
         </div>
-
-        {/* <!-- Hr --> */}
-        <hr className="rounded-full border-t-2 border-slate-300" />
-
-        {/* <!-- utilities --> */}
-        <div className="flex flex-row justify-between gap-4">
-          {/* only shows edit button if current user is the author of the post */}
-          {post.user_id === user.user.id && (
-            <BtnEdit handleClick={() => setIsEditing(true)} />
-          )}
-          <BtnComment
-            handleClick={handleGetComments}
-            showComments={showComments}
-          />
-          {/* only shows delete button if current user is the author of the post */}
-          {post.user_id === user.user.id && (
-            <BtnDelete handleClick={handleDeletePost(post.id)} />
-          )}
-        </div>
       </div>
 
       {/* <!-- Post status --> */}
-      <div className="w-f flex flex-row flex-nowrap items-center justify-between mx-6 my-3">
+      <div className="flex items-center justify-between m-3 gap-2">
         {/* Creation date */}
         <h4 className="font-sans text-xs text-slate-500">
           {creationDateGen(post.created_at, "Posted")}
         </h4>
 
+        <BtnComment
+          handleClick={handleGetComments}
+          showComments={showComments}
+        />
+
         {/* Update date, only displayed if updated */}
         {post.created_at !== post.updated_at && (
-          <h4 className="font-sans text-xs text-slate-500">
+          <h4 className="font-sans text-xs text-slate-500 text-right">
             {updateDateGen(post.updated_at, "Edited")}
           </h4>
         )}

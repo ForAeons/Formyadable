@@ -26,7 +26,7 @@ const Navbar: React.FC = () => {
   }, [openMenu]);
 
   return (
-    <div className="flex flex-col gap-6 w-full lg:w-auto lg:sticky lg:top-0">
+    <div className="flex flex-col gap-6 w-full lg:w-fit lg:sticky lg:top-0">
       <nav className="flex lg:flex-col flex-row-reverse lg:justify-start justify-between items-center lg:p-4 py-2 px-4 bg-slate-200 shadow-md hover:shadow-xl gap-4 lg:m-6 lg:rounded-lg lg:h-[calc(100vh-3rem)] flex-grow-0 transition-shadow">
         {/* Logo, also act as home button*/}
         <ChatBubbleOvalLeftEllipsisIcon

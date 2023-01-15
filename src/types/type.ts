@@ -152,3 +152,9 @@ export interface IAxiosError {
   request?: any;
   response: IAxiosResponse;
 }
+
+export interface IPriorityError {
+  statusMessage: string;
+  responseMessage: string;
+  severity: number;
+}

@@ -19,7 +19,6 @@ import {
   TUserApiResponseWithToken,
 } from "../types/type";
 import { getCommentsByPostID } from "../utility/commentApi";
-import { deletePost } from "../utility/postApi";
 
 interface Context {
   user: TUserApiResponseWithToken;
@@ -91,32 +90,6 @@ const PostContainer: React.FC<Props> = ({ post, posts, setPosts }) => {
     fetchComments();
   };
 
-  // DELETE post
-  const handleDeletePost = (postID: number) => {
-    return () => {
-      deletePost(postID)
-        .then(() => {
-          setPosts(posts.filter((eachpost) => eachpost.id !== post.id));
-        })
-        .catch((err: IAxiosError) => {
-          console.log(err);
-          if (err.response.statusText) {
-            setAlert({
-              message: err.response.statusText,
-              severity: severityLevel.high,
-            });
-            return;
-          }
-          if (err.message) {
-            setAlert({
-              message: err.message,
-              severity: severityLevel.high,
-            });
-          }
-        });
-    };
-  };
-
   return (
     <div className="flex flex-col mx-3 w-full items-center animate-FadeIn">
       {/* Renders post based on editing mode */}
@@ -137,7 +110,6 @@ const PostContainer: React.FC<Props> = ({ post, posts, setPosts }) => {
           showComments={showComments}
           setIsEditing={setIsEditing}
           handleGetComments={handleGetComments}
-          handleDeletePost={handleDeletePost}
         />
       )}
 
@@ -147,7 +119,7 @@ const PostContainer: React.FC<Props> = ({ post, posts, setPosts }) => {
       {/* showComment: display loading comment or actual comments */}
       {showComments && (
         <>
-          <div className="flex flex-row w-full flex-wrap content-start items-center justify-center gap-4">
+          <div className="flex flex-col w-full content-start items-center justify-start gap-4">
             {isFetchingComments ? (
               // comment place holders
               Array(Math.floor(Math.random() * 4 + 1))

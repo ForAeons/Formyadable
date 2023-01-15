@@ -6,7 +6,7 @@ import React from "react";
 
 const CommentLoading: React.FC = () => {
   return (
-    <div className="flex flex-col w-[40%] min-w-fit mx-3">
+    <div className="flex flex-col min-w-fit mx-3 w-[50%]">
       {/* <!-- title section --> */}
       <div className="justify-left flex w-full flex-row items-center gap-4 px-6 py-3 animate-pulse">
         <div className="rounded-full bg-slate-300 shadow-md p-4"></div>

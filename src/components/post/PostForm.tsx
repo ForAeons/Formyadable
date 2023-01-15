@@ -2,18 +2,24 @@ import React, { useState, useRef } from "react";
 
 import {
   TPostApiResponse,
-  TPost,
   categories,
   alert,
   IAxiosError,
   severityLevel,
 } from "../../types/type";
-import { BtnClose, BtnPost, BtnEdit, BtnCategory } from "../../components";
-import { createPost, updatePost } from "../../utility/postApi";
+import {
+  BtnClose,
+  BtnPost,
+  BtnEdit,
+  BtnDelete,
+  BtnCategory,
+} from "../../components";
 import { snakeCase } from "../../utility/strings";
+import { createPost, updatePost, deletePost } from "../../utility/postApi";
+import { handleError } from "../../utility/error";
 
 interface Props {
-  thisPost: TPost;
+  thisPost: TPostApiResponse;
   posts: TPostApiResponse[];
   setPosts: React.Dispatch<React.SetStateAction<TPostApiResponse[]>>;
   isEditingPost: boolean;
@@ -39,7 +45,6 @@ const PostForm: React.FC<Props> = ({
   const [title, setTitle] = useState(thisPost.title);
   const [content, setContent] = useState(thisPost.content);
   const [category, setCategory] = useState(thisPost.category);
-  const [message, setMessage] = useState("");
 
   const handleClose = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -53,26 +58,24 @@ const PostForm: React.FC<Props> = ({
   ): void => {
     e.preventDefault();
 
+    if (category == "") {
+      setAlert({
+        message: "Please choose a category!",
+        severity: severityLevel.low,
+      });
+      return;
+    }
+
     createPost({ title: title, content: content, category: category })
       .then((result: TPostApiResponse) => {
         setPosts([result, ...posts]);
         setForumStatus(false);
+        // clears the input fields
+        setContent("");
+        setTitle("");
       })
       .catch((err: IAxiosError) => {
-        console.log(err);
-        if (err.response.statusText) {
-          setAlert({
-            message: err.response.statusText,
-            severity: severityLevel.high,
-          });
-          return;
-        }
-        if (err.message) {
-          setAlert({
-            message: err.message,
-            severity: severityLevel.high,
-          });
-        }
+        handleError(err, setAlert);
       });
   };
 
@@ -88,23 +91,33 @@ const PostForm: React.FC<Props> = ({
       id: thisPost.id,
     })
       .then((result: TPostApiResponse) => {
-        setMessage("Post edited!");
         setPosts([
           result,
           ...posts.filter((eachPost) => eachPost.id !== thisPost.id),
         ]);
         setForumStatus(false);
       })
-      .catch((err) => {
-        console.log(err);
-        if (err.request.statusText === "Unauthorized") {
-          setMessage("Please login first!");
-          return;
-        }
-        if (err.message) {
-          setMessage(err.message);
-        }
+      .catch((err: IAxiosError) => {
+        handleError(err, setAlert, {
+          statusMessage: "Unauthorized",
+          responseMessage: "Please login first!",
+          severity: severityLevel.medium,
+        });
       });
+  };
+
+  // DELETE post
+  const handleDeletePost = (postID: number) => {
+    return (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      e.preventDefault();
+      deletePost(postID)
+        .then(() => {
+          setPosts(posts.filter((eachpost) => eachpost.id !== thisPost.id));
+        })
+        .catch((err: IAxiosError) => {
+          handleError(err, setAlert);
+        });
+    };
   };
 
   const textareaTitleRef = useRef<HTMLTextAreaElement>(null);
@@ -142,7 +155,7 @@ const PostForm: React.FC<Props> = ({
           onChange={(e) => setTitle(e.target.value)}
           ref={textareaTitleRef}
           onInput={() => handleOnInput(textareaTitleRef)}
-          defaultValue={title}
+          value={title}
         />
       </div>
 
@@ -167,7 +180,7 @@ const PostForm: React.FC<Props> = ({
           onChange={(e) => setContent(e.target.value)}
           ref={textareaBodyRef}
           onInput={() => handleOnInput(textareaBodyRef)}
-          defaultValue={content}
+          value={content}
         />
       </div>
 
@@ -200,9 +213,9 @@ const PostForm: React.FC<Props> = ({
         ) : (
           <BtnPost handleClick={handleSubmit} />
         )}
-
-        {/* Renders a error message depending when necessary */}
-        {message && <p className="text-lg font-bold text-red-500">{message}</p>}
+        {isEditingPost && (
+          <BtnDelete handleClick={handleDeletePost(thisPost.id)} />
+        )}
       </div>
     </form>
   );

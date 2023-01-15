@@ -3,6 +3,7 @@ import { Link, useOutletContext, useNavigate } from "react-router-dom";
 
 import { Alert } from "../components";
 import { login } from "../utility/userApi";
+import { handleError } from "../utility/error";
 import {
   IAxiosError,
   TUserApiResponse,
@@ -43,27 +44,11 @@ const Login: React.FC = () => {
         }, 1000);
       })
       .catch((err: IAxiosError) => {
-        console.log(err);
-        if (err.response.statusText === "Unauthorized") {
-          setAlert({
-            message: "Invalid credentials",
-            severity: severityLevel.medium,
-          });
-          return;
-        }
-        if (err.response.statusText) {
-          setAlert({
-            message: err.response.statusText,
-            severity: severityLevel.high,
-          });
-          return;
-        }
-        if (err.message) {
-          setAlert({
-            message: err.message,
-            severity: severityLevel.high,
-          });
-        }
+        handleError(err, setAlert, {
+          statusMessage: "Unauthorized",
+          responseMessage: "Invalid credentials",
+          severity: severityLevel.medium,
+        });
       });
   };
 

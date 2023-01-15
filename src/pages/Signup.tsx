@@ -3,6 +3,7 @@ import { Link, useOutletContext, useNavigate } from "react-router-dom";
 
 import { Alert } from "../components";
 import { signUp } from "../utility/userApi";
+import { handleError } from "../utility/error";
 import { TUserApiResponse, severityLevel } from "../types/type";
 
 interface Context {
@@ -66,27 +67,11 @@ const Signup: React.FC = () => {
         }, 1000);
       })
       .catch((err) => {
-        console.log(err);
-        if (err.response.status == 422) {
-          setAlert({
-            message: "This username may have been taken.\nTry a new one!",
-            severity: severityLevel.medium,
-          });
-          return;
-        }
-        if (err.response.statusText) {
-          setAlert({
-            message: err.response.statusText,
-            severity: severityLevel.high,
-          });
-          return;
-        }
-        if (err.message) {
-          setAlert({
-            message: err.message,
-            severity: severityLevel.high,
-          });
-        }
+        handleError(err, setAlert, {
+          statusMessage: "Unprocessable Entity",
+          responseMessage: "This username may have been taken.\nTry a new one!",
+          severity: severityLevel.medium,
+        });
       });
   };
 
