@@ -86,6 +86,14 @@ const PostForm: React.FC<Props> = ({
   ): void => {
     e.preventDefault();
 
+    if (category == "") {
+      setAlert({
+        message: "Please choose a category!",
+        severity: severityLevel.low,
+      });
+      return;
+    }
+
     updatePost({
       title: title,
       content: content,
