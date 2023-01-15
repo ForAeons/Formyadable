@@ -34,15 +34,18 @@ const NavMenu: React.FC<Props> = ({ isMobile }) => {
           //  logged in
           <>
             <ProfileIcon username={user.user.username} size="lg" />
+            <h2 className="font-Raleway font-extrabold tracking-wide text-xl text-slate-700 self-center">
+              {user.user.username}
+            </h2>
             <Link
               to={`/profile/${user.user.username}`}
-              className="font-Raleway font-bold tracking-wide text-lg text-slate-600 hover:text-slate-500 hover:-translate-x-1 transition-transform "
+              className="font-Raleway font-bold tracking-wide text-md text-slate-600 hover:text-slate-500 hover:-translate-x-1 transition-transform "
             >
               Profile
             </Link>
             <Link
               to="/"
-              className="font-Raleway font-bold tracking-wide text-lg text-slate-600 hover:text-red-500 hover:-translate-x-1 transition"
+              className="font-Raleway font-bold tracking-wide text-md text-slate-600 hover:text-red-500 hover:-translate-x-1 transition"
               onClick={() => setUser(nullUser)}
             >
               Log Out
@@ -54,13 +57,13 @@ const NavMenu: React.FC<Props> = ({ isMobile }) => {
             <UserCircleIcon className="h-24 w-24 sm:h-12 sm:w-12  hover:text-slate-500 text-slate-600 self-center mb-2" />
             <Link
               to="/signup"
-              className="font-Raleway font-bold tracking-wide text-lg text-slate-600 hover:text-slate-500 hover:-translate-x-1 transition-transform"
+              className="font-Raleway font-bold tracking-wide text-md text-slate-600 hover:text-slate-500 hover:-translate-x-1 transition-transform"
             >
               Sign Up
             </Link>
             <Link
               to="/login"
-              className="font-Raleway font-bold tracking-wide text-lg text-slate-600 hover:text-slate-500 hover:-translate-x-1 transition-transform"
+              className="font-Raleway font-bold tracking-wide text-md text-slate-600 hover:text-slate-500 hover:-translate-x-1 transition-transform"
             >
               Login
             </Link>
@@ -76,7 +79,7 @@ const NavMenu: React.FC<Props> = ({ isMobile }) => {
           <Link
             key={i}
             to={`/posts/${snakeCase(cat)}`}
-            className="font-Raleway font-bold tracking-wide text-lg text-slate-600 hover:text-slate-500 hover:-translate-x-1 transition-transform"
+            className="font-Raleway font-bold tracking-wide text-md text-slate-600 hover:text-slate-500 hover:-translate-x-1 transition-transform"
           >
             {cat}
           </Link>

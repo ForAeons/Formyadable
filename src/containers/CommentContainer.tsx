@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Alert, Comment, CommentForm } from "../components";
 
-import { TCommentApiResponse, alert } from "../types/type";
+import { TCommentApiResponse, alert, nullAlert } from "../types/type";
 
 interface Props {
   comment: TCommentApiResponse;
@@ -21,7 +21,7 @@ const CommentContainer: React.FC<Props> = ({
   setComments,
 }) => {
   const [isEditingComment, setIsEditingComment] = useState(false);
-  const [alert, setAlert] = useState<alert>({ message: "", severity: -1 });
+  const [alert, setAlert] = useState<alert>(nullAlert);
 
   // renders different component based on editingComment status
 

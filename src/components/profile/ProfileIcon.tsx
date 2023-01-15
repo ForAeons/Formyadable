@@ -14,7 +14,7 @@ const ProfileIcon: React.FC<Props> = ({ username, size }) => {
       : "bg-slate-300 hover:bg-slate-200 h-8 w-8  text-md font-extrabold text-slate-500";
   return (
     <div
-      className={`rounded-full  self-center flex justify-center items-center font-Raleway hover:scale-110 transition ${className}`}
+      className={`rounded-full self-center flex justify-center items-center font-Raleway hover:scale-110 transition ${className}`}
     >
       {iconTextGenerator(username)}
     </div>

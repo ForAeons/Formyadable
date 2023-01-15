@@ -34,7 +34,7 @@ const Post: React.FC<Props> = ({
   return (
     <div className="flex flex-col w-full lg:min-w-[50%]">
       {/* <!-- title section --> */}
-      <div className="justify-left flex flex-row items-center gap-4 px-6 py-3">
+      <div className="justify-left flex flex-row items-center gap-4 mx-3 mb-3">
         <Link to={`/profile/${post.author}`}>
           <ProfileIcon username={post.author} size="sm" />
         </Link>
@@ -42,7 +42,7 @@ const Post: React.FC<Props> = ({
           {post.title}
         </h3>
         <h3 className=" text-xs sm:text-sm font-light text-slate-500 ml-auto self-end font-Raleway tracking-wide">
-          by {post.author}
+          Post by {post.author === user.user.username ? "me" : post.author}
         </h3>
       </div>
 
@@ -67,7 +67,7 @@ const Post: React.FC<Props> = ({
       </div>
 
       {/* <!-- Post status --> */}
-      <div className="flex items-center justify-between m-3 gap-2">
+      <div className="flex items-center justify-between mx-3 mt-3 gap-2">
         {/* Creation date */}
         <h4 className="font-sans text-xs text-slate-500">
           {creationDateGen(post.created_at, "Posted")}

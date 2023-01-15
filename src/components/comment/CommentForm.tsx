@@ -10,6 +10,7 @@ import {
   alert,
   severityLevel,
   IAxiosError,
+  nullAlert,
 } from "../../types/type";
 import { BtnClose, BtnDelete, BtnEdit, BtnPost } from "../../components";
 import { handleError } from "../../utility/error";
@@ -67,6 +68,7 @@ const CommentForm: React.FC<Props> = ({
             (eachComment) => eachComment.id !== thisComment.id
           ),
         ]);
+        setAlert(nullAlert);
         if (setIsEditingComment) setIsEditingComment(false);
       })
       .catch((err: IAxiosError) => {
@@ -89,6 +91,7 @@ const CommentForm: React.FC<Props> = ({
 
         // clears the input field
         setContent("");
+        setAlert(nullAlert);
       })
       .catch((err: IAxiosError) => {
         handleError(err, setAlert, {
@@ -108,6 +111,7 @@ const CommentForm: React.FC<Props> = ({
           setComments(
             comments.filter((eachcomment) => eachcomment.id !== thisComment.id)
           );
+          setAlert(nullAlert);
         })
         .catch((err) => {
           handleError(err, setAlert);
@@ -127,7 +131,7 @@ const CommentForm: React.FC<Props> = ({
   };
 
   return (
-    <form className="flex flex-col w-full bg-slate-200 rounded-xl lg:rounded-2xl p-4 lg:p-6 shadow-lg hover:shadow-xl gap-2 lg:gap-3 transition-shadow">
+    <form className="flex flex-col w-full bg-slate-200 rounded-xl lg:rounded-2xl p-4 lg:p-6 shadow-lg hover:shadow-xl gap-2 lg:gap-3 transition-shadow mt-2">
       <div className="flex flex-row justify-between">
         <label
           htmlFor="body"
@@ -142,7 +146,7 @@ const CommentForm: React.FC<Props> = ({
       <div className="justify-left flex flex-row justify-between items-center gap-4 px-4 lg:px-6 py-3 rounded-xl lg:rounded-2xl shadow-inner bg-white">
         <textarea
           id="body"
-          className="text-lg text-slate-700 font-sans tracking-wide flex-grow bg-transparent my-1"
+          className="text-md text-slate-700 font-sans tracking-wide flex-grow bg-transparent my-1"
           maxLength={5000}
           placeholder=""
           rows={4}

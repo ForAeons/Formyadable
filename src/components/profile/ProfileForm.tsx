@@ -8,9 +8,11 @@ import {
   IAxiosError,
   severityLevel,
   alert,
+  nullAlert,
 } from "../../types/type";
 import iconTextGenerator from "../../utility/iconTextGeneator";
 import { updateUserInfo } from "../../utility/userApi";
+import { handleError } from "../../utility/error";
 
 interface Context {
   user: TUserApiResponseWithToken;
@@ -45,22 +47,14 @@ const ProfileForm: React.FC<Props> = ({
       .then((result: TUserApiResponse) => {
         setUser({ ...user, user: result });
         setDisplayedUser(result);
+        setAlert(nullAlert);
       })
       .catch((err: IAxiosError) => {
-        console.log(err);
-        if (err.response.statusText) {
-          setAlert({
-            message: err.response.statusText,
-            severity: severityLevel.high,
-          });
-          return;
-        }
-        if (err.message) {
-          setAlert({
-            message: err.message,
-            severity: severityLevel.high,
-          });
-        }
+        handleError(err, setAlert, {
+          statusMessage: "Unprocessable Entity",
+          responseMessage: "This user does not exist!",
+          severity: severityLevel.medium,
+        });
       })
       .finally(() => setIsEditingProfile(false));
   };

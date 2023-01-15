@@ -29,34 +29,27 @@ const Comment: React.FC<Props> = ({ comment, setIsEditingComment }) => {
 
   return (
     <div className="flex flex-col w-full lg:min-w-[50%] mx-3">
-      <div className="flex h-fit flex-col justify-start bg-slate-50 shadow-md hover:shadow-lg transition-shadow rounded-xl lg:rounded-2xl p-4 lg:p-6 gap-2 lg:gap-3">
-        {/* <!-- title section --> */}
-        <div className="justify-left flex flex-row items-center gap-4">
-          <Link to={`/profile/${comment.author}`}>
-            <ProfileIcon username={comment.author} size="sm" />
-          </Link>
-
-          <h3 className="text-md sm:text-lg font-bold text-slate-500 font-Raleway tracking-wide mr-auto">
-            by {comment.author}
-          </h3>
-
-          {/* reveals edit btn to comment owner */}
-          {user.user.id === comment.user_id && (
-            <BtnPencil handleClick={() => setIsEditingComment(true)} />
-          )}
-        </div>
-
-        {/* <!-- Hr --> */}
-        <hr className="rounded-full border-t-2 border-slate-300" />
-
+      <div className="ml-auto flex gap-2 items-center mx-3 mb-2">
+        <Link
+          to={`/profile/${comment.author}`}
+          className="text-xs text-slate-500 font-sans hover:cursor-pointer hover:text-slate-800 transition-color"
+        >
+          Comment by{" "}
+          {comment.author === user.user.username ? "me" : comment.author}
+        </Link>
+        {user.user.id === comment.user_id && (
+          <BtnPencil handleClick={() => setIsEditingComment(true)} size="sm" />
+        )}
+      </div>
+      <div className="flex h-fit flex-col justify-start bg-slate-50 shadow-md hover:shadow-lg transition-shadow rounded-xl lg:rounded-2xl p-3 lg:p-4 gap-2 lg:gap-3">
         {/* <!-- Body --> */}
-        <div className="w-f font-sans text-lg text-slate-600">
+        <div className="font-sans text-md text-slate-600">
           {comment.content}
         </div>
       </div>
 
       {/* <!-- Comment status --> */}
-      <div className="w-f flex flex-row flex-nowrap items-center justify-between mx-6 my-3">
+      <div className="flex flex-row flex-nowrap items-center justify-between mx-3 mt-2">
         {/* Creation date */}
         <h4 className="font-sans text-xs text-slate-500">
           {creationDateGen(comment.created_at, "Posted")}

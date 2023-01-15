@@ -158,3 +158,5 @@ export interface IPriorityError {
   responseMessage: string;
   severity: number;
 }
+
+export const nullAlert = { message: "", severity: -1 };

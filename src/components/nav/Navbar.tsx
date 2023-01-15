@@ -14,6 +14,14 @@ const Navbar: React.FC = () => {
 
   const navigator = useNavigate();
 
+  function checkWidth() {
+    if (window.innerWidth > 1024 && openMenu) {
+      setOpenMenu(false);
+    }
+  }
+
+  window.addEventListener("resize", checkWidth);
+
   // prevent/resume scrolling depending on status of openMenu
   useEffect(() => {
     if (openMenu) {

@@ -17,8 +17,10 @@ import {
   alert,
   IAxiosError,
   TUserApiResponseWithToken,
+  nullAlert,
 } from "../types/type";
 import { getCommentsByPostID } from "../utility/commentApi";
+import { handleError } from "../utility/error";
 
 interface Context {
   user: TUserApiResponseWithToken;
@@ -48,7 +50,7 @@ const PostContainer: React.FC<Props> = ({ post, posts, setPosts }) => {
   const [comments, setComments] = useState<TCommentApiResponse[]>([]);
   const [isFetchingComments, setIsFetchingComments] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [alert, setAlert] = useState<alert>({ message: "", severity: -1 });
+  const [alert, setAlert] = useState<alert>(nullAlert);
 
   const { user }: Context = useOutletContext();
 
@@ -58,22 +60,10 @@ const PostContainer: React.FC<Props> = ({ post, posts, setPosts }) => {
     getCommentsByPostID(post.id)
       .then((result: TCommentApiResponse[]) => {
         setComments([...comments, ...result]);
+        setAlert(nullAlert);
       })
       .catch((err: IAxiosError) => {
-        console.log(err);
-        if (err.response.statusText) {
-          setAlert({
-            message: err.response.statusText,
-            severity: severityLevel.high,
-          });
-          return;
-        }
-        if (err.message) {
-          setAlert({
-            message: err.message,
-            severity: severityLevel.high,
-          });
-        }
+        handleError(err, setAlert);
       })
       .finally(() => {
         setIsFetchingComments(false);
@@ -119,7 +109,7 @@ const PostContainer: React.FC<Props> = ({ post, posts, setPosts }) => {
       {/* showComment: display loading comment or actual comments */}
       {showComments && (
         <>
-          <div className="flex flex-col w-full content-start items-center justify-start gap-4">
+          <div className="flex flex-col w-full content-start items-center justify-start gap-2">
             {isFetchingComments ? (
               // comment place holders
               Array(Math.floor(Math.random() * 4 + 1))

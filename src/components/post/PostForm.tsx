@@ -6,6 +6,7 @@ import {
   alert,
   IAxiosError,
   severityLevel,
+  nullAlert,
 } from "../../types/type";
 import {
   BtnClose,
@@ -73,6 +74,7 @@ const PostForm: React.FC<Props> = ({
         // clears the input fields
         setContent("");
         setTitle("");
+        setAlert(nullAlert);
       })
       .catch((err: IAxiosError) => {
         handleError(err, setAlert);
@@ -95,6 +97,7 @@ const PostForm: React.FC<Props> = ({
           result,
           ...posts.filter((eachPost) => eachPost.id !== thisPost.id),
         ]);
+        setAlert(nullAlert);
         setForumStatus(false);
       })
       .catch((err: IAxiosError) => {
@@ -113,6 +116,7 @@ const PostForm: React.FC<Props> = ({
       deletePost(postID)
         .then(() => {
           setPosts(posts.filter((eachpost) => eachpost.id !== thisPost.id));
+          setAlert(nullAlert);
         })
         .catch((err: IAxiosError) => {
           handleError(err, setAlert);

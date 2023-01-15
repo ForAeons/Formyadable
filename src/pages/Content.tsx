@@ -23,7 +23,9 @@ import {
   severityLevel,
   alert,
   IAxiosError,
+  nullAlert,
 } from "../types/type";
+import { handleError } from "../utility/error";
 
 interface Context {
   user: TUserApiResponseWithToken;
@@ -46,12 +48,10 @@ const Content: React.FC = () => {
   const [posts, setPosts] = useState<TPostApiResponse[]>([]);
   const [isLoadingPosts, setIsLoadingPosts] = useState(false);
   const [searchValue, setSearchValue] = useState("");
-  const [alert, setAlert] = useState<alert>({ message: "", severity: -1 });
+  const [alert, setAlert] = useState<alert>(nullAlert);
   const { category: categoryParam } = useParams();
 
   const { user }: Context = useOutletContext();
-
-  console.log("Category", categoryParam);
 
   ////////////////////////////////////////////////////////////////////////
   // Actions on mount
@@ -60,31 +60,18 @@ const Content: React.FC = () => {
   // fetches posts on mount
   useEffect(() => {
     setIsLoadingPosts(true);
+    setAlert(nullAlert);
 
     // no category restriction, get all posts
     if (!categoryParam) {
       getAllPost()
         .then((result: TPostApiResponse[]) => {
-          console.log(result);
           setPosts(result);
           // removes error message
-          setAlert({ message: "", severity: -1 });
+          setAlert(nullAlert);
         })
         .catch((err: IAxiosError) => {
-          console.log(err);
-          if (err.response.statusText) {
-            setAlert({
-              message: err.response.statusText,
-              severity: severityLevel.high,
-            });
-            return;
-          }
-          if (err.message) {
-            setAlert({
-              message: err.message,
-              severity: severityLevel.high,
-            });
-          }
+          handleError(err, setAlert);
         })
         .finally(() => {
           setIsLoadingPosts(false);
@@ -93,25 +80,11 @@ const Content: React.FC = () => {
       // get posts by category
       getPostByCategory(categoryParam)
         .then((result: TPostApiResponse[]) => {
-          console.log(result);
           setPosts(result);
+          setAlert(nullAlert);
         })
         .catch((err: IAxiosError) => {
-          console.log(err);
-          // display error message
-          if (err.response.statusText) {
-            setAlert({
-              message: err.response.statusText,
-              severity: severityLevel.high,
-            });
-            return;
-          }
-          if (err.message) {
-            setAlert({
-              message: err.message,
-              severity: severityLevel.high,
-            });
-          }
+          handleError(err, setAlert);
         })
         .finally(() => {
           setIsLoadingPosts(false);
@@ -138,22 +111,11 @@ const Content: React.FC = () => {
       .then((result: TPostApiResponse[]) => {
         // overrides existing posts
         setPosts(result);
+        setAlert(nullAlert);
       })
       .catch((err: IAxiosError) => {
         console.log(err);
-        if (err.response.statusText) {
-          setAlert({
-            message: err.response.statusText,
-            severity: severityLevel.high,
-          });
-          return;
-        }
-        if (err.message) {
-          setAlert({
-            message: err.message,
-            severity: severityLevel.high,
-          });
-        }
+        handleError(err, setAlert);
       })
       .finally(() => {
         setIsLoadingPosts(false);

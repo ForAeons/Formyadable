@@ -8,8 +8,10 @@ import {
   severityLevel,
   alert,
   IAxiosError,
+  nullAlert,
 } from "../types/type";
 import { getUserInfo } from "../utility/userApi";
+import { handleError } from "../utility/error";
 
 interface Context {
   user: TUserApiResponseWithToken;
@@ -25,7 +27,7 @@ interface Context {
 const Profile: React.FC = () => {
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [isFetchingUser, setIsFetchingUser] = useState(true);
-  const [alert, setAlert] = useState<alert>({ message: "", severity: -1 });
+  const [alert, setAlert] = useState<alert>(nullAlert);
 
   const {
     user: { user },
@@ -45,22 +47,15 @@ const Profile: React.FC = () => {
     getUserInfo(username)
       .then((data: TUserApiResponse) => {
         setDisplayedUser(data);
+        setAlert(nullAlert);
       })
       .catch((err: IAxiosError) => {
-        console.log(err);
-        if (err.response.statusText) {
-          setAlert({
-            message: err.response.statusText,
-            severity: severityLevel.high,
-          });
-          return;
-        }
-        if (err.message) {
-          setAlert({
-            message: err.message,
-            severity: severityLevel.high,
-          });
-        }
+        handleError(err, setAlert, {
+          statusMessage: "Bad Request",
+          responseMessage:
+            "This user does not exist!\nOr they may have changed their username.",
+          severity: severityLevel.medium,
+        });
       })
       .finally(() => {
         setIsFetchingUser(false);
@@ -79,10 +74,12 @@ const Profile: React.FC = () => {
           setAlert={setAlert}
         />
       ) : (
-        <ProfileCard
-          user={displayedUser}
-          setIsEditingProfile={setIsEditingProfile}
-        />
+        displayedUser.username && (
+          <ProfileCard
+            user={displayedUser}
+            setIsEditingProfile={setIsEditingProfile}
+          />
+        )
       )}
       {alert.message && <Alert alert={alert} />}
     </div>

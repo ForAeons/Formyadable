@@ -4,7 +4,7 @@ import { Link, useOutletContext, useNavigate } from "react-router-dom";
 import { Alert } from "../components";
 import { signUp } from "../utility/userApi";
 import { handleError } from "../utility/error";
-import { TUserApiResponse, severityLevel } from "../types/type";
+import { TUserApiResponse, nullAlert, severityLevel } from "../types/type";
 
 interface Context {
   setUser: (user: TUserApiResponse) => void;
@@ -20,7 +20,7 @@ const Signup: React.FC = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [passwordC, setPasswordC] = useState("");
-  const [alert, setAlert] = useState({ message: "", severity: -1 });
+  const [alert, setAlert] = useState(nullAlert);
 
   const { setUser }: Context = useOutletContext();
   const navigator = useNavigate();

@@ -8,6 +8,7 @@ import {
   IAxiosError,
   TUserApiResponse,
   alert,
+  nullAlert,
   severityLevel,
 } from "../types/type";
 
@@ -24,7 +25,7 @@ interface Context {
 const Login: React.FC = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [alert, setAlert] = useState<alert>({ message: "", severity: -1 });
+  const [alert, setAlert] = useState<alert>(nullAlert);
 
   const { setUser }: Context = useOutletContext();
   const navigator = useNavigate();
