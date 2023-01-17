@@ -9,7 +9,7 @@ interface Props {
 
 const BtnToggleDarkMode: React.FC<Props> = ({ isDarkMode, handleClick }) => {
   return (
-    <div className="w-12 h-6 rounded-2xl bg-white flex items-center shadow p-1">
+    <div className="w-12 h-6 rounded-2xl bg-white dark:bg-slate-800 flex items-center shadow-md p-1">
       <button
         onClick={handleClick}
         className={`flex justify-center items-center w-5 h-5 relative rounded-full transition duration-700 ${
@@ -19,9 +19,9 @@ const BtnToggleDarkMode: React.FC<Props> = ({ isDarkMode, handleClick }) => {
         }`}
       >
         {isDarkMode ? (
-          <MoonIcon className="text-slate-200 hover:text-slate-100 transition-colors h-4 w-4" />
+          <MoonIcon className="text-slate-300 hover:text-slate-400 transition h-4 w-4" />
         ) : (
-          <SunIcon className="text-slate-700 hover:text-slate-600 transition-colors h-5 w-5" />
+          <SunIcon className="text-slate-700 hover:text-slate-500 transition h-5 w-5" />
         )}
       </button>
     </div>

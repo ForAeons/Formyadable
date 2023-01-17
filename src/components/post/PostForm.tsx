@@ -70,9 +70,9 @@ const PostForm: React.FC<Props> = ({
       return;
     }
 
-    if (title == "") {
+    if (title == "" || content.trim() === "") {
       setAlert({
-        message: "Please choose a title for your post.",
+        message: "Your post cannot be empty",
         severity: severityLevel.low,
       });
       return;
@@ -88,15 +88,6 @@ const PostForm: React.FC<Props> = ({
 
     // prevent cross-site scripting (XSS) attacks
     const santiziedContent = cleanHtml(content);
-    if (santiziedContent !== content) {
-      setAlert({
-        message:
-          "Your post may potentially contain dangerous elements and attributes.\nPlease modify your post!",
-        severity: severityLevel.high,
-      });
-      return;
-    }
-
     createPost({ title: title, content: santiziedContent, category: category })
       .then((result: TPostApiResponse) => {
         setPosts([result, ...posts]);
@@ -129,9 +120,24 @@ const PostForm: React.FC<Props> = ({
       return;
     }
 
+    if (title == "" || content.trim() === "") {
+      setAlert({
+        message: "Your post cannot be empty",
+        severity: severityLevel.low,
+      });
+      return;
+    }
+
+    if (content.length > 5000) {
+      setAlert({
+        message: "Your post have exceeded the maximum character limit.",
+        severity: severityLevel.medium,
+      });
+      return;
+    }
+
     // prevent cross-site scripting (XSS) attacks
     const santiziedContent = cleanHtml(content);
-
     updatePost({
       title: title,
       content: santiziedContent,
@@ -139,10 +145,11 @@ const PostForm: React.FC<Props> = ({
       id: thisPost.id,
     })
       .then((result: TPostApiResponse) => {
-        setPosts([
-          result,
-          ...posts.filter((eachPost) => eachPost.id !== thisPost.id),
-        ]);
+        setPosts(
+          posts.map((eachPost) =>
+            eachPost.id !== thisPost.id ? eachPost : result
+          )
+        );
         setAlert(nullAlert);
         setForumStatus(false);
       })
@@ -171,7 +178,6 @@ const PostForm: React.FC<Props> = ({
   };
 
   const textareaTitleRef = useRef<HTMLTextAreaElement>(null);
-  const textareaBodyRef = useRef<HTMLTextAreaElement>(null);
 
   // Allows textfields to expand upon reaching its size limit
   const handleOnInput = (Ref: React.RefObject<HTMLTextAreaElement>) => {
@@ -182,7 +188,7 @@ const PostForm: React.FC<Props> = ({
   };
 
   return (
-    <form className="flex flex-col w-full mx-3 bg-slate-200 shadow-lg hover:shadow-xl rounded-xl lg:rounded-2xl p-4 lg:p-6 gap-2 lg:gap-3">
+    <form className="flex flex-col w-full mx-3 bg-slate-200 shadow-lg hover:shadow-xl rounded-xl lg:rounded-2xl p-4 lg:p-6 gap-2 lg:gap-3 transition">
       <div className="flex justify-between items-center">
         {/* <!-- title section --> */}
         <label
@@ -224,19 +230,6 @@ const PostForm: React.FC<Props> = ({
       <div className="bg-white w-full">
         <QuillEditor value={content} onChange={setContent} />
       </div>
-      {/* <div className="flex flex-row justify-between items-center gap-4 px-4 lg:px-6 py-1 lg:py-3 rounded-xl lg:rounded-2xl shadow-inner bg-white">
-        <textarea
-          id="body"
-          className="text-lg text-slate-700 tracking-wide font-sans flex-grow bg-transparent my-1"
-          maxLength={5000}
-          placeholder="Text (optional)"
-          rows={5}
-          onChange={(e) => setContent(e.target.value)}
-          ref={textareaBodyRef}
-          onInput={() => handleOnInput(textareaBodyRef)}
-          value={content}
-        />
-      </div> */}
 
       {/* <!-- body length status --> */}
       <h4 className="font-sans font-bold text-xs text-slate-500 self-end">{`${content.length}/5000`}</h4>

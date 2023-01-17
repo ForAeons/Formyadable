@@ -8,7 +8,7 @@ interface Props {
 const BtnComment: React.FC<Props> = ({ showComments, handleClick }) => {
   return (
     <button
-      className="rounded-md bg-slate-300 hover:bg-slate-400 px-5 py-1 text-sm font-bold text-slate-600 shadow-md transition-colors mx-auto"
+      className="rounded-md bg-slate-300 hover:bg-slate-400 px-5 py-1 text-sm font-bold text-slate-600 shadow-md transition mx-auto"
       onClick={handleClick}
     >
       {showComments ? "Hide Comments" : "View Comments"}

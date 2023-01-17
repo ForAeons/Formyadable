@@ -12,7 +12,7 @@ const MobileMenu: React.FC<Props> = ({ openMenu, setOpenMenu }) => {
     <div
       className={`${
         openMenu ? "flex bg-slate-700 bg-opacity-25" : "hidden"
-      } h-screen flex-col items-start justify-start absolute w-screen mr-auto z-10 transition-colors duration-600`}
+      } h-screen flex-col items-start justify-start absolute w-screen mr-auto z-10 transition duration-600`}
       onClick={() => setOpenMenu(!openMenu)}
     >
       <div className="h-[100vh] min-w-fit bg-slate-200 p-4 shadow-lg animate-SlideIn">

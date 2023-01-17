@@ -10,7 +10,7 @@ const BtnPencil: React.FC<Props> = ({ handleClick, size = "lg" }) => {
   return (
     <button onClick={handleClick}>
       <PencilSquareIcon
-        className={`text-slate-600 hover:text-slate-500 transition-colors ${
+        className={`text-slate-600 hover:text-slate-500 transition ${
           size == "lg" ? "h-6 w-6" : "h-4 w-4"
         }`}
       />

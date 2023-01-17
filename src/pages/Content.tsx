@@ -7,6 +7,7 @@ import {
   Navbar,
   SearchBar,
   BtnCreatePost,
+  BtnReverse,
   Alert,
 } from "../components";
 import { PostContainer } from "../containers";
@@ -47,6 +48,7 @@ const Content: React.FC = () => {
   const [createPost, setCreatePost] = useState(false);
   const [posts, setPosts] = useState<TPostApiResponse[]>([]);
   const [isLoadingPosts, setIsLoadingPosts] = useState(false);
+  const [isReverse, setIsReverse] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [alert, setAlert] = useState<alert>(nullAlert);
   const { category: categoryParam } = useParams();
@@ -134,17 +136,23 @@ const Content: React.FC = () => {
     setCreatePost(true);
   };
 
+  const handleReverse = () => {
+    setIsReverse(!isReverse);
+    setPosts(posts.reverse());
+  };
+
   return (
     <div className="flex flex-col lg:flex-row items-center lg:items-start content-start w-[100%] lg:max-w-[1536px] lg:mx-auto">
       <Navbar />
       <div className="flex flex-col w-full lg:max-w-[calc(100%-224.916px)] flex-grow items-center justify-start gap-4 my-3 px-3 lg:px-6">
-        <div className="flex w-full flex-row justify-center items-center mx-3 gap-3 mt-3 lg:mt-6">
+        <div className="flex w-full flex-row justify-between items-center mx-3 gap-3 mt-3 lg:mt-6">
+          <BtnCreatePost handleClick={handleCreatePost} />
           <SearchBar
             handleClick={handleSearch}
             searchValue={searchValue}
             setSearchValue={setSearchValue}
           />
-          <BtnCreatePost handleClick={handleCreatePost} />
+          <BtnReverse isReversed={isReverse} handleClick={handleReverse} />
         </div>
 
         {createPost && (

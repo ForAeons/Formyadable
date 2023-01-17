@@ -32,11 +32,10 @@ export function titleCase(cat: string | undefined): string {
  */
 export const cleanHtml = (dirtyHtml: string) =>
   sanitize(dirtyHtml, {
-    allowedTags: sanitize.defaults.allowedTags.concat(["img", "h1", "h2"]),
+    allowedTags: sanitize.defaults.allowedTags.concat(["h1", "h2"]),
     allowedAttributes: {
       "*": ["class"],
       a: ["href", "title"],
-      img: ["src", "alt"],
     },
     transformTags: {
       script: (tagName, attribs) => {

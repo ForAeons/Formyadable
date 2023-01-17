@@ -47,7 +47,7 @@ const Post: React.FC<Props> = ({
       </div>
 
       {/* Content card */}
-      <div className="flex min-h-[20%] min-w-[40%] flex-col justify-start bg-slate-200 shadow-lg hover:shadow-xl transition-shadow rounded-xl lg:rounded-2xl p-4 lg:p-6 gap-2 lg:gap-3">
+      <div className="flex min-h-[20%] min-w-[40%] flex-col justify-start bg-slate-200 shadow-lg hover:shadow-xl transition rounded-xl lg:rounded-2xl p-4 lg:p-6 gap-2 lg:gap-3">
         <div className="flex justify-between">
           <h3 className=" text-md sm:text-xl font-bold text-slate-600 font-Raleway tracking-wide">
             {titleCase(post.category)}

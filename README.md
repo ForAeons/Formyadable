@@ -52,7 +52,8 @@ Database: PostgreSQL
 ### General
 
 - [x] Adding animations
-- [x] Dark mode support
+- [x] Text editor support
+- [ ] Dark mode support
 - [x] Better documentation
 - [x] Code refactoring
 - [x] Better code organization for api requests

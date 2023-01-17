@@ -12,7 +12,7 @@ import { BtnBack, BtnHome } from "../components";
 const PageNotFound: React.FC = () => {
   return (
     <div className="flex flex-col h-[100vh] w-[100vw] justify-center items-center">
-      <div className="flex flex-col min-h-[50%] w-[70%] sm:w-[50%] max-w-[550px] justify-center items-center gap-6 rounded-2xl bg-slate-200 p-6 shadow-xl hover:shadow-2xl transition-shadow">
+      <div className="flex flex-col min-h-[50%] w-[70%] sm:w-[50%] max-w-[550px] justify-center items-center gap-6 rounded-2xl bg-slate-200 p-6 shadow-xl hover:shadow-2xl transition">
         <h1 className="font-Raleway sm:text-9xl text-8xl font-extralight text-slate-800">
           404
         </h1>

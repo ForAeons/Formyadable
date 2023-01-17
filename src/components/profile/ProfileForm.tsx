@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { useOutletContext } from "react-router-dom";
 
-import { BtnEdit, BtnHome, BtnBack, BtnClose } from "../../components";
+import { BtnEdit, BtnClose } from "../../components";
 import {
   TUserApiResponseWithToken,
   TUserApiResponse,
@@ -103,7 +103,7 @@ const ProfileForm: React.FC<Props> = ({
         <hr className="rounded-full border-t-2 border-slate-400" />
 
         {/* Updating bio */}
-        <div className="flex flex-col min-h-fit gap-3">
+        <div className="flex flex-col h-fit gap-3">
           <label className="font-Raleway text-lg font-extrabold text-slate-700">
             Update bio
           </label>
@@ -112,7 +112,7 @@ const ProfileForm: React.FC<Props> = ({
               className="w-full text-slate-700 font-sans tracking-wide flex-grow bg-transparent my-1 focus:outline-none"
               name="username"
               id="username"
-              rows={3}
+              rows={7}
               onChange={(e) => setNewBio(e.target.value)}
               defaultValue={newBio}
               ref={textareaBioRef}

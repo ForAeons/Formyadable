@@ -78,7 +78,7 @@ const Signup: React.FC = () => {
   return (
     <div className="bg-slate-50 h-screen w-screen flex flex-col justify-center items-center gap-6 ">
       <form
-        className="p-6 md:p-12 w-fit bg-slate-200 rounded-2xl shadow-xl flex flex-col items-center justify-between gap-6 hover:shadow-2xl transition-shadow"
+        className="p-6 md:p-12 w-fit bg-slate-200 rounded-2xl shadow-xl flex flex-col items-center justify-between gap-6 hover:shadow-2xl transition"
         onSubmit={handleSubmit}
       >
         <h1 className="font-bold text-3xl text-slate-700">Sign Up</h1>

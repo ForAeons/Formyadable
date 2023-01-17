@@ -22,3 +22,7 @@ ul {
   list-style-type: circle;
   list-style-position: inside; /* default */
 }
+
+a {
+  color: #0ea5e9;
+}

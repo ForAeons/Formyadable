@@ -54,7 +54,6 @@ const CommentForm: React.FC<Props> = ({
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): void => {
     e.preventDefault();
-    console.log("Close btn clicked");
 
     // checks for undefined
     if (setIsEditingComment) setIsEditingComment(false);
@@ -62,6 +61,22 @@ const CommentForm: React.FC<Props> = ({
 
   const handleEdit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
+
+    if (content === "") {
+      setAlert({
+        message: "Your comment cannot be empty",
+        severity: severityLevel.low,
+      });
+      return;
+    }
+
+    if (content.length > 3000) {
+      setAlert({
+        message: "Your comment have exceeded the maximum character limit.",
+        severity: severityLevel.medium,
+      });
+      return;
+    }
 
     // prevent cross-site scripting (XSS) attacks
     const santiziedContent = cleanHtml(content);
@@ -71,12 +86,11 @@ const CommentForm: React.FC<Props> = ({
       thisComment.id
     )
       .then((result: TCommentApiResponse) => {
-        setComments([
-          result,
-          ...comments.filter(
-            (eachComment) => eachComment.id !== thisComment.id
-          ),
-        ]);
+        setComments(
+          comments.map((eachComment) =>
+            eachComment.id !== thisComment.id ? eachComment : result
+          )
+        );
         setAlert(nullAlert);
         if (setIsEditingComment) setIsEditingComment(false);
       })
@@ -94,6 +108,14 @@ const CommentForm: React.FC<Props> = ({
   ): void => {
     e.preventDefault();
 
+    if (content.trim() === "") {
+      setAlert({
+        message: "Your comment cannot be empty",
+        severity: severityLevel.low,
+      });
+      return;
+    }
+
     if (content.length > 3000) {
       setAlert({
         message: "Your comment have exceeded the maximum character limit.",
@@ -104,15 +126,6 @@ const CommentForm: React.FC<Props> = ({
 
     // prevent cross-site scripting (XSS) attacks
     const santiziedContent = cleanHtml(content);
-    if (santiziedContent !== content) {
-      setAlert({
-        message:
-          "Your post may potentially contain dangerous elements and attributes.\nPlease modify your post!",
-        severity: severityLevel.high,
-      });
-      return;
-    }
-
     createComment({ content: santiziedContent, post_id: postID })
       .then((result: TCommentApiResponse) => {
         setComments([result, ...comments]);
@@ -134,7 +147,6 @@ const CommentForm: React.FC<Props> = ({
   // DELETE post
   const handleDeleteComment = (commentID: number) => {
     return () => {
-      console.log("Delete Btn clicked");
       deleteComment(commentID)
         .then(() => {
           setComments(
@@ -148,19 +160,8 @@ const CommentForm: React.FC<Props> = ({
     };
   };
 
-  // const textareaCommentRef = useRef<HTMLTextAreaElement>(null);
-
-  // // Allows textfields to expand upon reaching its size limit
-  // const handleOnInput = () => {
-  //   if (textareaCommentRef.current) {
-  //     textareaCommentRef.current.style.height = "auto";
-  //     textareaCommentRef.current.style.height =
-  //       textareaCommentRef.current.scrollHeight + "px";
-  //   }
-  // };
-
   return (
-    <form className="flex flex-col w-full bg-slate-200 rounded-xl lg:rounded-2xl p-4 lg:p-6 shadow-lg hover:shadow-xl gap-2 lg:gap-3 transition-shadow mt-2">
+    <form className="flex flex-col w-full bg-slate-200 rounded-xl lg:rounded-2xl p-4 lg:p-6 shadow-lg hover:shadow-xl gap-2 lg:gap-3 transition mt-2">
       <div className="flex flex-row justify-between">
         <label
           htmlFor="body"

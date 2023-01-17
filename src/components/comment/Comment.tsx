@@ -33,7 +33,7 @@ const Comment: React.FC<Props> = ({ comment, setIsEditingComment }) => {
       <div className="ml-auto flex gap-2 items-center mx-3 mb-2">
         <Link
           to={`/profile/${comment.user_id}`}
-          className="text-xs text-slate-500 font-sans hover:cursor-pointer hover:text-slate-800 transition-color"
+          className="text-xs text-slate-500 font-sans hover:cursor-pointer hover:text-slate-800 transition"
         >
           Comment by{" "}
           {comment.author === user.user.username ? "me" : comment.author}
@@ -42,7 +42,7 @@ const Comment: React.FC<Props> = ({ comment, setIsEditingComment }) => {
           <BtnPencil handleClick={() => setIsEditingComment(true)} size="sm" />
         )}
       </div>
-      <div className="flex h-fit flex-col justify-start bg-slate-50 shadow-md hover:shadow-lg transition-shadow rounded-xl lg:rounded-2xl p-3 lg:p-4 gap-2 lg:gap-3">
+      <div className="flex h-fit flex-col justify-start bg-slate-50 shadow-md hover:shadow-lg transition rounded-xl lg:rounded-2xl p-3 lg:p-4 gap-2 lg:gap-3">
         {/* <!-- Body --> */}
         {/* <div className="font-sans text-md text-slate-600">
           {comment.content}

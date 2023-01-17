@@ -7,6 +7,7 @@ import {
   TUserApiResponseWithToken,
   categories,
   nullUser,
+  themeChoice,
 } from "../../types/type";
 import { snakeCase } from "../../utility/strings";
 import ProfileIcon from "../profile/ProfileIcon";
@@ -21,25 +22,31 @@ interface Props {
 }
 
 const NavMenu: React.FC<Props> = ({ isMobile }) => {
-  const [isDarkMode, setIsDarkMode] = useState(
-    document.documentElement.classList.contains("dark")
-  );
+  // const [isDarkMode, setIsDarkMode] = useState(
+  //   document.documentElement.classList.contains("dark")
+  // );
   const { user, setUser }: Context = useOutletContext();
 
-  const handleToggleDarkMode = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.stopPropagation(); // prevent menu from closing
+  // const handleToggleDarkMode = (
+  //   e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  // ) => {
+  //   e.stopPropagation(); // prevent menu from closing
 
-    // toggles darkmode
-    setIsDarkMode(!isDarkMode);
+  //   // toggles darkmode
+  //   setIsDarkMode(!isDarkMode);
 
-    // Whenever the user explicitly chooses dark mode
-    if (!isDarkMode) localStorage.theme = "dark";
-    // at this point, isDarkMode has yet to update
-    // Whenever the user explicitly chooses light mode
-    else localStorage.theme = "light";
-  };
+  //   // Whenever the user explicitly chooses dark mode
+  //   if (!isDarkMode) {
+  //     localStorage.theme = "dark";
+  //     document.documentElement.classList.add(themeChoice.dark);
+  //   }
+  //   // at this point, isDarkMode has yet to update
+  //   // Whenever the user explicitly chooses light mode
+  //   else {
+  //     localStorage.theme = "light";
+  //     document.documentElement.classList.remove(themeChoice.dark);
+  //   }
+  // };
 
   return (
     <div
@@ -114,10 +121,10 @@ const NavMenu: React.FC<Props> = ({ isMobile }) => {
       {/* Empty space */}
       <div className=" mt-auto"></div>
 
-      <BtnToggleDarkMode
+      {/* <BtnToggleDarkMode
         isDarkMode={isDarkMode}
         handleClick={handleToggleDarkMode}
-      />
+      /> */}
       <a
         href="#top"
         className="rounded-md bg-slate-400 px-5 py-1 text-sm font-bold text-slate-600 shadow-md hover:bg-slate-300 transition-colors"

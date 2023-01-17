@@ -9,6 +9,7 @@ export { default as BtnHome } from "./button/BtnHome";
 export { default as BtnBack } from "./button/BtnBack";
 export { default as BtnPencil } from "./button/BtnPencil";
 export { default as BtnToggleDarkMode } from "./button/BtnToggleDarkMode";
+export { default as BtnReverse } from "./button/BtnReverse";
 
 export { default as Navbar } from "./nav/Navbar";
 export { default as MobileMenu } from "./nav/MobileMenu";
