@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import ReactQuill from "react-quill";
+import { stripHtml } from "string-strip-html";
 
 import {
   TPostApiResponse,
@@ -48,7 +48,6 @@ const PostForm: React.FC<Props> = ({
   const [title, setTitle] = useState(thisPost.title);
   const [content, setContent] = useState(thisPost.content);
   const [category, setCategory] = useState(thisPost.category);
-  ReactQuill.Quill;
 
   const handleClose = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -70,7 +69,7 @@ const PostForm: React.FC<Props> = ({
       return;
     }
 
-    if (title == "" || content.trim() === "") {
+    if (title == "" || stripHtml(content).result === "") {
       setAlert({
         message: "Your post cannot be empty",
         severity: severityLevel.low,
@@ -78,7 +77,7 @@ const PostForm: React.FC<Props> = ({
       return;
     }
 
-    if (content.length > 5000) {
+    if (stripHtml(content).result.length > 5000) {
       setAlert({
         message: "Your post have exceeded the maximum character limit.",
         severity: severityLevel.medium,
@@ -120,7 +119,7 @@ const PostForm: React.FC<Props> = ({
       return;
     }
 
-    if (title == "" || content.trim() === "") {
+    if (title == "" || stripHtml(content).result === "") {
       setAlert({
         message: "Your post cannot be empty",
         severity: severityLevel.low,
@@ -128,7 +127,7 @@ const PostForm: React.FC<Props> = ({
       return;
     }
 
-    if (content.length > 5000) {
+    if (stripHtml(content).result.length > 5000) {
       setAlert({
         message: "Your post have exceeded the maximum character limit.",
         severity: severityLevel.medium,
@@ -232,7 +231,9 @@ const PostForm: React.FC<Props> = ({
       </div>
 
       {/* <!-- body length status --> */}
-      <h4 className="font-sans font-bold text-xs text-slate-500 self-end">{`${content.length}/5000`}</h4>
+      <h4 className="font-sans font-bold text-xs text-slate-500 self-end">
+        {`${stripHtml(content).result.length}/5000`}
+      </h4>
 
       <label
         htmlFor="category"

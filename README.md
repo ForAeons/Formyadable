@@ -13,7 +13,7 @@ Frontend: React.js, ~~MUI~~ Tailwind
 - run: `npm i` to install dependencies
 - run: `npm run dev` to start
 
-- [Demo by Netlify for v3.1.2](https://justforum.netlify.app/)
+- [Demo by Netlify for v3.2.0](https://justforum.netlify.app/)
 
 [Backend: Ruby on Rails](https://github.com/ForAeons/cvwo_forum_backend)  
 Database: PostgreSQL
@@ -53,7 +53,6 @@ Database: PostgreSQL
 
 - [x] Adding animations
 - [x] Text editor support
-- [ ] Dark mode support
 - [x] Better documentation
 - [x] Code refactoring
 - [x] Better code organization for api requests

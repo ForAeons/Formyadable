@@ -1,4 +1,5 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
+import { stripHtml } from "string-strip-html";
 
 import {
   createComment,
@@ -13,7 +14,6 @@ import {
   nullAlert,
 } from "../../types/type";
 import {
-  Alert,
   BtnClose,
   BtnDelete,
   BtnEdit,
@@ -63,7 +63,7 @@ const CommentForm: React.FC<Props> = ({
   const handleEdit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
 
-    if (content === "") {
+    if (stripHtml(content).result === "") {
       setAlert({
         message: "Your comment cannot be empty",
         severity: severityLevel.low,
@@ -71,7 +71,7 @@ const CommentForm: React.FC<Props> = ({
       return;
     }
 
-    if (content.length > 3000) {
+    if (stripHtml(content).result.length > 3000) {
       setAlert({
         message: "Your comment have exceeded the maximum character limit.",
         severity: severityLevel.medium,
@@ -81,7 +81,6 @@ const CommentForm: React.FC<Props> = ({
 
     // prevent cross-site scripting (XSS) attacks
     const santiziedContent = cleanHtml(content);
-
     updateComment(
       { content: santiziedContent, post_id: thisComment.post_id },
       thisComment.id
@@ -109,7 +108,7 @@ const CommentForm: React.FC<Props> = ({
   ): void => {
     e.preventDefault();
 
-    if (content.trim() === "") {
+    if (stripHtml(content).result === "") {
       setAlert({
         message: "Your comment cannot be empty",
         severity: severityLevel.low,
@@ -117,7 +116,7 @@ const CommentForm: React.FC<Props> = ({
       return;
     }
 
-    if (content.length > 3000) {
+    if (stripHtml(content).result.length > 3000) {
       setAlert({
         message: "Your comment have exceeded the maximum character limit.",
         severity: severityLevel.medium,
@@ -194,7 +193,9 @@ const CommentForm: React.FC<Props> = ({
         />
       </div> */}
 
-      <h4 className="font-sans font-bold text-xs text-slate-500 ml-auto">{`${content.length}/3000`}</h4>
+      <h4 className="font-sans font-bold text-xs text-slate-500 ml-auto">{`${
+        stripHtml(content).result.length
+      }/3000`}</h4>
 
       <div className="flex flex-row justify-between">
         {/* displays different button based whether creating new comment or editing existing one */}
