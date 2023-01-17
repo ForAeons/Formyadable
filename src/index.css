@@ -12,3 +12,13 @@ textarea,
 input:focus {
   outline: none;
 }
+
+ol {
+  list-style-type: decimal;
+  list-style-position: inside; /* default */
+}
+
+ul {
+  list-style-type: circle;
+  list-style-position: inside; /* default */
+}

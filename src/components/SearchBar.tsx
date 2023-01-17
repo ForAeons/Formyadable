@@ -19,7 +19,7 @@ const SearchBar: React.FC<Props> = ({
     >
       <input
         type="text"
-        placeholder="Search by title"
+        placeholder="Search by title or author"
         className="rounded-md font-semibold flex-grow px-3 text-slate-600 bg-transparent font-Raleway tracking-wide"
         value={searchValue}
         onChange={(e) => setSearchValue(e.target.value)}

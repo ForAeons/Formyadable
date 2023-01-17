@@ -2,7 +2,7 @@ import React from "react";
 import { useOutletContext, Link } from "react-router-dom";
 
 import { BtnComment, BtnPencil, ProfileIcon } from "../../components";
-import { titleCase } from "../../utility/strings";
+import { titleCase, cleanHtml } from "../../utility/strings";
 import { creationDateGen, updateDateGen } from "../../utility/date";
 import { TUserApiResponseWithToken, TPostApiResponse } from "../../types/type";
 
@@ -35,7 +35,7 @@ const Post: React.FC<Props> = ({
     <div className="flex flex-col w-full lg:min-w-[50%]">
       {/* <!-- title section --> */}
       <div className="justify-left flex flex-row items-center gap-4 mx-3 mb-3">
-        <Link to={`/profile/${post.author}`}>
+        <Link to={`/profile/${post.user_id}`}>
           <ProfileIcon username={post.author} size="sm" />
         </Link>
         <h3 className="text-lg sm:text-xl font-bold text-slate-700 font-Raleway tracking-wide">
@@ -61,9 +61,11 @@ const Post: React.FC<Props> = ({
         <hr className="rounded-full border-t-2 border-slate-300" />
 
         {/* <!-- Body --> */}
-        <div className="w-f font-sans text-lg text-slate-600">
+        {/* <div className="w-f font-sans text-lg text-slate-600">
           {post.content}
-        </div>
+        </div> */}
+
+        <div dangerouslySetInnerHTML={{ __html: cleanHtml(post.content) }} />
       </div>
 
       {/* <!-- Post status --> */}

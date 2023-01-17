@@ -1,12 +1,13 @@
 import React from "react";
 import { useOutletContext, Link } from "react-router-dom";
 
-import { BtnPencil, ProfileIcon } from "../../components";
+import { BtnPencil } from "../../components";
 import {
   TCommentApiResponse,
   TUserApiResponseWithToken,
 } from "../../types/type";
 import { creationDateGen, updateDateGen } from "../../utility/date";
+import { cleanHtml } from "../../utility/strings";
 
 interface Props {
   comment: TCommentApiResponse;
@@ -31,7 +32,7 @@ const Comment: React.FC<Props> = ({ comment, setIsEditingComment }) => {
     <div className="flex flex-col w-full lg:w-fit lg:min-w-[50%] mx-3">
       <div className="ml-auto flex gap-2 items-center mx-3 mb-2">
         <Link
-          to={`/profile/${comment.author}`}
+          to={`/profile/${comment.user_id}`}
           className="text-xs text-slate-500 font-sans hover:cursor-pointer hover:text-slate-800 transition-color"
         >
           Comment by{" "}
@@ -43,9 +44,10 @@ const Comment: React.FC<Props> = ({ comment, setIsEditingComment }) => {
       </div>
       <div className="flex h-fit flex-col justify-start bg-slate-50 shadow-md hover:shadow-lg transition-shadow rounded-xl lg:rounded-2xl p-3 lg:p-4 gap-2 lg:gap-3">
         {/* <!-- Body --> */}
-        <div className="font-sans text-md text-slate-600">
+        {/* <div className="font-sans text-md text-slate-600">
           {comment.content}
-        </div>
+        </div> */}
+        <div dangerouslySetInnerHTML={{ __html: cleanHtml(comment.content) }} />
       </div>
 
       {/* <!-- Comment status --> */}

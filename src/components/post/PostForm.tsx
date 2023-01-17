@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import ReactQuill from "react-quill";
 
 import {
   TPostApiResponse,
@@ -14,8 +15,9 @@ import {
   BtnEdit,
   BtnDelete,
   BtnCategory,
+  QuillEditor,
 } from "../../components";
-import { snakeCase } from "../../utility/strings";
+import { snakeCase, cleanHtml } from "../../utility/strings";
 import { createPost, updatePost, deletePost } from "../../utility/postApi";
 import { handleError } from "../../utility/error";
 
@@ -46,6 +48,7 @@ const PostForm: React.FC<Props> = ({
   const [title, setTitle] = useState(thisPost.title);
   const [content, setContent] = useState(thisPost.content);
   const [category, setCategory] = useState(thisPost.category);
+  ReactQuill.Quill;
 
   const handleClose = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -61,13 +64,40 @@ const PostForm: React.FC<Props> = ({
 
     if (category == "") {
       setAlert({
-        message: "Please choose a category!",
+        message: "Please choose a category.",
         severity: severityLevel.low,
       });
       return;
     }
 
-    createPost({ title: title, content: content, category: category })
+    if (title == "") {
+      setAlert({
+        message: "Please choose a title for your post.",
+        severity: severityLevel.low,
+      });
+      return;
+    }
+
+    if (content.length > 5000) {
+      setAlert({
+        message: "Your post have exceeded the maximum character limit.",
+        severity: severityLevel.medium,
+      });
+      return;
+    }
+
+    // prevent cross-site scripting (XSS) attacks
+    const santiziedContent = cleanHtml(content);
+    if (santiziedContent !== content) {
+      setAlert({
+        message:
+          "Your post may potentially contain dangerous elements and attributes.\nPlease modify your post!",
+        severity: severityLevel.high,
+      });
+      return;
+    }
+
+    createPost({ title: title, content: santiziedContent, category: category })
       .then((result: TPostApiResponse) => {
         setPosts([result, ...posts]);
         setForumStatus(false);
@@ -77,7 +107,12 @@ const PostForm: React.FC<Props> = ({
         setAlert(nullAlert);
       })
       .catch((err: IAxiosError) => {
-        handleError(err, setAlert);
+        handleError(err, setAlert, {
+          statusMessage: "Unprocessable Entity",
+          responseMessage:
+            "Please check that your post does not exceed maximum length!",
+          severity: severityLevel.medium,
+        });
       });
   };
 
@@ -94,9 +129,12 @@ const PostForm: React.FC<Props> = ({
       return;
     }
 
+    // prevent cross-site scripting (XSS) attacks
+    const santiziedContent = cleanHtml(content);
+
     updatePost({
       title: title,
-      content: content,
+      content: santiziedContent,
       category: category,
       id: thisPost.id,
     })
@@ -157,10 +195,10 @@ const PostForm: React.FC<Props> = ({
         {/* Close button */}
         <BtnClose handleClick={handleClose} />
       </div>
-      <div className="justify-left flex flex-row justify-between items-center gap-4 px-4 lg:px-6 py-1 lg:py-3 rounded-xl lg:rounded-2xl shadow-inner bg-white">
+      <div className="justify-left flex flex-row justify-between items-center gap-4 p-4 shadow-inner bg-white border border-slate-300">
         <textarea
           id="newPost"
-          className="text-lg text-slate-700 font-sans tracking-wide flex-grow bg-transparent my-1"
+          className="text-md text-slate-700 font-sans flex-grow bg-transparent"
           placeholder="An interesting title"
           maxLength={300}
           rows={2}
@@ -182,7 +220,11 @@ const PostForm: React.FC<Props> = ({
       >
         Body
       </label>
-      <div className="flex flex-row justify-between items-center gap-4 px-4 lg:px-6 py-1 lg:py-3 rounded-xl lg:rounded-2xl shadow-inner bg-white">
+
+      <div className="bg-white w-full">
+        <QuillEditor value={content} onChange={setContent} />
+      </div>
+      {/* <div className="flex flex-row justify-between items-center gap-4 px-4 lg:px-6 py-1 lg:py-3 rounded-xl lg:rounded-2xl shadow-inner bg-white">
         <textarea
           id="body"
           className="text-lg text-slate-700 tracking-wide font-sans flex-grow bg-transparent my-1"
@@ -194,7 +236,7 @@ const PostForm: React.FC<Props> = ({
           onInput={() => handleOnInput(textareaBodyRef)}
           value={content}
         />
-      </div>
+      </div> */}
 
       {/* <!-- body length status --> */}
       <h4 className="font-sans font-bold text-xs text-slate-500 self-end">{`${content.length}/5000`}</h4>

@@ -18,7 +18,7 @@ const Alert: React.FC<Props> = ({ alert }) => {
 
   return (
     <div
-      className={`${theme.bgColor} ${theme.textColor} mt-3 py-6 px-10 flex justify-center items-center rounded-lg shadow-md animate-WiggleOnce`}
+      className={`${theme.bgColor} ${theme.textColor} mt-3 py-6 px-10 flex justify-center items-center rounded-lg shadow-md hover:shadow-lg transition-shadow animate-WiggleOnce`}
     >
       <h2 className="text-center font-Raleway text-lg font-extrabold tracking-wide whitespace-pre">
         {alert.message}

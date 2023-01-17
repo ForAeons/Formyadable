@@ -8,6 +8,7 @@ export { default as BtnCategory } from "./button/BtnCategory";
 export { default as BtnHome } from "./button/BtnHome";
 export { default as BtnBack } from "./button/BtnBack";
 export { default as BtnPencil } from "./button/BtnPencil";
+export { default as BtnToggleDarkMode } from "./button/BtnToggleDarkMode";
 
 export { default as Navbar } from "./nav/Navbar";
 export { default as MobileMenu } from "./nav/MobileMenu";
@@ -28,3 +29,4 @@ export { default as ProfileIcon } from "./profile/ProfileIcon";
 
 export { default as SearchBar } from "./SearchBar";
 export { default as Alert } from "./Alert";
+export { default as QuillEditor } from "./QuillEditor";

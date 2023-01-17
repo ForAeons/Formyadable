@@ -160,3 +160,9 @@ export interface IPriorityError {
 }
 
 export const nullAlert = { message: "", severity: -1 };
+
+export enum themeChoice {
+  default = "default",
+  dark = "dark",
+  light = "light",
+}

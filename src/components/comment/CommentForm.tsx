@@ -12,8 +12,15 @@ import {
   IAxiosError,
   nullAlert,
 } from "../../types/type";
-import { BtnClose, BtnDelete, BtnEdit, BtnPost } from "../../components";
+import {
+  BtnClose,
+  BtnDelete,
+  BtnEdit,
+  BtnPost,
+  QuillEditor,
+} from "../../components";
 import { handleError } from "../../utility/error";
+import { cleanHtml } from "../../utility/strings";
 
 interface Props {
   postID: number;
@@ -55,10 +62,12 @@ const CommentForm: React.FC<Props> = ({
 
   const handleEdit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    console.log("Edit btn clicked");
+
+    // prevent cross-site scripting (XSS) attacks
+    const santiziedContent = cleanHtml(content);
 
     updateComment(
-      { content: content, post_id: thisComment.post_id },
+      { content: santiziedContent, post_id: thisComment.post_id },
       thisComment.id
     )
       .then((result: TCommentApiResponse) => {
@@ -85,7 +94,26 @@ const CommentForm: React.FC<Props> = ({
   ): void => {
     e.preventDefault();
 
-    createComment({ content: content, post_id: postID })
+    if (content.length > 3000) {
+      setAlert({
+        message: "Your comment have exceeded the maximum character limit.",
+        severity: severityLevel.medium,
+      });
+      return;
+    }
+
+    // prevent cross-site scripting (XSS) attacks
+    const santiziedContent = cleanHtml(content);
+    if (santiziedContent !== content) {
+      setAlert({
+        message:
+          "Your post may potentially contain dangerous elements and attributes.\nPlease modify your post!",
+        severity: severityLevel.high,
+      });
+      return;
+    }
+
+    createComment({ content: santiziedContent, post_id: postID })
       .then((result: TCommentApiResponse) => {
         setComments([result, ...comments]);
 
@@ -95,8 +123,9 @@ const CommentForm: React.FC<Props> = ({
       })
       .catch((err: IAxiosError) => {
         handleError(err, setAlert, {
-          statusMessage: "Unauthorized",
-          responseMessage: "Please login first!",
+          statusMessage: "Unprocessable Entity",
+          responseMessage:
+            "Please check that your comment does not exceed maximum length!",
           severity: severityLevel.medium,
         });
       });
@@ -119,16 +148,16 @@ const CommentForm: React.FC<Props> = ({
     };
   };
 
-  const textareaCommentRef = useRef<HTMLTextAreaElement>(null);
+  // const textareaCommentRef = useRef<HTMLTextAreaElement>(null);
 
-  // Allows textfields to expand upon reaching its size limit
-  const handleOnInput = () => {
-    if (textareaCommentRef.current) {
-      textareaCommentRef.current.style.height = "auto";
-      textareaCommentRef.current.style.height =
-        textareaCommentRef.current.scrollHeight + "px";
-    }
-  };
+  // // Allows textfields to expand upon reaching its size limit
+  // const handleOnInput = () => {
+  //   if (textareaCommentRef.current) {
+  //     textareaCommentRef.current.style.height = "auto";
+  //     textareaCommentRef.current.style.height =
+  //       textareaCommentRef.current.scrollHeight + "px";
+  //   }
+  // };
 
   return (
     <form className="flex flex-col w-full bg-slate-200 rounded-xl lg:rounded-2xl p-4 lg:p-6 shadow-lg hover:shadow-xl gap-2 lg:gap-3 transition-shadow mt-2">
@@ -143,7 +172,11 @@ const CommentForm: React.FC<Props> = ({
         {/* only displays close btn when in edit mode */}
         {isEditingComment && <BtnClose handleClick={handleClose} />}
       </div>
-      <div className="justify-left flex flex-row justify-between items-center gap-4 px-4 lg:px-6 py-3 rounded-xl lg:rounded-2xl shadow-inner bg-white">
+
+      <div className="bg-white w-full">
+        <QuillEditor value={content} onChange={setContent} />
+      </div>
+      {/* <div className="justify-left flex flex-row justify-between items-center gap-4 px-4 lg:px-6 py-3 rounded-xl lg:rounded-2xl shadow-inner bg-white">
         <textarea
           id="body"
           className="text-md text-slate-700 font-sans tracking-wide flex-grow bg-transparent my-1"
@@ -155,7 +188,7 @@ const CommentForm: React.FC<Props> = ({
           onInput={handleOnInput}
           value={content}
         />
-      </div>
+      </div> */}
 
       <h4 className="font-sans font-bold text-xs text-slate-500 ml-auto">{`${content.length}/3000`}</h4>
 

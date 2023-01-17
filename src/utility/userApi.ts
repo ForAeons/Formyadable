@@ -29,8 +29,8 @@ export const login = async (user: TUser) => {
   }
 };
 
-export const getUserInfo = async (username: string) => {
-  const res: IAxiosResponse = await axios.get(`/users/${username}`);
+export const getUserInfo = async (userID: number) => {
+  const res: IAxiosResponse = await axios.get(`/users/${userID}`);
   // for debugging
   console.log(res);
 

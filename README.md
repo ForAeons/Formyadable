@@ -1,6 +1,6 @@
 # Just A Forum
 
-Submission by: Wu Xiaoyun
+Submission by: Wu Xiaoyun  
 Matriculation Number: A0231121E
 
 ## Minimalist and responsive forum website with a flat design
@@ -15,14 +15,14 @@ Frontend: React.js, ~~MUI~~ Tailwind
 
 - [Demo by Netlify for v3.1.2](https://justforum.netlify.app/)
 
-Backend: Ruby on Rails  
+[Backend: Ruby on Rails](https://github.com/ForAeons/cvwo_forum_backend)  
 Database: PostgreSQL
 
 - Hosted by Heroku
 
 ---
 
-## Todo list
+## Todo list / features
 
 ### User
 
@@ -52,10 +52,11 @@ Database: PostgreSQL
 ### General
 
 - [x] Adding animations
-- [x] Code refactoring
+- [x] Dark mode support
 - [x] Better documentation
-- [x] Better error handling, displaying human readable errors
+- [x] Code refactoring
 - [x] Better code organization for api requests
+- [x] Better error handling, displaying human readable errors
 
 ---
 

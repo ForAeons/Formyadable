@@ -2,7 +2,7 @@ import React from "react";
 
 const ProfileLoading: React.FC = () => {
   return (
-    <div className="flex flex-col h-fit items-start justify-start gap-4 bg-slate-100 rounded-2xl shadow-2xl p-6 ">
+    <div className="flex flex-col h-fit items-start justify-start gap-4 bg-slate-100 rounded-2xl shadow-2xl p-6 mx-6 max-w-lg">
       {/* Profile pic placeholder*/}
       <div className="rounded-full bg-slate-600 p-12 shadow-lg self-center animate-pulse"></div>
 

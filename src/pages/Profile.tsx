@@ -1,80 +1,81 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useOutletContext } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-import { ProfileCard, ProfileForm, ProfileLoading, Alert } from "../components";
+import { Alert, PostLoading } from "../components";
+import { ProfileContainer, PostContainer } from "../containers";
 import {
-  TUserApiResponseWithToken,
-  TUserApiResponse,
-  severityLevel,
-  alert,
-  IAxiosError,
   nullAlert,
-  nullUser,
+  TPostApiResponse,
+  IAxiosError,
+  severityLevel,
 } from "../types/type";
-import { getUserInfo } from "../utility/userApi";
 import { handleError } from "../utility/error";
-
-/**
- * Profile page
- * - View user's profile
- * - Edit user profile (for the logged in user)
- * - Holds the state of edit or view mode (default to view)
- */
+import { getPostByAuthorID } from "../utility/postApi";
+import { getLoadingForumCount } from "../utility/loadingForumCount";
 
 const Profile: React.FC = () => {
-  const [isEditingProfile, setIsEditingProfile] = useState(false);
-  const [isFetchingUser, setIsFetchingUser] = useState(true);
-  const [alert, setAlert] = useState<alert>(nullAlert);
+  const [isLoadingPosts, setIsLoadingPosts] = useState(true);
+  const [posts, setPosts] = useState<TPostApiResponse[]>([]);
+  const [alert, setAlert] = useState(nullAlert);
 
-  const [displayedUser, setDisplayedUser] = useState(nullUser.user);
+  let { userID } = useParams();
 
-  let { username } = useParams();
-
-  // fetches the user profile info on mount
+  // fetches posts on mount
   useEffect(() => {
-    // if no username is supplied, skip fetching the user
-    if (!username) return;
+    if (!userID) return;
 
-    // otherwise proceed to fetch the user
-    setIsFetchingUser(true);
-    getUserInfo(username)
-      .then((data: TUserApiResponse) => {
-        setDisplayedUser(data);
+    setIsLoadingPosts(true);
+    setAlert(nullAlert);
+
+    // get posts by userID
+    getPostByAuthorID(+userID)
+      .then((result: TPostApiResponse[]) => {
+        setPosts(result);
         setAlert(nullAlert);
       })
       .catch((err: IAxiosError) => {
-        handleError(err, setAlert, {
-          statusMessage: "Bad Request",
-          responseMessage:
-            "This user does not exist!\nOr they may have changed their username.",
-          severity: severityLevel.medium,
-        });
+        handleError(err, setAlert);
       })
       .finally(() => {
-        setIsFetchingUser(false);
+        setIsLoadingPosts(false);
       });
-  }, []);
 
+    // trigger reload when categoryParam changes
+  }, []);
   return (
-    <div className="flex flex-col h-screen w-screen items-center justify-center gap-4">
-      {isFetchingUser ? (
-        <ProfileLoading />
-      ) : isEditingProfile ? (
-        // no props is needed since user can only edit their own acc
-        <ProfileForm
-          setIsEditingProfile={setIsEditingProfile}
-          setDisplayedUser={setDisplayedUser}
-          setAlert={setAlert}
-        />
-      ) : (
-        displayedUser.username && (
-          <ProfileCard
-            user={displayedUser}
-            setIsEditingProfile={setIsEditingProfile}
+    <div className="flex flex-col lg:flex-row items-center lg:items-start content-start w-[100%] lg:max-w-[1536px] lg:mx-auto">
+      <ProfileContainer />
+
+      <div className="flex flex-col w-full items-center justify-start gap-4 my-3 px-3 lg:px-6">
+        {/* displays error */}
+        {alert.message && <Alert alert={alert} />}
+
+        {/* displays prompt to post */}
+        {posts.length === 0 && isLoadingPosts === false && (
+          <Alert
+            alert={{
+              message: "No posts here.\nBe the first to post!",
+              severity: severityLevel.low,
+            }}
           />
-        )
-      )}
-      {alert.message && <Alert alert={alert} />}
+        )}
+
+        {/* Loading posts placeholder */}
+        {isLoadingPosts &&
+          Array(getLoadingForumCount())
+            .fill(1)
+            .map((_, i) => <PostLoading key={i} />)}
+
+        {/* Displaying each Post */}
+        {posts.map((post) => (
+          <PostContainer
+            key={post.id}
+            post={post}
+            posts={posts}
+            setPosts={setPosts}
+          />
+        ))}
+      </div>
     </div>
   );
 };

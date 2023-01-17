@@ -105,7 +105,6 @@ const Content: React.FC = () => {
 
     // loads posts
     setIsLoadingPosts(true);
-    console.log("Searching by title");
 
     getPostByTitle(searchValue)
       .then((result: TPostApiResponse[]) => {
@@ -138,7 +137,7 @@ const Content: React.FC = () => {
   return (
     <div className="flex flex-col lg:flex-row items-center lg:items-start content-start w-[100%] lg:max-w-[1536px] lg:mx-auto">
       <Navbar />
-      <div className="flex flex-col w-full items-center justify-start gap-4 my-3 px-3 lg:px-6">
+      <div className="flex flex-col w-full lg:max-w-[calc(100%-224.916px)] flex-grow items-center justify-start gap-4 my-3 px-3 lg:px-6">
         <div className="flex w-full flex-row justify-center items-center mx-3 gap-3 mt-3 lg:mt-6">
           <SearchBar
             handleClick={handleSearch}

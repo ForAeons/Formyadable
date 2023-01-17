@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { useOutletContext } from "react-router-dom";
 
-import { BtnEdit, BtnHome, BtnBack } from "../../components";
+import { BtnEdit, BtnHome, BtnBack, BtnClose } from "../../components";
 import {
   TUserApiResponseWithToken,
   TUserApiResponse,
@@ -70,10 +70,14 @@ const ProfileForm: React.FC<Props> = ({
   };
 
   return (
-    <div className="flex flex-col w-fit items-start justify-center gap-4 mx-12 sm:max-w-lg bg-slate-100 rounded-2xl shadow-2xl p-6">
+    <div className="flex flex-col w-fit items-start justify-center gap-4 mx-6 max-w-lg bg-slate-100 rounded-2xl shadow-lg hover:shadow-xl transition p-6 relative">
       {/* Profile pic */}
       <div className="rounded-full bg-slate-600 hover:bg-slate-500 flex justify-center items-center font-Raleway text-2xl font-extrabold text-slate-200 h-24 w-24 self-center shadow-lg">
         {iconTextGenerator(user.user.username)}
+      </div>
+
+      <div className="absolute right-6 top-6">
+        <BtnClose handleClick={() => setIsEditingProfile(false)} />
       </div>
 
       {/* Form */}
@@ -134,12 +138,7 @@ const ProfileForm: React.FC<Props> = ({
         />
       </form>
 
-      {/* Back to home */}
-      <div className="w-full self-center flex justify-evenly">
-        <BtnHome />
-        <BtnEdit handleClick={handleEdit} />
-        <BtnBack />
-      </div>
+      <BtnEdit handleClick={handleEdit} />
     </div>
   );
 };
