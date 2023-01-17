@@ -55,7 +55,7 @@ const ProfileContainer: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex flex-col h-fit lg:h-screen my-6 lg:m-0 w-fit items-center justify-center gap-4  lg:sticky lg:top-0">
+    <div className="flex flex-col w-fit items-center justify-center gap-4">
       {isFetchingUser ? (
         <ProfileLoading />
       ) : isEditingProfile ? (

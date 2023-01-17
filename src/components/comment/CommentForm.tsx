@@ -13,6 +13,7 @@ import {
   nullAlert,
 } from "../../types/type";
 import {
+  Alert,
   BtnClose,
   BtnDelete,
   BtnEdit,
@@ -144,9 +145,11 @@ const CommentForm: React.FC<Props> = ({
       });
   };
 
-  // DELETE post
+  // DELETE comment
   const handleDeleteComment = (commentID: number) => {
-    return () => {
+    return (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      e.preventDefault();
+
       deleteComment(commentID)
         .then(() => {
           setComments(
@@ -201,9 +204,8 @@ const CommentForm: React.FC<Props> = ({
           <BtnPost handleClick={handleSubmit} />
         )}
         {isEditingComment && (
-          <BtnDelete handleClick={() => handleDeleteComment(thisComment.id)} />
+          <BtnDelete handleClick={handleDeleteComment(thisComment.id)} />
         )}
-        {/* <!-- Post status --> */}
       </div>
     </form>
   );
