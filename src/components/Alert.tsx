@@ -1,6 +1,6 @@
 import React from "react";
 
-import { alert } from "../types/type";
+import { alert } from "../store/type";
 
 interface Props {
   alert: alert;

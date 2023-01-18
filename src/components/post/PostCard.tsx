@@ -1,20 +1,16 @@
 import React from "react";
-import { useOutletContext, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux/es/exports";
 
-import { BtnComment, BtnPencil, ProfileIcon } from "../../components";
+import { BtnComment, BtnPencil, ProfileIcon } from "..";
 import { titleCase, cleanHtml } from "../../utility/strings";
 import { creationDateGen, updateDateGen } from "../../utility/date";
-import { TUserApiResponseWithToken, TPostApiResponse } from "../../types/type";
-
-interface Context {
-  user: TUserApiResponseWithToken;
-}
+import { Post, Store } from "../../store/type";
+import { editPost } from "../../store/action";
+import { getCommentsFn } from "../../utility/commentApi";
 
 interface Props {
-  showComments: boolean;
-  post: TPostApiResponse;
-  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
-  handleGetComments: () => void;
+  post: Post;
 }
 
 /**
@@ -23,13 +19,11 @@ interface Props {
  * Ability to fetch comments belong to this post.
  */
 
-const Post: React.FC<Props> = ({
-  showComments,
-  post,
-  setIsEditing,
-  handleGetComments,
-}) => {
-  const { user }: Context = useOutletContext();
+const PostCard: React.FC<Props> = ({ post }) => {
+  const store = useSelector((state: Store) => state);
+  const dispatch = useDispatch();
+
+  const handleGetComments = getCommentsFn(post, dispatch);
 
   return (
     <div className="flex flex-col w-full lg:min-w-[50%]">
@@ -42,7 +36,7 @@ const Post: React.FC<Props> = ({
           {post.title}
         </h3>
         <h3 className=" text-xs sm:text-sm font-light text-slate-500 ml-auto self-end font-Raleway tracking-wide">
-          Post by {post.author === user.user.username ? "me" : post.author}
+          Post by {post.user_id === store.user.user.id ? "me" : post.author}
         </h3>
       </div>
 
@@ -52,18 +46,22 @@ const Post: React.FC<Props> = ({
           <h3 className=" text-md sm:text-xl font-bold text-slate-600 font-Raleway tracking-wide">
             {titleCase(post.category)}
           </h3>
-          {user.user.id === post.user_id && (
-            <BtnPencil handleClick={() => setIsEditing(true)} />
+          {store.user.user.id === post.user_id && (
+            <BtnPencil
+              handleClick={() =>
+                dispatch(
+                  editPost({
+                    ...post,
+                    isEditingPost: true,
+                  })
+                )
+              }
+            />
           )}
         </div>
 
         {/* <!-- Hr --> */}
         <hr className="rounded-full border-t-2 border-slate-300" />
-
-        {/* <!-- Body --> */}
-        {/* <div className="w-f font-sans text-lg text-slate-600">
-          {post.content}
-        </div> */}
 
         <div dangerouslySetInnerHTML={{ __html: cleanHtml(post.content) }} />
       </div>
@@ -77,7 +75,7 @@ const Post: React.FC<Props> = ({
 
         <BtnComment
           handleClick={handleGetComments}
-          showComments={showComments}
+          showComments={post.isShowingComments}
         />
 
         {/* Update date, only displayed if updated */}
@@ -91,4 +89,4 @@ const Post: React.FC<Props> = ({
   );
 };
 
-export default Post;
+export default PostCard;

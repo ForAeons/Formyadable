@@ -3,7 +3,7 @@ import {
   alert,
   severityLevel,
   IPriorityError,
-} from "../types/type";
+} from "../store/type";
 
 /**
  * Handles error and displays them
@@ -14,7 +14,7 @@ import {
  */
 export function handleError(
   err: IAxiosError,
-  setAlert: React.Dispatch<React.SetStateAction<alert>>,
+  setAlert: (alert: alert) => void,
   alernative: IPriorityError | undefined = undefined
 ): void {
   console.error(err);

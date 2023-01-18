@@ -11,7 +11,6 @@ import { useNavigate } from "react-router-dom";
 
 const Navbar: React.FC = () => {
   const [openMenu, setOpenMenu] = useState(false);
-
   const navigator = useNavigate();
 
   function checkWidth() {
@@ -19,7 +18,6 @@ const Navbar: React.FC = () => {
       setOpenMenu(false);
     }
   }
-
   window.addEventListener("resize", checkWidth);
 
   // prevent/resume scrolling depending on status of openMenu

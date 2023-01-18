@@ -9,7 +9,7 @@ import {
   severityLevel,
   alert,
   nullAlert,
-} from "../../types/type";
+} from "../../store/type";
 import iconTextGenerator from "../../utility/iconTextGeneator";
 import { updateUserInfo } from "../../utility/userApi";
 import { handleError } from "../../utility/error";

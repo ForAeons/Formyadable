@@ -1,14 +1,15 @@
 import React, { useState, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux/es/exports";
 import { stripHtml } from "string-strip-html";
 
 import {
+  Store,
+  TPost,
   TPostApiResponse,
   categories,
   alert,
-  IAxiosError,
-  severityLevel,
-  nullAlert,
-} from "../../types/type";
+  Post,
+} from "../../store/type";
 import {
   BtnClose,
   BtnPost,
@@ -17,17 +18,12 @@ import {
   BtnCategory,
   QuillEditor,
 } from "../../components";
-import { snakeCase, cleanHtml } from "../../utility/strings";
-import { createPost, updatePost, deletePost } from "../../utility/postApi";
-import { handleError } from "../../utility/error";
+import { snakeCase } from "../../utility/strings";
+import { SubmitPostFn, EditPostFn, DeletePostFn } from "../../utility/postApi";
+import { editPost } from "../../store/action";
 
 interface Props {
-  thisPost: TPostApiResponse;
-  posts: TPostApiResponse[];
-  setPosts: React.Dispatch<React.SetStateAction<TPostApiResponse[]>>;
-  isEditingPost: boolean;
-  setForumStatus: React.Dispatch<React.SetStateAction<boolean>>;
-  setAlert: React.Dispatch<React.SetStateAction<alert>>;
+  post: Post;
 }
 
 /**
@@ -37,148 +33,28 @@ interface Props {
  * Ability leave edit mode for creator of the post.
  */
 
-const PostForm: React.FC<Props> = ({
-  thisPost,
-  posts,
-  setPosts,
-  isEditingPost,
-  setForumStatus,
-  setAlert,
-}) => {
-  const [title, setTitle] = useState(thisPost.title);
-  const [content, setContent] = useState(thisPost.content);
-  const [category, setCategory] = useState(thisPost.category);
+const PostForm: React.FC<Props> = ({ post }) => {
+  const store = useSelector((state: Store) => state);
+  const dispatch = useDispatch();
 
   const handleClose = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): void => {
     e.preventDefault();
-    setForumStatus(false);
-  };
-
-  const handleSubmit = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ): void => {
-    e.preventDefault();
-
-    if (category == "") {
-      setAlert({
-        message: "Please choose a category.",
-        severity: severityLevel.low,
-      });
-      return;
-    }
-
-    if (title == "" || stripHtml(content).result === "") {
-      setAlert({
-        message: "Your post cannot be empty",
-        severity: severityLevel.low,
-      });
-      return;
-    }
-
-    if (stripHtml(content).result.length > 5000) {
-      setAlert({
-        message: "Your post have exceeded the maximum character limit.",
-        severity: severityLevel.medium,
-      });
-      return;
-    }
-
-    // prevent cross-site scripting (XSS) attacks
-    const santiziedContent = cleanHtml(content);
-    createPost({ title: title, content: santiziedContent, category: category })
-      .then((result: TPostApiResponse) => {
-        setPosts([result, ...posts]);
-        setForumStatus(false);
-        // clears the input fields
-        setContent("");
-        setTitle("");
-        setAlert(nullAlert);
+    dispatch(
+      editPost({
+        ...post,
+        isEditingPost: false,
       })
-      .catch((err: IAxiosError) => {
-        handleError(err, setAlert, {
-          statusMessage: "Unprocessable Entity",
-          responseMessage:
-            "Please check that your post does not exceed maximum length!",
-          severity: severityLevel.medium,
-        });
-      });
+    );
   };
 
-  const handleEdit = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ): void => {
-    e.preventDefault();
-
-    if (category == "") {
-      setAlert({
-        message: "Please choose a category!",
-        severity: severityLevel.low,
-      });
-      return;
-    }
-
-    if (title == "" || stripHtml(content).result === "") {
-      setAlert({
-        message: "Your post cannot be empty",
-        severity: severityLevel.low,
-      });
-      return;
-    }
-
-    if (stripHtml(content).result.length > 5000) {
-      setAlert({
-        message: "Your post have exceeded the maximum character limit.",
-        severity: severityLevel.medium,
-      });
-      return;
-    }
-
-    // prevent cross-site scripting (XSS) attacks
-    const santiziedContent = cleanHtml(content);
-    updatePost({
-      title: title,
-      content: santiziedContent,
-      category: category,
-      id: thisPost.id,
-    })
-      .then((result: TPostApiResponse) => {
-        setPosts(
-          posts.map((eachPost) =>
-            eachPost.id !== thisPost.id ? eachPost : result
-          )
-        );
-        setAlert(nullAlert);
-        setForumStatus(false);
-      })
-      .catch((err: IAxiosError) => {
-        handleError(err, setAlert, {
-          statusMessage: "Unauthorized",
-          responseMessage: "Please login first!",
-          severity: severityLevel.medium,
-        });
-      });
-  };
-
-  // DELETE post
-  const handleDeletePost = (postID: number) => {
-    return (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-      e.preventDefault();
-      deletePost(postID)
-        .then(() => {
-          setPosts(posts.filter((eachpost) => eachpost.id !== thisPost.id));
-          setAlert(nullAlert);
-        })
-        .catch((err: IAxiosError) => {
-          handleError(err, setAlert);
-        });
-    };
-  };
-
-  const textareaTitleRef = useRef<HTMLTextAreaElement>(null);
+  const handleSubmit = SubmitPostFn(post, dispatch);
+  const handleEdit = EditPostFn(post, dispatch);
+  const handleDelete = DeletePostFn(post, dispatch);
 
   // Allows textfields to expand upon reaching its size limit
+  const textareaTitleRef = useRef<HTMLTextAreaElement>(null);
   const handleOnInput = (Ref: React.RefObject<HTMLTextAreaElement>) => {
     if (Ref.current) {
       Ref.current.style.height = "auto";
@@ -207,16 +83,23 @@ const PostForm: React.FC<Props> = ({
           placeholder="An interesting title"
           maxLength={300}
           rows={2}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e) =>
+            dispatch(
+              editPost({
+                ...post,
+                title: e.target.value,
+              })
+            )
+          }
           ref={textareaTitleRef}
           onInput={() => handleOnInput(textareaTitleRef)}
-          value={title}
+          value={post.title}
         />
       </div>
 
       {/* <!-- title length status --> */}
       <h4 className="font-sans font-bold text-xs text-slate-500 self-end">
-        {`${title.length}/300`}
+        {`${post.title.length}/300`}
       </h4>
 
       <label
@@ -227,12 +110,22 @@ const PostForm: React.FC<Props> = ({
       </label>
 
       <div className="bg-white w-full">
-        <QuillEditor value={content} onChange={setContent} />
+        <QuillEditor
+          value={post.content}
+          onChange={(content: string) =>
+            dispatch(
+              editPost({
+                ...post,
+                content: content,
+              })
+            )
+          }
+        />
       </div>
 
       {/* <!-- body length status --> */}
       <h4 className="font-sans font-bold text-xs text-slate-500 self-end">
-        {`${stripHtml(content).result.length}/5000`}
+        {`${stripHtml(post.content).result.length}/5000`}
       </h4>
 
       <label
@@ -246,8 +139,15 @@ const PostForm: React.FC<Props> = ({
           <BtnCategory
             key={i}
             category={snakeCase(cat)}
-            curCategory={category}
-            setCategory={setCategory}
+            curCategory={post.category}
+            setCategory={(category: string) =>
+              dispatch(
+                editPost({
+                  ...post,
+                  category: category,
+                })
+              )
+            }
           />
         ))}
       </div>
@@ -256,14 +156,12 @@ const PostForm: React.FC<Props> = ({
       <hr className="rounded-full border-t-2 border-transparent" />
       <div className="flex flex-row justify-between">
         {/* displays different button based whether creating new post or editing existing one */}
-        {isEditingPost ? (
+        {post.isEditingPost ? (
           <BtnEdit handleClick={handleEdit} />
         ) : (
           <BtnPost handleClick={handleSubmit} />
         )}
-        {isEditingPost && (
-          <BtnDelete handleClick={handleDeletePost(thisPost.id)} />
-        )}
+        {post.isEditingPost && <BtnDelete handleClick={handleDelete} />}
       </div>
     </form>
   );

@@ -4,7 +4,7 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/Outline";
 interface Props {
   handleClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   searchValue: string;
-  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
+  setSearchValue: (value: string) => void;
 }
 
 const SearchBar: React.FC<Props> = ({

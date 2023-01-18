@@ -15,11 +15,11 @@ export { default as Navbar } from "./nav/Navbar";
 export { default as MobileMenu } from "./nav/MobileMenu";
 export { default as NavMenu } from "./nav/NavMenu";
 
-export { default as Post } from "./post/Post";
+export { default as PostCard } from "./post/PostCard";
 export { default as PostLoading } from "./post/PostLoading";
 export { default as PostForm } from "./post/PostForm";
 
-export { default as Comment } from "./comment/Comment";
+export { default as CommentCard } from "./comment/CommentCard";
 export { default as CommentLoading } from "./comment/CommentLoading";
 export { default as CommentForm } from "./comment/CommentForm";
 

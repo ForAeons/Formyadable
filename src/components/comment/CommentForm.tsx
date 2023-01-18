@@ -1,18 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
+import { useDispatch } from "react-redux/es/exports";
 import { stripHtml } from "string-strip-html";
 
 import {
-  createComment,
-  updateComment,
-  deleteComment,
+  submitCommentFn,
+  editCommentFn,
+  deleteCommentFn,
+  closeCommentFn,
 } from "../../utility/commentApi";
-import {
-  TCommentApiResponse,
-  alert,
-  severityLevel,
-  IAxiosError,
-  nullAlert,
-} from "../../types/type";
+import { Comment } from "../../store/type";
 import {
   BtnClose,
   BtnDelete,
@@ -20,17 +16,10 @@ import {
   BtnPost,
   QuillEditor,
 } from "../../components";
-import { handleError } from "../../utility/error";
-import { cleanHtml } from "../../utility/strings";
+import { editComment } from "../../store/action";
 
 interface Props {
-  postID: number;
-  thisComment: TCommentApiResponse;
-  setComments: React.Dispatch<React.SetStateAction<TCommentApiResponse[]>>;
-  comments: TCommentApiResponse[];
-  isEditingComment?: boolean;
-  setIsEditingComment?: React.Dispatch<React.SetStateAction<boolean>>;
-  setAlert: React.Dispatch<React.SetStateAction<alert>>;
+  comment: Comment;
 }
 
 /**
@@ -39,128 +28,12 @@ interface Props {
  * Ability edit existing comment for creator of the comment.
  * Ability leave edit mode for creator of the comment.
  */
-
-const CommentForm: React.FC<Props> = ({
-  postID,
-  thisComment,
-  comments,
-  setComments,
-  isEditingComment,
-  setIsEditingComment,
-  setAlert,
-}) => {
-  const [content, setContent] = useState(thisComment.content);
-
-  const handleClose = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ): void => {
-    e.preventDefault();
-
-    // checks for undefined
-    if (setIsEditingComment) setIsEditingComment(false);
-  };
-
-  const handleEdit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
-
-    if (stripHtml(content).result === "") {
-      setAlert({
-        message: "Your comment cannot be empty",
-        severity: severityLevel.low,
-      });
-      return;
-    }
-
-    if (stripHtml(content).result.length > 3000) {
-      setAlert({
-        message: "Your comment have exceeded the maximum character limit.",
-        severity: severityLevel.medium,
-      });
-      return;
-    }
-
-    // prevent cross-site scripting (XSS) attacks
-    const santiziedContent = cleanHtml(content);
-    updateComment(
-      { content: santiziedContent, post_id: thisComment.post_id },
-      thisComment.id
-    )
-      .then((result: TCommentApiResponse) => {
-        setComments(
-          comments.map((eachComment) =>
-            eachComment.id !== thisComment.id ? eachComment : result
-          )
-        );
-        setAlert(nullAlert);
-        if (setIsEditingComment) setIsEditingComment(false);
-      })
-      .catch((err: IAxiosError) => {
-        handleError(err, setAlert, {
-          statusMessage: "Unauthorized",
-          responseMessage: "You may not edit comments from others!",
-          severity: severityLevel.medium,
-        });
-      });
-  };
-
-  const handleSubmit = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ): void => {
-    e.preventDefault();
-
-    if (stripHtml(content).result === "") {
-      setAlert({
-        message: "Your comment cannot be empty",
-        severity: severityLevel.low,
-      });
-      return;
-    }
-
-    if (stripHtml(content).result.length > 3000) {
-      setAlert({
-        message: "Your comment have exceeded the maximum character limit.",
-        severity: severityLevel.medium,
-      });
-      return;
-    }
-
-    // prevent cross-site scripting (XSS) attacks
-    const santiziedContent = cleanHtml(content);
-    createComment({ content: santiziedContent, post_id: postID })
-      .then((result: TCommentApiResponse) => {
-        setComments([result, ...comments]);
-
-        // clears the input field
-        setContent("");
-        setAlert(nullAlert);
-      })
-      .catch((err: IAxiosError) => {
-        handleError(err, setAlert, {
-          statusMessage: "Unprocessable Entity",
-          responseMessage:
-            "Please check that your comment does not exceed maximum length!",
-          severity: severityLevel.medium,
-        });
-      });
-  };
-
-  // DELETE comment
-  const handleDeleteComment = (commentID: number) => {
-    return (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-      e.preventDefault();
-
-      deleteComment(commentID)
-        .then(() => {
-          setComments(
-            comments.filter((eachcomment) => eachcomment.id !== thisComment.id)
-          );
-          setAlert(nullAlert);
-        })
-        .catch((err) => {
-          handleError(err, setAlert);
-        });
-    };
-  };
+const CommentForm: React.FC<Props> = ({ comment }) => {
+  const dispatch = useDispatch();
+  const handleClose = closeCommentFn(comment);
+  const handleEdit = editCommentFn(comment);
+  const handleSubmit = submitCommentFn(comment);
+  const handleDelete = deleteCommentFn(comment);
 
   return (
     <form className="flex flex-col w-full bg-slate-200 rounded-xl lg:rounded-2xl p-4 lg:p-6 shadow-lg hover:shadow-xl gap-2 lg:gap-3 transition mt-2">
@@ -170,43 +43,38 @@ const CommentForm: React.FC<Props> = ({
           className="text-xl px-4 lg:px-6 font-bold text-slate-700 font-Raleway tracking-wide"
         >
           {/* Display different prompt text based on mode */}
-          {`${isEditingComment ? "Edit your comment" : "New comment"}`}
+          {`${comment.isEditingComment ? "Edit your comment" : "New comment"}`}
         </label>
         {/* only displays close btn when in edit mode */}
-        {isEditingComment && <BtnClose handleClick={handleClose} />}
+        {comment.isEditingComment && <BtnClose handleClick={handleClose} />}
       </div>
 
       <div className="bg-white w-full">
-        <QuillEditor value={content} onChange={setContent} />
-      </div>
-      {/* <div className="justify-left flex flex-row justify-between items-center gap-4 px-4 lg:px-6 py-3 rounded-xl lg:rounded-2xl shadow-inner bg-white">
-        <textarea
-          id="body"
-          className="text-md text-slate-700 font-sans tracking-wide flex-grow bg-transparent my-1"
-          maxLength={5000}
-          placeholder=""
-          rows={4}
-          onChange={(e) => setContent(e.target.value)}
-          ref={textareaCommentRef}
-          onInput={handleOnInput}
-          value={content}
+        <QuillEditor
+          value={comment.content}
+          onChange={(content: string) =>
+            dispatch(
+              editComment({
+                ...comment,
+                content: content,
+              })
+            )
+          }
         />
-      </div> */}
+      </div>
 
       <h4 className="font-sans font-bold text-xs text-slate-500 ml-auto">{`${
-        stripHtml(content).result.length
+        stripHtml(comment.content).result.length
       }/3000`}</h4>
 
       <div className="flex flex-row justify-between">
         {/* displays different button based whether creating new comment or editing existing one */}
-        {isEditingComment ? (
+        {comment.isEditingComment ? (
           <BtnEdit handleClick={handleEdit} />
         ) : (
           <BtnPost handleClick={handleSubmit} />
         )}
-        {isEditingComment && (
-          <BtnDelete handleClick={handleDeleteComment(thisComment.id)} />
-        )}
+        {comment.isEditingComment && <BtnDelete handleClick={handleDelete} />}
       </div>
     </form>
   );

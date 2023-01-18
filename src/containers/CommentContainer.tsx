@@ -1,12 +1,10 @@
-import React, { useState } from "react";
-import { Alert, Comment, CommentForm } from "../components";
+import React from "react";
+import { Alert, CommentCard, CommentForm } from "../components";
 
-import { TCommentApiResponse, alert, nullAlert } from "../types/type";
+import { Comment } from "../store/type";
 
 interface Props {
-  comment: TCommentApiResponse;
-  comments: TCommentApiResponse[];
-  setComments: React.Dispatch<React.SetStateAction<TCommentApiResponse[]>>;
+  comment: Comment;
 }
 
 /**
@@ -14,38 +12,16 @@ interface Props {
  * A comment is either in edit or view mode. It defaults to view mode.
  * edit mode is only accessible by creator of the comment.
  */
-
-const CommentContainer: React.FC<Props> = ({
-  comment,
-  comments,
-  setComments,
-}) => {
-  const [isEditingComment, setIsEditingComment] = useState(false);
-  const [alert, setAlert] = useState<alert>(nullAlert);
-
+const CommentContainer: React.FC<Props> = ({ comment }) => {
   // renders different component based on editingComment status
-
   return (
     <>
-      {isEditingComment ? (
-        <CommentForm
-          postID={comment.post_id}
-          thisComment={comment}
-          comments={comments}
-          setComments={setComments}
-          isEditingComment={isEditingComment}
-          setIsEditingComment={setIsEditingComment}
-          setAlert={setAlert}
-        />
+      {comment.isEditingComment ? (
+        <CommentForm comment={comment} />
       ) : (
-        <Comment
-          comment={comment}
-          comments={comments}
-          setComments={setComments}
-          setIsEditingComment={setIsEditingComment}
-        />
+        <CommentCard comment={comment} />
       )}
-      {alert.message && <Alert alert={alert} />}
+      {comment.alert.message && <Alert alert={comment.alert} />}
     </>
   );
 };

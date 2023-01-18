@@ -14,7 +14,7 @@ const toolbarOptions = [
 
 interface Props {
   value: string;
-  onChange: React.Dispatch<React.SetStateAction<string>>;
+  onChange: (content: string) => void;
 }
 
 import React from "react";

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { TUser, IAxiosResponse } from "../types/type";
+import { TUser, IAxiosResponse } from "../store/type";
 
 export const signUp = async (user: TUser) => {
   const res: IAxiosResponse = await axios.post("/signup", user);

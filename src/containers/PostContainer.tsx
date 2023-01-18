@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { useOutletContext } from "react-router-dom";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux/es/exports";
 
 import {
-  Post,
+  PostCard,
   CommentForm,
   CommentLoading,
   PostForm,
@@ -10,26 +10,18 @@ import {
 } from ".././components";
 import { CommentContainer } from "../containers";
 import {
-  TPostApiResponse,
-  TCommentApiResponse,
+  Store,
+  Post,
   emptyComment,
   severityLevel,
-  alert,
-  IAxiosError,
-  TUserApiResponseWithToken,
   nullAlert,
-} from "../types/type";
-import { getCommentsByPostID } from "../utility/commentApi";
+} from "../store/type";
+import { getCommentsByPostID, getCommentsFn } from "../utility/commentApi";
 import { handleError } from "../utility/error";
-
-interface Context {
-  user: TUserApiResponseWithToken;
-}
+import { editPost, setComments } from "../store/action";
 
 interface Props {
-  post: TPostApiResponse;
-  posts: TPostApiResponse[];
-  setPosts: React.Dispatch<React.SetStateAction<TPostApiResponse[]>>;
+  post: Post;
 }
 
 /**
@@ -45,72 +37,26 @@ interface Props {
  * Comments are lazy loaded and toggleable.
  */
 
-const PostContainer: React.FC<Props> = ({ post, posts, setPosts }) => {
-  const [showComments, setShowComments] = useState(false);
-  const [comments, setComments] = useState<TCommentApiResponse[]>([]);
-  const [isFetchingComments, setIsFetchingComments] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const [alert, setAlert] = useState<alert>(nullAlert);
-
-  const { user }: Context = useOutletContext();
-
-  const fetchComments = () => {
-    setIsFetchingComments(true);
-
-    getCommentsByPostID(post.id)
-      .then((result: TCommentApiResponse[]) => {
-        setComments([...comments, ...result]);
-        setAlert(nullAlert);
-      })
-      .catch((err: IAxiosError) => {
-        handleError(err, setAlert);
-      })
-      .finally(() => {
-        setIsFetchingComments(false);
-      });
-  };
-
-  // GET comments
-  const handleGetComments = () => {
-    setShowComments(!showComments);
-
-    if (isFetchingComments) return; // guard clause
-    if (comments.length > 0) return; // no need to refetch
-
-    fetchComments();
-  };
+const PostContainer: React.FC<Props> = ({ post }) => {
+  const store = useSelector((state: Store) => state);
 
   return (
     <div className="flex flex-col mx-3 w-full items-center animate-FadeIn">
       {/* Renders post based on editing mode */}
-      {isEditing ? (
-        <PostForm
-          key={post.id}
-          thisPost={post}
-          posts={posts}
-          setPosts={setPosts}
-          isEditingPost={true}
-          setForumStatus={setIsEditing}
-          setAlert={setAlert}
-        />
+      {post.isEditingPost ? (
+        <PostForm key={post.id} post={post} />
       ) : (
-        <Post
-          key={post.id}
-          post={post}
-          showComments={showComments}
-          setIsEditing={setIsEditing}
-          handleGetComments={handleGetComments}
-        />
+        <PostCard key={post.id} post={post} />
       )}
 
       {/* displays error */}
-      {alert.message && <Alert alert={alert} />}
+      {post.alert.message && <Alert alert={post.alert} />}
 
       {/* showComment: display loading comment or actual comments */}
-      {showComments && (
+      {post.isShowingComments && (
         <>
           <div className="flex flex-col w-full content-start items-center justify-start gap-2">
-            {isFetchingComments ? (
+            {post.isFetchingComments ? (
               // comment place holders
               Array(Math.floor(Math.random() * 4 + 1))
                 .fill(1)
@@ -118,7 +64,7 @@ const PostContainer: React.FC<Props> = ({ post, posts, setPosts }) => {
             ) : (
               <>
                 {/* displays prompt to post */}
-                {comments.length === 0 && (
+                {post.comments.length === 0 && (
                   <Alert
                     alert={{
                       message: "No comments here.\nBe the first to comment!",
@@ -128,24 +74,19 @@ const PostContainer: React.FC<Props> = ({ post, posts, setPosts }) => {
                 )}
 
                 {/* Comment submission form, shows only when logging in */}
-                {user.token != "" && (
+                {store.user.token != "" && (
                   <CommentForm
-                    postID={post.id}
-                    thisComment={emptyComment}
-                    comments={comments}
-                    setComments={setComments}
-                    setAlert={setAlert}
+                    comment={{
+                      ...emptyComment,
+                      isEditingComment: false,
+                      alert: nullAlert,
+                    }}
                   />
                 )}
 
                 {/* Comments */}
-                {comments.map((comment) => (
-                  <CommentContainer
-                    key={comment.id}
-                    comment={comment}
-                    comments={comments}
-                    setComments={setComments}
-                  />
+                {post.comments.map((comment) => (
+                  <CommentContainer key={comment.id} comment={comment} />
                 ))}
               </>
             )}

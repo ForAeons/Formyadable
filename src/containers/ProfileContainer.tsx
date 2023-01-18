@@ -9,7 +9,7 @@ import {
   IAxiosError,
   nullAlert,
   nullUser,
-} from "../types/type";
+} from "../store/type";
 import { getUserInfo } from "../utility/userApi";
 import { handleError } from "../utility/error";
 

@@ -1,23 +1,20 @@
 import React from "react";
-import { useOutletContext, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux/es/exports";
 
-import { BtnPencil } from "../../components";
+import { BtnPencil } from "..";
 import {
+  Store,
+  Comment,
   TCommentApiResponse,
   TUserApiResponseWithToken,
-} from "../../types/type";
+} from "../../store/type";
 import { creationDateGen, updateDateGen } from "../../utility/date";
 import { cleanHtml } from "../../utility/strings";
+import { editComment } from "../../store/action";
 
 interface Props {
-  comment: TCommentApiResponse;
-  comments: TCommentApiResponse[];
-  setComments: React.Dispatch<React.SetStateAction<TCommentApiResponse[]>>;
-  setIsEditingComment: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-interface Context {
-  user: TUserApiResponseWithToken;
+  comment: Comment;
 }
 
 /**
@@ -25,8 +22,9 @@ interface Context {
  * Ability to delete comment or enter edit mode for creator of the comment
  */
 
-const Comment: React.FC<Props> = ({ comment, setIsEditingComment }) => {
-  const { user }: Context = useOutletContext();
+const CommentCard: React.FC<Props> = ({ comment }) => {
+  const user = useSelector((state: Store) => state.user);
+  const dispatch = useDispatch();
 
   return (
     <div className="flex flex-col w-full lg:w-fit lg:min-w-[50%] mx-3">
@@ -35,18 +33,24 @@ const Comment: React.FC<Props> = ({ comment, setIsEditingComment }) => {
           to={`/profile/${comment.user_id}`}
           className="text-xs text-slate-500 font-sans hover:cursor-pointer hover:text-slate-800 transition"
         >
-          Comment by{" "}
-          {comment.author === user.user.username ? "me" : comment.author}
+          Comment by {comment.user_id === user.user.id ? "me" : comment.author}
         </Link>
         {user.user.id === comment.user_id && (
-          <BtnPencil handleClick={() => setIsEditingComment(true)} size="sm" />
+          <BtnPencil
+            handleClick={() =>
+              dispatch(
+                editComment({
+                  ...comment,
+                  isEditingComment: true,
+                })
+              )
+            }
+            size="sm"
+          />
         )}
       </div>
       <div className="flex h-fit flex-col justify-start bg-slate-50 shadow-md hover:shadow-lg transition rounded-xl lg:rounded-2xl p-3 lg:p-4 gap-2 lg:gap-3">
         {/* <!-- Body --> */}
-        {/* <div className="font-sans text-md text-slate-600">
-          {comment.content}
-        </div> */}
         <div dangerouslySetInnerHTML={{ __html: cleanHtml(comment.content) }} />
       </div>
 
@@ -68,4 +72,4 @@ const Comment: React.FC<Props> = ({ comment, setIsEditingComment }) => {
   );
 };
 
-export default Comment;
+export default CommentCard;

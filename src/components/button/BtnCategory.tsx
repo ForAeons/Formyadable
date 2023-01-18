@@ -5,7 +5,7 @@ import { titleCase, snakeCase } from "../../utility/strings";
 interface Props {
   category: string;
   curCategory: string;
-  setCategory: React.Dispatch<React.SetStateAction<string>>;
+  setCategory: (category: string) => void;
 }
 
 const BtnCategory: React.FC<Props> = ({
@@ -18,12 +18,11 @@ const BtnCategory: React.FC<Props> = ({
       className={`px-5 py-1 rounded-md shadow-md text-sm font-bold text-slate-600 hover:bg-teal-300 hover:cursor-pointer whitespace-nowrap transition ${
         curCategory === category ? "bg-teal-200" : "bg-teal-400"
       }`}
-      onClick={() => {
+      onClick={() =>
         curCategory === category
           ? setCategory("")
-          : setCategory(snakeCase(category));
-        console.log(curCategory, category);
-      }}
+          : setCategory(snakeCase(category))
+      }
     >
       {titleCase(category)}
     </div>

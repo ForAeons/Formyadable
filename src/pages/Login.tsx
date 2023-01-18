@@ -10,7 +10,7 @@ import {
   alert,
   nullAlert,
   severityLevel,
-} from "../types/type";
+} from "../store/type";
 
 interface Context {
   setUser: (user: TUserApiResponse) => void;

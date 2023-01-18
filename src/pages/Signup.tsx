@@ -4,7 +4,7 @@ import { Link, useOutletContext, useNavigate } from "react-router-dom";
 import { Alert } from "../components";
 import { signUp } from "../utility/userApi";
 import { handleError } from "../utility/error";
-import { TUserApiResponse, nullAlert, severityLevel } from "../types/type";
+import { TUserApiResponse, nullAlert, severityLevel } from "../store/type";
 
 interface Context {
   setUser: (user: TUserApiResponse) => void;

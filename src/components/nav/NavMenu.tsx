@@ -1,31 +1,25 @@
-import React, { useState } from "react";
-import { Link, useOutletContext } from "react-router-dom";
+import React from "react";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux/es/exports";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
 
-import { BtnToggleDarkMode } from "../../components";
-import {
-  TUserApiResponseWithToken,
-  categories,
-  nullUser,
-  themeChoice,
-} from "../../types/type";
+import { categories, nullUser, Store } from "../../store/type";
 import { snakeCase } from "../../utility/strings";
 import ProfileIcon from "../profile/ProfileIcon";
-
-interface Context {
-  user: TUserApiResponseWithToken;
-  setUser: React.Dispatch<React.SetStateAction<TUserApiResponseWithToken>>;
-}
+import { setStore } from "../../store/action";
 
 interface Props {
   isMobile: boolean;
 }
 
 const NavMenu: React.FC<Props> = ({ isMobile }) => {
+  const user = useSelector((state: Store) => state.user);
+  const store = useSelector((state: Store) => state);
+  const dispatch = useDispatch();
+
   // const [isDarkMode, setIsDarkMode] = useState(
   //   document.documentElement.classList.contains("dark")
   // );
-  const { user, setUser }: Context = useOutletContext();
 
   // const handleToggleDarkMode = (
   //   e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -72,7 +66,14 @@ const NavMenu: React.FC<Props> = ({ isMobile }) => {
             <Link
               to="/"
               className="font-Raleway font-bold tracking-wide text-md text-slate-600 hover:text-red-500 hover:-translate-x-1 transition"
-              onClick={() => setUser(nullUser)}
+              onClick={() =>
+                dispatch(
+                  setStore({
+                    ...store,
+                    user: nullUser,
+                  })
+                )
+              }
             >
               Log Out
             </Link>

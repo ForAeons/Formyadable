@@ -2,7 +2,7 @@ import React from "react";
 import { useOutletContext } from "react-router-dom";
 
 import { BtnPencil } from "../../components";
-import { TUserApiResponse, TUserApiResponseWithToken } from "../../types/type";
+import { TUserApiResponse, TUserApiResponseWithToken } from "../../store/type";
 import iconTextGenerator from "../../utility/iconTextGeneator";
 
 interface Context {

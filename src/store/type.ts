@@ -33,16 +33,6 @@ export type alert = {
   severity: number;
 };
 
-// export type TError = {
-//   error: string;
-// };
-
-// export function isError(
-//   toBeDetermined: TError | any
-// ): toBeDetermined is TError {
-//   return !!(toBeDetermined as TError)?.error;
-// }
-
 export type TPost = {
   id?: number;
   title: string;
@@ -161,8 +151,31 @@ export interface IPriorityError {
 
 export const nullAlert = { message: "", severity: -1 };
 
-export enum themeChoice {
-  default = "default",
-  dark = "dark",
-  light = "light",
+// export enum themeChoice {
+//   default = "default",
+//   dark = "dark",
+//   light = "light",
+// }
+
+export interface Comment extends TCommentApiResponse {
+  alert: alert;
+  isEditingComment: boolean;
+}
+
+export interface Post extends TPostApiResponse {
+  alert: alert;
+  isEditingPost: boolean;
+  isShowingComments: boolean;
+  isFetchingComments: boolean;
+  comments: Comment[];
+}
+
+export interface Store {
+  alert: alert;
+  user: TUserApiResponseWithToken;
+  posts: Post[];
+  isFetchingPosts: boolean;
+  isCreatingPost: boolean;
+  isReverse: boolean;
+  searchValue: string;
 }

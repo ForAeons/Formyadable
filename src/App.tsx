@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import axios from "axios";
+import { useSelector, useDispatch } from "react-redux/es/exports";
 
 import {
   TUserApiResponseWithToken,
-  nullUser,
-  themeChoice,
   IAxiosError,
   TUserApiResponse,
-} from "./types/type";
+  Store,
+} from "./store/type";
 import { getUserInfo } from "./utility/userApi";
+import { setUser } from "./store/action";
 
 const App: React.FC = () => {
-  // user is initialised to not logged in state
-  const [user, setUser] = useState<TUserApiResponseWithToken>(nullUser);
-  // const [theme, setTheme] = useState(themeChoice.default);
+  const user = useSelector((state: Store) => state.user);
+  const dispatch = useDispatch();
 
   // Actions on mount:
   useEffect(() => {
@@ -23,7 +23,7 @@ const App: React.FC = () => {
     if (userString) {
       // prevent logging out first
       const thisUser = JSON.parse(userString) as TUserApiResponseWithToken;
-      setUser(thisUser);
+      dispatch(setUser(thisUser));
 
       // then fetches the latest data
       getUserInfo(thisUser.user.id)
@@ -38,16 +38,16 @@ const App: React.FC = () => {
         });
     }
 
-    // Theme: On page load or when changing themes, best to add inline in `head` to avoid FOUC
-    if (
-      localStorage.theme === themeChoice.dark ||
-      (!("theme" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
-      document.documentElement.classList.add(themeChoice.dark);
-    } else {
-      document.documentElement.classList.remove(themeChoice.dark);
-    }
+    // // Theme: On page load or when changing themes, best to add inline in `head` to avoid FOUC
+    // if (
+    //   localStorage.theme === themeChoice.dark ||
+    //   (!("theme" in localStorage) &&
+    //     window.matchMedia("(prefers-color-scheme: dark)").matches)
+    // ) {
+    //   document.documentElement.classList.add(themeChoice.dark);
+    // } else {
+    //   document.documentElement.classList.remove(themeChoice.dark);
+    // }
   }, []);
 
   // Resets the user in the localstorage upon logging out
@@ -66,14 +66,13 @@ const App: React.FC = () => {
       console.log("JwtToken updated to: ", user.token);
     } else {
       console.log("logged out");
-      // user logs out
-      // clears all data
+      // user logs out and clears all data
       axios.defaults.headers.common["Authorization"] = "";
       localStorage.removeItem("user");
     }
   }, [user]);
 
-  return <Outlet context={{ user, setUser }} />;
+  return <Outlet />;
 };
 
 export default App;

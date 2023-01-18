@@ -8,7 +8,7 @@ import {
   TPostApiResponse,
   IAxiosError,
   severityLevel,
-} from "../types/type";
+} from "../store/type";
 import { handleError } from "../utility/error";
 import { getPostByAuthorID } from "../utility/postApi";
 import { getLoadingForumCount } from "../utility/loadingForumCount";
