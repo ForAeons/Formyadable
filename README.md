@@ -1,7 +1,7 @@
 # Just A Forum
 
 Submission by: Wu Xiaoyun  
-Matriculation Number: A0231121E
+Matriculation Number: A0231121E  
 [Final Writeup](https://docs.google.com/document/d/1_7w9-Mj1T05pht_L0UZ7bGTFUNCujPL_qVmfqGAebLI/edit?usp=sharing)
 
 ## Minimalist and responsive forum website with a flat design
