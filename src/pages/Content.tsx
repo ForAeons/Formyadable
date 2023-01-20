@@ -27,6 +27,13 @@ import {
   nullAlert,
 } from "../types/type";
 import { handleError } from "../utility/error";
+import {
+  handleCreatePostFn,
+  handleGetAllPostFn,
+  handleGetPostByCatFn,
+  handleReverseFn,
+  handleSearchFn,
+} from "../components/post/handler";
 
 interface Context {
   user: TUserApiResponseWithToken;
@@ -52,7 +59,6 @@ const Content: React.FC = () => {
   const [searchValue, setSearchValue] = useState("");
   const [alert, setAlert] = useState<alert>(nullAlert);
   const { category: categoryParam } = useParams();
-
   const { user }: Context = useOutletContext();
 
   ////////////////////////////////////////////////////////////////////////
@@ -61,36 +67,16 @@ const Content: React.FC = () => {
 
   // fetches posts on mount
   useEffect(() => {
-    setIsLoadingPosts(true);
-    setAlert(nullAlert);
-
     // no category restriction, get all posts
     if (!categoryParam) {
-      getAllPost()
-        .then((result: TPostApiResponse[]) => {
-          setPosts(result);
-          // removes error message
-          setAlert(nullAlert);
-        })
-        .catch((err: IAxiosError) => {
-          handleError(err, setAlert);
-        })
-        .finally(() => {
-          setIsLoadingPosts(false);
-        });
+      handleGetAllPostFn(setPosts, setIsLoadingPosts, setAlert);
     } else {
-      // get posts by category
-      getPostByCategory(categoryParam)
-        .then((result: TPostApiResponse[]) => {
-          setPosts(result);
-          setAlert(nullAlert);
-        })
-        .catch((err: IAxiosError) => {
-          handleError(err, setAlert);
-        })
-        .finally(() => {
-          setIsLoadingPosts(false);
-        });
+      handleGetPostByCatFn(
+        categoryParam,
+        setPosts,
+        setIsLoadingPosts,
+        setAlert
+      );
     }
     // trigger reload when categoryParam changes
   }, [categoryParam]);
@@ -99,47 +85,22 @@ const Content: React.FC = () => {
   // HANDLERS
   ////////////////////////////////////////////////////////////////////////
 
-  const handleSearch = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleSearch = handleSearchFn(
+    searchValue,
+    isLoadingPosts,
+    setIsLoadingPosts,
+    setPosts,
+    setAlert
+  );
 
-    // prevent user from making request until the current request is completed
-    if (isLoadingPosts) return;
+  const handleCreatePost = handleCreatePostFn(user, setCreatePost, setAlert);
 
-    // loads posts
-    setIsLoadingPosts(true);
-
-    getPostByTitle(searchValue)
-      .then((result: TPostApiResponse[]) => {
-        // overrides existing posts
-        setPosts(result);
-        setAlert(nullAlert);
-      })
-      .catch((err: IAxiosError) => {
-        console.log(err);
-        handleError(err, setAlert);
-      })
-      .finally(() => {
-        setIsLoadingPosts(false);
-      });
-  };
-
-  const handleCreatePost = () => {
-    // checking for logged in status
-    if (user.token === "") {
-      setAlert({
-        message: "Please log in first!",
-        severity: severityLevel.low,
-      });
-      return;
-    }
-
-    setCreatePost(true);
-  };
-
-  const handleReverse = () => {
-    setIsReverse(!isReverse);
-    setPosts(posts.reverse());
-  };
+  const handleReverse = handleReverseFn(
+    posts,
+    isReverse,
+    setIsReverse,
+    setPosts
+  );
 
   return (
     <div className="flex flex-col lg:flex-row items-center lg:items-start content-start w-[100%] lg:max-w-[1536px] lg:mx-auto">

@@ -34,24 +34,26 @@ const Post: React.FC<Props> = ({
   return (
     <div className="flex flex-col w-full lg:min-w-[50%]">
       {/* <!-- title section --> */}
-      <div className="justify-left flex flex-row items-center gap-4 mx-3 mb-3">
+      <div className="justify-left flex flex-row content-center gap-4 mx-3 mb-3">
         <Link to={`/profile/${post.user_id}`}>
           <ProfileIcon username={post.author} size="sm" />
         </Link>
-        <h3 className="text-lg sm:text-xl font-bold text-slate-700 font-Raleway tracking-wide">
-          {post.title}
+
+        <h3 className=" text-md sm:text-xl font-bold text-slate-600 mr-auto font-Raleway tracking-wide">
+          {post.author === user.user.username ? "me" : post.author}
         </h3>
-        <h3 className=" text-xs sm:text-sm font-light text-slate-500 ml-auto self-end font-Raleway tracking-wide">
-          Post by {post.author === user.user.username ? "me" : post.author}
+        <h3 className=" text-md sm:text-xl font-bold text-slate-600 font-Raleway tracking-wide">
+          {"Post on " + titleCase(post.category)}
         </h3>
       </div>
 
       {/* Content card */}
       <div className="flex min-h-[20%] min-w-[40%] flex-col justify-start bg-slate-200 shadow-lg hover:shadow-xl transition rounded-xl lg:rounded-2xl p-4 lg:p-6 gap-2 lg:gap-3">
         <div className="flex justify-between">
-          <h3 className=" text-md sm:text-xl font-bold text-slate-600 font-Raleway tracking-wide">
-            {titleCase(post.category)}
+          <h3 className="text-lg sm:text-xl font-bold text-slate-700 font-Raleway tracking-wide">
+            {post.title}
           </h3>
+
           {user.user.id === post.user_id && (
             <BtnPencil handleClick={() => setIsEditing(true)} />
           )}

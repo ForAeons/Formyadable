@@ -24,12 +24,10 @@ const CommentContainer: React.FC<Props> = ({
   const [alert, setAlert] = useState<alert>(nullAlert);
 
   // renders different component based on editingComment status
-
   return (
     <>
       {isEditingComment ? (
         <CommentForm
-          postID={comment.post_id}
           thisComment={comment}
           comments={comments}
           setComments={setComments}

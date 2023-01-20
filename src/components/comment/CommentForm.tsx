@@ -1,18 +1,7 @@
 import React, { useState } from "react";
 import { stripHtml } from "string-strip-html";
 
-import {
-  createComment,
-  updateComment,
-  deleteComment,
-} from "../../utility/commentApi";
-import {
-  TCommentApiResponse,
-  alert,
-  severityLevel,
-  IAxiosError,
-  nullAlert,
-} from "../../types/type";
+import { TCommentApiResponse, alert } from "../../types/type";
 import {
   BtnClose,
   BtnDelete,
@@ -20,11 +9,14 @@ import {
   BtnPost,
   QuillEditor,
 } from "../../components";
-import { handleError } from "../../utility/error";
-import { cleanHtml } from "../../utility/strings";
+import {
+  handleCloseFn,
+  handleDeleteFn,
+  handleEditFn,
+  handleSubmitFn,
+} from "./handler";
 
 interface Props {
-  postID: number;
   thisComment: TCommentApiResponse;
   setComments: React.Dispatch<React.SetStateAction<TCommentApiResponse[]>>;
   comments: TCommentApiResponse[];
@@ -41,7 +33,6 @@ interface Props {
  */
 
 const CommentForm: React.FC<Props> = ({
-  postID,
   thisComment,
   comments,
   setComments,
@@ -51,116 +42,33 @@ const CommentForm: React.FC<Props> = ({
 }) => {
   const [content, setContent] = useState(thisComment.content);
 
-  const handleClose = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ): void => {
-    e.preventDefault();
+  const handleClose = handleCloseFn(setIsEditingComment);
 
-    // checks for undefined
-    if (setIsEditingComment) setIsEditingComment(false);
-  };
+  const handleSubmit = handleSubmitFn(
+    thisComment,
+    comments,
+    content,
+    setContent,
+    setComments,
+    setAlert
+  );
 
-  const handleEdit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
-
-    if (stripHtml(content).result === "") {
-      setAlert({
-        message: "Your comment cannot be empty",
-        severity: severityLevel.low,
-      });
-      return;
-    }
-
-    if (stripHtml(content).result.length > 3000) {
-      setAlert({
-        message: "Your comment have exceeded the maximum character limit.",
-        severity: severityLevel.medium,
-      });
-      return;
-    }
-
-    // prevent cross-site scripting (XSS) attacks
-    const santiziedContent = cleanHtml(content);
-    updateComment(
-      { content: santiziedContent, post_id: thisComment.post_id },
-      thisComment.id
-    )
-      .then((result: TCommentApiResponse) => {
-        setComments(
-          comments.map((eachComment) =>
-            eachComment.id !== thisComment.id ? eachComment : result
-          )
-        );
-        setAlert(nullAlert);
-        if (setIsEditingComment) setIsEditingComment(false);
-      })
-      .catch((err: IAxiosError) => {
-        handleError(err, setAlert, {
-          statusMessage: "Unauthorized",
-          responseMessage: "You may not edit comments from others!",
-          severity: severityLevel.medium,
-        });
-      });
-  };
-
-  const handleSubmit = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ): void => {
-    e.preventDefault();
-
-    if (stripHtml(content).result === "") {
-      setAlert({
-        message: "Your comment cannot be empty",
-        severity: severityLevel.low,
-      });
-      return;
-    }
-
-    if (stripHtml(content).result.length > 3000) {
-      setAlert({
-        message: "Your comment have exceeded the maximum character limit.",
-        severity: severityLevel.medium,
-      });
-      return;
-    }
-
-    // prevent cross-site scripting (XSS) attacks
-    const santiziedContent = cleanHtml(content);
-    createComment({ content: santiziedContent, post_id: postID })
-      .then((result: TCommentApiResponse) => {
-        setComments([result, ...comments]);
-
-        // clears the input field
-        setContent("");
-        setAlert(nullAlert);
-      })
-      .catch((err: IAxiosError) => {
-        handleError(err, setAlert, {
-          statusMessage: "Unprocessable Entity",
-          responseMessage:
-            "Please check that your comment does not exceed maximum length!",
-          severity: severityLevel.medium,
-        });
-      });
-  };
+  const handleEdit = handleEditFn(
+    thisComment,
+    comments,
+    content,
+    setComments,
+    setIsEditingComment,
+    setAlert
+  );
 
   // DELETE comment
-  const handleDeleteComment = (commentID: number) => {
-    return (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-      e.preventDefault();
-
-      deleteComment(commentID)
-        .then(() => {
-          setComments(
-            comments.filter((eachcomment) => eachcomment.id !== thisComment.id)
-          );
-          setAlert(nullAlert);
-        })
-        .catch((err) => {
-          handleError(err, setAlert);
-        });
-    };
-  };
+  const handleDeleteComment = handleDeleteFn(
+    thisComment,
+    comments,
+    setComments,
+    setAlert
+  );
 
   return (
     <form className="flex flex-col w-full bg-slate-200 rounded-xl lg:rounded-2xl p-4 lg:p-6 shadow-lg hover:shadow-xl gap-2 lg:gap-3 transition mt-2">
@@ -204,9 +112,7 @@ const CommentForm: React.FC<Props> = ({
         ) : (
           <BtnPost handleClick={handleSubmit} />
         )}
-        {isEditingComment && (
-          <BtnDelete handleClick={handleDeleteComment(thisComment.id)} />
-        )}
+        {isEditingComment && <BtnDelete handleClick={handleDeleteComment} />}
       </div>
     </form>
   );

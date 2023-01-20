@@ -15,12 +15,10 @@ import {
   emptyComment,
   severityLevel,
   alert,
-  IAxiosError,
   TUserApiResponseWithToken,
   nullAlert,
 } from "../types/type";
-import { getCommentsByPostID } from "../utility/commentApi";
-import { handleError } from "../utility/error";
+import { handleGetFn } from "../components/comment/handler";
 
 interface Context {
   user: TUserApiResponseWithToken;
@@ -51,34 +49,19 @@ const PostContainer: React.FC<Props> = ({ post, posts, setPosts }) => {
   const [isFetchingComments, setIsFetchingComments] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [alert, setAlert] = useState<alert>(nullAlert);
-
   const { user }: Context = useOutletContext();
 
-  const fetchComments = () => {
-    setIsFetchingComments(true);
-
-    getCommentsByPostID(post.id)
-      .then((result: TCommentApiResponse[]) => {
-        setComments([...comments, ...result]);
-        setAlert(nullAlert);
-      })
-      .catch((err: IAxiosError) => {
-        handleError(err, setAlert);
-      })
-      .finally(() => {
-        setIsFetchingComments(false);
-      });
-  };
-
   // GET comments
-  const handleGetComments = () => {
-    setShowComments(!showComments);
-
-    if (isFetchingComments) return; // guard clause
-    if (comments.length > 0) return; // no need to refetch
-
-    fetchComments();
-  };
+  const handleGetComments = handleGetFn(
+    comments,
+    showComments,
+    isFetchingComments,
+    post,
+    setComments,
+    setShowComments,
+    setIsFetchingComments,
+    setAlert
+  );
 
   return (
     <div className="flex flex-col mx-3 w-full items-center animate-FadeIn">
@@ -130,8 +113,7 @@ const PostContainer: React.FC<Props> = ({ post, posts, setPosts }) => {
                 {/* Comment submission form, shows only when logging in */}
                 {user.token != "" && (
                   <CommentForm
-                    postID={post.id}
-                    thisComment={emptyComment}
+                    thisComment={{ ...emptyComment, post_id: post.id }}
                     comments={comments}
                     setComments={setComments}
                     setAlert={setAlert}

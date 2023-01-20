@@ -3,15 +3,9 @@ import { useParams } from "react-router-dom";
 
 import { Alert, PostLoading, BtnBack, BtnHome } from "../components";
 import { ProfileContainer, PostContainer } from "../containers";
-import {
-  nullAlert,
-  TPostApiResponse,
-  IAxiosError,
-  severityLevel,
-} from "../types/type";
-import { handleError } from "../utility/error";
-import { getPostByAuthorID } from "../utility/postApi";
+import { nullAlert, TPostApiResponse, severityLevel } from "../types/type";
 import { getLoadingForumCount } from "../utility/loadingForumCount";
+import { handleGetPostByAuthorIDFn } from "../components/post/handler";
 
 const Profile: React.FC = () => {
   const [isLoadingPosts, setIsLoadingPosts] = useState(true);
@@ -23,25 +17,10 @@ const Profile: React.FC = () => {
   // fetches posts on mount
   useEffect(() => {
     if (!userID) return;
-
-    setIsLoadingPosts(true);
-    setAlert(nullAlert);
-
-    // get posts by userID
-    getPostByAuthorID(+userID)
-      .then((result: TPostApiResponse[]) => {
-        setPosts(result);
-        setAlert(nullAlert);
-      })
-      .catch((err: IAxiosError) => {
-        handleError(err, setAlert);
-      })
-      .finally(() => {
-        setIsLoadingPosts(false);
-      });
-
+    handleGetPostByAuthorIDFn(+userID, setPosts, setIsLoadingPosts, setAlert);
     // trigger reload when categoryParam changes
   }, []);
+
   return (
     <div className="flex flex-col lg:flex-row justify-center items-center lg:items-start content-start w-[100%] lg:max-w-[1536px] lg:mx-auto">
       <div className="flex flex-col items-center justify-center h-fit lg:h-screen my-6 lg:m-0 gap-4 lg:sticky lg:top-0">

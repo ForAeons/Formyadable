@@ -13,6 +13,7 @@ import {
 import iconTextGenerator from "../../utility/iconTextGeneator";
 import { updateUserInfo } from "../../utility/userApi";
 import { handleError } from "../../utility/error";
+import { handleEditFn } from "./handler";
 
 interface Context {
   user: TUserApiResponseWithToken;
@@ -36,27 +37,16 @@ const ProfileForm: React.FC<Props> = ({
   const [newBio, setNewBio] = useState(user.user.bio);
   const [password, setPassword] = useState("");
 
-  const handleEdit = () => {
-    if (password === "") return;
-
-    updateUserInfo(
-      { username: newUsername, password: password, bio: newBio },
-      user.user.id
-    )
-      .then((result: TUserApiResponse) => {
-        setUser({ ...user, user: result });
-        setDisplayedUser(result);
-        setAlert(nullAlert);
-      })
-      .catch((err: IAxiosError) => {
-        handleError(err, setAlert, {
-          statusMessage: "Unauthorized",
-          responseMessage: "Invalid credentials.",
-          severity: severityLevel.medium,
-        });
-      })
-      .finally(() => setIsEditingProfile(false));
-  };
+  const handleEdit = handleEditFn(
+    newUsername,
+    password,
+    newBio,
+    user,
+    setUser,
+    setDisplayedUser,
+    setIsEditingProfile,
+    setAlert
+  );
 
   const textareaBioRef = useRef<HTMLTextAreaElement>(null);
 

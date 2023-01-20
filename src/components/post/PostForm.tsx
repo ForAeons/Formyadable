@@ -1,14 +1,7 @@
 import React, { useState, useRef } from "react";
 import { stripHtml } from "string-strip-html";
 
-import {
-  TPostApiResponse,
-  categories,
-  alert,
-  IAxiosError,
-  severityLevel,
-  nullAlert,
-} from "../../types/type";
+import { TPostApiResponse, categories, alert } from "../../types/type";
 import {
   BtnClose,
   BtnPost,
@@ -17,9 +10,13 @@ import {
   BtnCategory,
   QuillEditor,
 } from "../../components";
-import { snakeCase, cleanHtml } from "../../utility/strings";
-import { createPost, updatePost, deletePost } from "../../utility/postApi";
-import { handleError } from "../../utility/error";
+import { snakeCase } from "../../utility/strings";
+import {
+  handleCloseFn,
+  handleDeleteFn,
+  handleEditFn,
+  handleSubmitFn,
+} from "./handler";
 
 interface Props {
   thisPost: TPostApiResponse;
@@ -49,136 +46,35 @@ const PostForm: React.FC<Props> = ({
   const [content, setContent] = useState(thisPost.content);
   const [category, setCategory] = useState(thisPost.category);
 
-  const handleClose = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ): void => {
-    e.preventDefault();
-    setForumStatus(false);
-  };
+  const handleClose = handleCloseFn(setForumStatus);
 
-  const handleSubmit = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ): void => {
-    e.preventDefault();
+  const handleSubmit = handleSubmitFn(
+    posts,
+    title,
+    content,
+    category,
+    setTitle,
+    setContent,
+    setPosts,
+    setForumStatus,
+    setAlert
+  );
 
-    if (category == "") {
-      setAlert({
-        message: "Please choose a category.",
-        severity: severityLevel.low,
-      });
-      return;
-    }
+  const handleEdit = handleEditFn(
+    thisPost,
+    posts,
+    title,
+    content,
+    category,
+    setPosts,
+    setForumStatus,
+    setAlert
+  );
 
-    if (title == "" || stripHtml(content).result === "") {
-      setAlert({
-        message: "Your post cannot be empty",
-        severity: severityLevel.low,
-      });
-      return;
-    }
-
-    if (stripHtml(content).result.length > 5000) {
-      setAlert({
-        message: "Your post have exceeded the maximum character limit.",
-        severity: severityLevel.medium,
-      });
-      return;
-    }
-
-    // prevent cross-site scripting (XSS) attacks
-    const santiziedContent = cleanHtml(content);
-    createPost({ title: title, content: santiziedContent, category: category })
-      .then((result: TPostApiResponse) => {
-        setPosts([result, ...posts]);
-        setForumStatus(false);
-        // clears the input fields
-        setContent("");
-        setTitle("");
-        setAlert(nullAlert);
-      })
-      .catch((err: IAxiosError) => {
-        handleError(err, setAlert, {
-          statusMessage: "Unprocessable Entity",
-          responseMessage:
-            "Please check that your post does not exceed maximum length!",
-          severity: severityLevel.medium,
-        });
-      });
-  };
-
-  const handleEdit = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ): void => {
-    e.preventDefault();
-
-    if (category == "") {
-      setAlert({
-        message: "Please choose a category!",
-        severity: severityLevel.low,
-      });
-      return;
-    }
-
-    if (title == "" || stripHtml(content).result === "") {
-      setAlert({
-        message: "Your post cannot be empty",
-        severity: severityLevel.low,
-      });
-      return;
-    }
-
-    if (stripHtml(content).result.length > 5000) {
-      setAlert({
-        message: "Your post have exceeded the maximum character limit.",
-        severity: severityLevel.medium,
-      });
-      return;
-    }
-
-    // prevent cross-site scripting (XSS) attacks
-    const santiziedContent = cleanHtml(content);
-    updatePost({
-      title: title,
-      content: santiziedContent,
-      category: category,
-      id: thisPost.id,
-    })
-      .then((result: TPostApiResponse) => {
-        setPosts(
-          posts.map((eachPost) =>
-            eachPost.id !== thisPost.id ? eachPost : result
-          )
-        );
-        setAlert(nullAlert);
-        setForumStatus(false);
-      })
-      .catch((err: IAxiosError) => {
-        handleError(err, setAlert, {
-          statusMessage: "Unauthorized",
-          responseMessage: "Please login first!",
-          severity: severityLevel.medium,
-        });
-      });
-  };
-
-  // DELETE post
-  const handleDeletePost = (postID: number) => {
-    return (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-      e.preventDefault();
-      deletePost(postID)
-        .then(() => {
-          setPosts(posts.filter((eachpost) => eachpost.id !== thisPost.id));
-          setAlert(nullAlert);
-        })
-        .catch((err: IAxiosError) => {
-          handleError(err, setAlert);
-        });
-    };
-  };
-
-  const textareaTitleRef = useRef<HTMLTextAreaElement>(null);
+  const handleDeletePost = handleDeleteFn(thisPost, posts, setPosts, setAlert);
 
   // Allows textfields to expand upon reaching its size limit
+  const textareaTitleRef = useRef<HTMLTextAreaElement>(null);
   const handleOnInput = (Ref: React.RefObject<HTMLTextAreaElement>) => {
     if (Ref.current) {
       Ref.current.style.height = "auto";
@@ -261,9 +157,7 @@ const PostForm: React.FC<Props> = ({
         ) : (
           <BtnPost handleClick={handleSubmit} />
         )}
-        {isEditingPost && (
-          <BtnDelete handleClick={handleDeletePost(thisPost.id)} />
-        )}
+        {isEditingPost && <BtnDelete handleClick={handleDeletePost} />}
       </div>
     </form>
   );

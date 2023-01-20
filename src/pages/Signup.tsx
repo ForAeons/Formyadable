@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import { Link, useOutletContext, useNavigate } from "react-router-dom";
 
 import { Alert } from "../components";
-import { signUp } from "../utility/userApi";
-import { handleError } from "../utility/error";
-import { TUserApiResponse, nullAlert, severityLevel } from "../types/type";
+import { TUserApiResponse, nullAlert } from "../types/type";
+import { handleSignupFn } from "../components/profile/handler";
 
 interface Context {
   setUser: (user: TUserApiResponse) => void;
@@ -25,55 +24,14 @@ const Signup: React.FC = () => {
   const { setUser }: Context = useOutletContext();
   const navigator = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
-    e.preventDefault();
-
-    // password check
-    if (password !== passwordC) {
-      setAlert({
-        message: "Both passwords must be the same!",
-        severity: severityLevel.medium,
-      });
-      return;
-    }
-
-    // username check
-    if (userName.length < 6 || userName.length > 30) {
-      setAlert({
-        message: "Username must be between 6 and 30 characters long!",
-        severity: severityLevel.medium,
-      });
-      return;
-    }
-
-    // password check
-    if (password.length < 8 || password.length > 30) {
-      setAlert({
-        message: "Password must be between 8 and 30 characters long!",
-        severity: severityLevel.medium,
-      });
-      return;
-    }
-
-    signUp({ username: userName, password: password })
-      .then((result) => {
-        setUser(result);
-        setAlert({
-          message: "Account successfully created!\nRedirecting to home page.",
-          severity: severityLevel.low,
-        });
-        setTimeout(() => {
-          navigator("/");
-        }, 1000);
-      })
-      .catch((err) => {
-        handleError(err, setAlert, {
-          statusMessage: "Unprocessable Entity",
-          responseMessage: "This username may have been taken.\nTry a new one!",
-          severity: severityLevel.medium,
-        });
-      });
-  };
+  const handleSubmit = handleSignupFn(
+    userName,
+    password,
+    passwordC,
+    setUser,
+    navigator,
+    setAlert
+  );
 
   return (
     <div className="bg-slate-50 h-screen w-screen flex flex-col justify-center items-center gap-6 ">

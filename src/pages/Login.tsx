@@ -2,15 +2,8 @@ import React, { useState } from "react";
 import { Link, useOutletContext, useNavigate } from "react-router-dom";
 
 import { Alert } from "../components";
-import { login } from "../utility/userApi";
-import { handleError } from "../utility/error";
-import {
-  IAxiosError,
-  TUserApiResponse,
-  alert,
-  nullAlert,
-  severityLevel,
-} from "../types/type";
+import { TUserApiResponse, alert, nullAlert } from "../types/type";
+import { handleLoginFn } from "../components/profile/handler";
 
 interface Context {
   setUser: (user: TUserApiResponse) => void;
@@ -23,35 +16,19 @@ interface Context {
  */
 
 const Login: React.FC = () => {
-  const [userName, setUserName] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [alert, setAlert] = useState<alert>(nullAlert);
-
   const { setUser }: Context = useOutletContext();
   const navigator = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
-    e.preventDefault();
-
-    login({ username: userName, password: password })
-      .then((result) => {
-        setUser(result);
-        setAlert({
-          message: "Successfully logged in!\nRedirecting to home page.",
-          severity: severityLevel.low,
-        });
-        setTimeout(() => {
-          navigator("/");
-        }, 1000);
-      })
-      .catch((err: IAxiosError) => {
-        handleError(err, setAlert, {
-          statusMessage: "Unauthorized",
-          responseMessage: "Invalid credentials",
-          severity: severityLevel.medium,
-        });
-      });
-  };
+  const handleSubmit = handleLoginFn(
+    username,
+    password,
+    setUser,
+    navigator,
+    setAlert
+  );
 
   return (
     <div className="bg-slate-50 h-screen w-screen flex flex-col justify-center items-center gap-6">
@@ -64,7 +41,7 @@ const Login: React.FC = () => {
           type="text"
           className="font-semibold text-xl dark:text-slate-400 px-5 py-1 rounded-md shadow-md"
           placeholder="Username"
-          onChange={(e) => setUserName(e.target.value)}
+          onChange={(e) => setUsername(e.target.value)}
         ></input>
         <input
           type="password"
