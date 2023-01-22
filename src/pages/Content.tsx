@@ -11,11 +11,6 @@ import {
   Alert,
 } from "../components";
 import { PostContainer } from "../containers";
-import {
-  getAllPost,
-  getPostByTitle,
-  getPostByCategory,
-} from "../utility/postApi";
 import { getLoadingForumCount } from "../utility/loadingForumCount";
 import {
   TUserApiResponseWithToken,
@@ -23,10 +18,8 @@ import {
   emptyPost,
   severityLevel,
   alert,
-  IAxiosError,
   nullAlert,
 } from "../types/type";
-import { handleError } from "../utility/error";
 import {
   handleCreatePostFn,
   handleGetAllPostFn,
