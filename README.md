@@ -2,7 +2,7 @@
 
 Submission by: Wu Xiaoyun  
 Matriculation Number: A0231121E  
-[Final Writeup](https://docs.google.com/document/d/1_7w9-Mj1T05pht_L0UZ7bGTFUNCujPL_qVmfqGAebLI/edit?usp=sharing)
+[Final Writeup](/WuXiaoyun_A0231121E_FinalWriteup.pdf)
 
 ## Minimalist and responsive forum website with a flat design
 
