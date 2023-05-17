@@ -8,7 +8,7 @@ Matriculation Number: A0231121E
 
 ## Deployement
 
-Frontend: React.js, ~~MUI~~ Tailwind
+Frontend: React.js, Tailwind
 
 - Installed locally:
 - run: `npm i` to install dependencies
@@ -16,7 +16,7 @@ Frontend: React.js, ~~MUI~~ Tailwind
 
 - [Demo by Netlify for v3.2.0](https://justforum.netlify.app/)
 
-[Backend: Ruby on Rails](https://github.com/ForAeons/cvwo_forum_backend)  
+[Backend: Ruby on Rails (BACKEND IS NO LONGER RUNNING)](https://github.com/ForAeons/cvwo_forum_backend)  
 Database: PostgreSQL
 
 - Hosted by Heroku
